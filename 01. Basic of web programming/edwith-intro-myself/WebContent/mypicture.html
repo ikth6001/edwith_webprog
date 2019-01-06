@@ -18,7 +18,7 @@
 		}
 		
 		#main {
-			text-align: center;
+			padding: 50px;
 		}
 		
 		#footer {
@@ -45,6 +45,15 @@
 			background-color: yellow;
 			margin: 5px;
 		}
+		
+		.contents {
+			display: inline-block;
+			vertical-align: top;
+		}
+		
+		.contentsContainer{
+			margin: 50px;
+		}
 	</style>
 	
 </head>
@@ -56,14 +65,23 @@
 		<div class="UpMenu"><a href="http://localhost:8080/edwith-intro-myself/">홈</a></div>
 	</header>
 	<section id="main" style="height: 800px">
-		<h1>이클립스 플러그인 개발자</h1>
-		현재 이클립스 플러그인을 개발하고 있습니다.<br>
-		백앤드 개발자로 전향하여 경력을 쌓은 후, Software Architecture가 되는 것이 최종 목표입니다.
-		<div style="overflow: auto;">
-			<div class="subMenu"><a href="http://localhost:8080/edwith-intro-myself/introduce.html">자기소개</a></div>
-			<div class="subMenu"><a href="http://localhost:8080/edwith-intro-myself/mypicture.html">내사진</a></div>
+		<div class="contentsContainer">
+			<div class="contents"><img alt="음식01" src="images/food01.PNG" border="3"></div>
+			<div class="contents">
+				맛있는 디저트 01<br>
+				마구마구 먹어주고 싶다<br>
+				맛있는거~
+			</div>
 		</div>
-		<img alt="map" src="images/map.PNG" width="400" height="400"/>
+		
+		<div class="contentsContainer">
+			<div class="contents"><img alt="음식02" src="images/food02.PNG" border="3"></div>
+			<div class="contents">
+				맛있는 디저트 02<br>
+				마구마구 먹어주고 싶다<br>
+				맛있는거~
+			</div>
+		</div>
 	</section>
 	<footer id="footer">
 		<div class="copyRight">
