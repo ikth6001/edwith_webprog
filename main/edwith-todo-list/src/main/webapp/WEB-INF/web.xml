@@ -12,6 +12,6 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>TodoManagerServlet</servlet-name>
-  	<url-pattern>/todo</url-pattern>
+  	<url-pattern>/todo/*</url-pattern>
   </servlet-mapping>
 </web-app>
