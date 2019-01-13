@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>TodoManagerServlet</servlet-name>
+  	<display-name>TodoManagerServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.ikth.apps.todo.servlet.TodoManagerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TodoManagerServlet</servlet-name>
+  	<url-pattern>/todo</url-pattern>
+  </servlet-mapping>
 </web-app>
