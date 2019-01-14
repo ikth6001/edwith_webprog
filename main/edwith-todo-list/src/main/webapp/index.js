@@ -54,7 +54,7 @@ function updateType(container) {
 			location.reload();
 		}
 	});
-	req.open("POST", reqUri);
+	req.open("PUT", reqUri);
 	req.send();
 }
 

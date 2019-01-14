@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>할일 관리 페이지</title>
 	<style type="text/css">
 		body > header {
 			overflow: auto;
@@ -21,15 +21,13 @@
 			color: white;
 			transform: translateY(50%);
 			text-align: center;
+			
+			float: right;
 		}
 		
 		.headerContents {
 			font-style: oblique;
 			font-weight: bold;
-		}
-		
-		#btnAdd {
-			float: right;
 		}
 		
 		body > section{
@@ -55,7 +53,9 @@
 <body>
 	<header style="height: 100px">
 		<div id="logo" class="headerContents">나의 해야할 일들</div>
-		<div id="btnAdd"  class="headerContents">새로운 TODO 등록</div>
+		<form action="http://localhost:8080/edwith-todo-list/task_regist.html">
+			<input type="submit" id="btnAdd" value="새로운 TODO 등록">
+		</form>
 	</header>
 	<section>
 		<div id="todo" class="taskContainer">

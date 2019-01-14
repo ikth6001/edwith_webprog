@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>할일 등록 페이지</title>
+	
+	<style type="text/css">
+		.element {
+			margin-bottom: 30px;
+		}
+		
+		.btn {
+			width: 150px;
+			height: 3em;
+		}
+		
+		#regist{
+			background-color: blue;
+			font-weight: bold;
+			color: white;
+			margin-left: 450px;
+		}
+	</style>
+</head>
+<body>
+	<header style="text-align: center; font-size: 3em; font-weight: bold;">
+		할일 등록
+	</header>
+	<section style="margin-left: 450px;">
+		<div class="element">
+			어떤 일인가요?<br>
+			<input type="text" id="title" style="width: 800px; height: 2em;">
+		</div>
+		<div class="element">
+			누가 할 일인가요?<br>
+			<input type="text" id="name" style="width: 400px; height: 2em;">
+		</div>
+		<div class="element">
+			<form action="http://localhost:8080/edwith-todo-list/index.html" style="display: inline-block;">
+				<input class="btn" id="prev" type="submit" value="< 이전">
+			</form>
+			<input class="btn" id="regist" type="button" onclick="reqRegistTask()" value="제출">
+		</div>
+	</section>
+	
+	<script type="text/javascript">
+		function reqRegistTask() {
+			var req= new XMLHttpRequest();
+			req.addEventListener("load", function(){
+				if(this.status != 200) {
+					alert("Can not regist specified task..");
+				} else {
+					
+				}
+			});
+			
+			var title= document.getElementById("title").value;
+			var name= document.getElementById("name").value;
+			var prefix="title=" + encodeURI(encodeURIComponent(title)) 
+					 + '&name=' + encodeURI(encodeURIComponent(name));
+			var reqUrl= 'http://localhost:8080/edwith-todo-list/todo?' + prefix;
+			console.log(reqUrl);
+			req.open('POST', reqUrl);
+			req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;encoding=utf-8');
+			req.send();
+		}
+	</script>
+</body>
+</html>

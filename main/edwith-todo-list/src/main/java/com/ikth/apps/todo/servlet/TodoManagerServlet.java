@@ -2,6 +2,7 @@ package com.ikth.apps.todo.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -68,6 +69,16 @@ public class TodoManagerServlet extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		final String title= URLDecoder.decode(request.getParameter("title"), "utf-8");
+		final String name= URLDecoder.decode(request.getParameter("name"), "utf-8");
+		logger.debug("request parameter title [{}], name [{}]", title, name);
+	}
+
+	/**
+	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+	 */
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		final String uri= request.getRequestURI();
 		logger.debug("requested uri [{}]", uri);
 		
@@ -108,13 +119,5 @@ public class TodoManagerServlet extends HttpServlet
 			logger.error(e.getMessage(), e);
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
 		}
-	}
-
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		// TODO Auto-generated method stub
 	}
 }
