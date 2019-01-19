@@ -32,6 +32,11 @@ public class TodoDao
 			+ " SET TYPE = ?"
 			+ " WHERE ID = ?";
 	
+	private final String INSERT_TASK=
+			"INSERT INTO TODO"
+			+ " (TITLE, NAME, SEQUENCE)"
+			+ " VALUES(?, ?, 1)";
+	
 	private Connection getConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException 
 	{
 		Class.forName(DRIVER_CLASS_NAME).newInstance();
@@ -103,6 +108,18 @@ public class TodoDao
 			}
 			
 			return tasks;
+		}
+	}
+	
+	public int insertTask(String name, String title) throws Exception
+	{
+		try(Connection conn= getConnection();
+				PreparedStatement pstmt= conn.prepareStatement(INSERT_TASK))
+		{
+			pstmt.setString(1, title);
+			pstmt.setString(2, name);
+			
+			return pstmt.executeUpdate();
 		}
 	}
 }

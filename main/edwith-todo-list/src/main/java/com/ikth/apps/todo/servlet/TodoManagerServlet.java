@@ -72,6 +72,15 @@ public class TodoManagerServlet extends HttpServlet
 		final String title= URLDecoder.decode(request.getParameter("title"), "utf-8");
 		final String name= URLDecoder.decode(request.getParameter("name"), "utf-8");
 		logger.debug("request parameter title [{}], name [{}]", title, name);
+		
+		try {
+			todoDao.insertTask(name, title);
+			response.sendRedirect("/edwith-todo-list/index.html");
+		} catch (Exception e) {
+			logger.error("add new todo task fail name [{}], title [{}]", name, title);
+			logger.error("the stack trace for add todo task fail", e);
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**

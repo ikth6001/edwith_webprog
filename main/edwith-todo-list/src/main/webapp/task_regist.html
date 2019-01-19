@@ -46,11 +46,13 @@
 	<script type="text/javascript">
 		function reqRegistTask() {
 			var req= new XMLHttpRequest();
-			req.addEventListener("load", function(){
+			req.addEventListener("load", function(response){
 				if(this.status != 200) {
 					alert("Can not regist specified task..");
 				} else {
-					
+					if(response.target.responseURL !== undefined) {
+						window.location.href= response.target.responseURL;
+					}
 				}
 			});
 			
