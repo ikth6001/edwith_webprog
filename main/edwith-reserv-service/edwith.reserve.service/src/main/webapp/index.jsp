@@ -3,7 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta charset="UTF-8">
 	<title>예약 서비스</title>
 	
 	<style type="text/css">
@@ -15,8 +14,7 @@
 		}
 		
 		#areaGnb {
-			background-color: gray;
-			color: white;
+			background-color: #F1F6F2;
 			font-weight: bold;
 		}
 		
@@ -24,6 +22,21 @@
 			text-align: center;
 			margin-top: 15px;
 			margin-bottom: 15px;
+		}
+		
+		#areaProductList {
+			background-color: #F1F6F2;
+			margin-bottom: 15px;
+		}
+		
+		#areaBtnMore {
+			margin-bottom: 15px;
+			cursor: pointer;
+		}
+		
+		#areaBtnToTop {
+			margin-bottom: 15px;
+			cursor: pointer;
 		}
 		
 		.categoryBtn {
@@ -34,12 +47,12 @@
 			cursor: pointer;
 		}
 		
-		.product {
+		.areaProduct {
 			display: inline-block;
 			width: 49%;
 		}
 		
-		.product > div {
+		.areaProduct > div {
 			text-align: center;
 			margin: 10px;
 		}
@@ -47,7 +60,7 @@
 	
 </head>
 <body>
-	<div id="container">
+	<div id="container" style="border: solid 1px gray;">
 		<div id="areaGnb">
 			<div id="areaBtnToMain" style="display: inline-block;">
 				<img src="images/mainLog.PNG" align="middle" style="margin: 5px;"> 예약
@@ -56,29 +69,21 @@
 				예약 확인
 			</div>
 		</div>
-		<div id="areaPromotion">
-			
-		</div>
+		<div id="areaPromotion"></div>
 		<div id="areaCategory">
-			<div class="categoryBtn" typeCode="ALL">전체 리스트</div>
-			<div class="categoryBtn" typeCode="DPL">전시</div>
-			<div class="categoryBtn" typeCode="MSC">뮤지컬</div>
-			<div class="categoryBtn" typeCode="CRT">콘서트</div>
-			<div class="categoryBtn" typeCode="CLS">클래식</div>
-			<div class="categoryBtn" typeCode="THT">연극</div>
+			<div class="categoryBtn" code="ALL">전체 리스트</div>
+			<div class="categoryBtn" code="DPL">전시</div>
+			<div class="categoryBtn" code="MSC">뮤지컬</div>
+			<div class="categoryBtn" code="CRT">콘서트</div>
+			<div class="categoryBtn" code="CLS">클래식</div>
+			<div class="categoryBtn" code="THT">연극</div>
 		</div>
-		<div id="areaCount" style="text-align: center;">
+		<div id="areaCount" style="text-align: center; margin-bottom: 15px;">
 			예약 가능한 공연이 ${count}개 있습니다.
 		</div>
 		<div id="areaProductList">
-			<div class="product" id="productLeft">
-				<div>left(1)</div>
-				<div>left(2)</div>
-			</div>
-			<div class="product" id="productRight">
-				<div>right(1)</div>
-				<div>right(2)</div>
-			</div>
+			<div class="areaProduct" id="productLeft"></div>
+			<div class="areaProduct" id="productRight"></div>
 		</div>
 		<div id="areaBtnMore" style="text-align: center;">
 			더 보기
@@ -88,10 +93,17 @@
 		</div>	
 	</div>
 	
-	<script id="promotionTemplate", type="text/template">
+	<script id="promotionTemplate" type="text/template">
 		<div class="promotionItem">
 			<img src="${path}" width="600" height="200">
 		</div>
+	</script>
+	
+	<script id="productTemplate" type="text/template">
+		<img src="${path}" height="350" width="280"><br>
+		<b>${name}</b><br>
+		${place}<br>
+		${description}
 	</script>
 	
 	<script type="text/javascript" src="javascript/index.js"></script>
