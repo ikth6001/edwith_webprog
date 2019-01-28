@@ -19,12 +19,49 @@ function addPromotions() {
 		if (this.status == 200) {
 			var txt = this.responseText;
 			var mock_data= JSON.parse(txt);
-			animate(element, template, mock_data.items, 0);
+			/*animate(element, template, mock_data.items, 0);*/
+			
+			var children= [];
+			var leng= mock_data.items.length;
+			for(var i=0; i<leng; i++) {
+				var tmp= document.createElement('div');
+				tmp.innerHTML= template.replace("${path}", mock_data.items[i].img);
+				children[i]= tmp.firstElementChild;
+			}
+			
+			animate(element, children, template, mock_data.items, 0, 1, 0);
 		}
 	});
 }
 
-function animate(element, template, items, idx) {
+function animate(element, children, template, items, firstIdx, secondIdx, cnt) {
+	window.requestAnimationFrame(function() {
+		var firstEle= children[firstIdx];
+		var secondEle= children[secondIdx];
+		
+		if(cnt == 0) {
+			firstEle.style.left= "0px";
+			firstEle.style.top= "0px";
+			secondEle.style.left= "600px";
+			secondEle.style.top= "-200px";
+			element.appendChild(firstEle);
+			element.appendChild(secondEle);
+			cnt= cnt+1;
+		} else if(cnt == 600) {
+			element.innerHTML= "";
+			firstIdx= (firstIdx === items.length-1) ? 0 : firstIdx+1;
+			secondIdx= (secondIdx === items.length-1) ? 0 : secondIdx+1;
+			cnt= 0;
+		} else {
+			firstEle.style.left= parseInt(firstEle.style.left) - 1 + "px";
+			secondEle.style.left= parseInt(secondEle.style.left) - 1 + "px";
+			cnt= cnt+1;
+		}
+		animate(element, children, template, items, firstIdx, secondIdx, cnt);
+	});
+}
+
+/*function animate(element, template, items, idx) {
 	window.setTimeout(function() {
 		if(idx == items.length) {
 			idx= 0;
@@ -34,7 +71,7 @@ function animate(element, template, items, idx) {
 		element.innerHTML= html;
 		animate(element, template, items, idx+1);
 	}, 2000)
-}
+}*/
 
 var products;
 var initialSize= 4;

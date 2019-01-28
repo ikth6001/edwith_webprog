@@ -69,7 +69,7 @@
 				예약 확인
 			</div>
 		</div>
-		<div id="areaPromotion"></div>
+		<div id="areaPromotion" style="vertical-align: top; height: 200px; width: 600px; overflow: hidden;"></div>
 		<div id="areaCategory">
 			<div class="categoryBtn" code="ALL">전체 리스트</div>
 			<div class="categoryBtn" code="DPL">전시</div>
@@ -90,11 +90,12 @@
 		</div>
 		<div id="areaBtnToTop" style="text-align: center;">
 			^ TOP
-		</div>	
+		</div>
+		
 	</div>
 	
 	<script id="promotionTemplate" type="text/template">
-		<div class="promotionItem">
+		<div class="promotionItem" style="position: relative; display: inline;">
 			<img src="${path}" width="600" height="200">
 		</div>
 	</script>
