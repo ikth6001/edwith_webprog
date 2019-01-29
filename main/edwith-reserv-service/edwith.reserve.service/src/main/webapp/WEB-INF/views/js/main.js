@@ -25,8 +25,8 @@ function addPromotions() {
 			var leng= mock_data.length;
 			for(var i=0; i<leng; i++) {
 				var tmp= document.createElement('div');
-				var base64= Convert.ToBase64String(mock_data[i].img);
-				tmp.innerHTML= template.replace("${path}", 'data:image/PNG;base64,' + base64);
+				/*var base64= Convert.ToBase64String(mock_data[i].img);*/
+				tmp.innerHTML= template.replace("${path}", 'data:image/PNG;base64,' + mock_data[i].imgBase64);
 				children[i]= tmp.firstElementChild;
 			}
 			
@@ -122,7 +122,7 @@ function displayProduct() {
 		child.setAttribute('style', 'margin-bottom: 15px;')
 		child.setAttribute('class', 'product');
 		var product= products[i];
-		child.innerHTML= html.replace('${path}', product.img)
+		child.innerHTML= html.replace('${path}', 'data:image/PNG;base64,' + product.imgBase64)
 							 .replace('${name}', product.name)
 							 .replace('${place}', product.place)
 							 .replace('${description}', product.description);
@@ -159,7 +159,7 @@ function addMoreBtnEvent() {
 			child.setAttribute('style', 'margin-bottom: 15px;')
 			child.setAttribute('class', 'product');
 			var product= products[i];
-			child.innerHTML= html.replace('${path}', product.img)
+			child.innerHTML= html.replace('${path}', 'data:image/PNG;base64,' + product.imgBase64)
 								 .replace('${name}', product.name)
 								 .replace('${place}', product.place)
 								 .replace('${description}', product.description);

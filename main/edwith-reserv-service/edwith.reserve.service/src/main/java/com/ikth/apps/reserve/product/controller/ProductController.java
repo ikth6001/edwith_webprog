@@ -3,6 +3,7 @@ package com.ikth.apps.reserve.product.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,13 +17,18 @@ import com.ikth.apps.reserve.product.vo.ProductVO;
 @RequestMapping(path="/api/products")
 public class ProductController 
 {
+	
+	/**
+	 * 이런식으로 응답 처리 하는 것이 REST 아키텍처에 맞는건지 잘 모르겠다..
+	 * @return ProductVO의 이미지 바이너리는 Base64로 인코딩 후 응답한다..
+	 */
 	@GetMapping
 	public List<ProductVO> getAllProducts()
 	{
 		List<ProductVO> products= new LinkedList<>();
 		
 		/**
-		 * DAO 생성 전, 테스트 데이터 생성
+		 * DAO 구현 전, 테스트 데이터 생성
 		 */
 		ProductVO lion= new ProductVO();
 		lion.setName("라이온킹");
@@ -30,7 +36,9 @@ public class ProductController
 		lion.setPlace("경기도 부천시 중동");
 		lion.setType("THT");
 		lion.setPromotion(true);
-		lion.setImg(getImage("C:\\Users\\TAEHOON\\git\\edwith_webprog\\main\\edwith-reserv-service\\edwith.reserve.service\\src\\main\\webapp\\test\\imgLionKing.PNG"));
+		lion.setImgBase64(
+				encodingBase64(
+						getImage("C:\\Users\\taehoonkim\\git\\edwith_webprog\\main\\edwith-reserv-service\\edwith.reserve.service\\src\\main\\webapp\\test\\imgLionKing.PNG")) );
 		
 		ProductVO dGirl= new ProductVO();
 		dGirl.setName("뮤지컬 드림걸즈");
@@ -38,13 +46,19 @@ public class ProductController
 		dGirl.setPlace("서울 송파구 잠실");
 		dGirl.setType("MSC");
 		dGirl.setPromotion(true);
-		lion.setImg(getImage("C:\\Users\\TAEHOON\\git\\edwith_webprog\\main\\edwith-reserv-service\\edwith.reserve.service\\src\\main\\webapp\\test\\imgDreamGirls.PNG"));
+		dGirl.setImgBase64(
+				encodingBase64(
+						getImage("C:\\Users\\taehoonkim\\git\\edwith_webprog\\main\\edwith-reserv-service\\edwith.reserve.service\\src\\main\\webapp\\test\\imgDreamGirls.PNG")) );
 		
 		for(int i=0; i<20; i++) {
 			products.add(i%2 == 0 ? lion : dGirl);
 		}
 		
 		return products;
+	}
+	
+	private String encodingBase64(byte[] binary) {
+		return Base64.getEncoder().encodeToString(binary);
 	}
 	
 	private byte[] getImage(String path) {

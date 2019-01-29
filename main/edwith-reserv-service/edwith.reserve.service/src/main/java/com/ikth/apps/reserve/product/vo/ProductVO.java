@@ -7,7 +7,7 @@ public class ProductVO
 	private String description;
 	private String type;
 	private boolean promotion;
-	private byte[] img;
+	private String imgBase64;
 	
 	public String getName() {
 		return name;
@@ -39,10 +39,11 @@ public class ProductVO
 	public void setPromotion(boolean promotion) {
 		this.promotion = promotion;
 	}
-	public byte[] getImg() {
-		return img;
+	public String getImgBase64() {
+		return imgBase64;
 	}
-	public void setImg(byte[] img) {
-		this.img = img;
+	public void setImgBase64(String imgBase64) {
+		this.imgBase64 = imgBase64;
 	}
+	
 }
