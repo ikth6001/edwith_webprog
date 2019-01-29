@@ -63,7 +63,7 @@
 	<div id="container" style="border: solid 1px gray;">
 		<div id="areaGnb">
 			<div id="areaBtnToMain" style="display: inline-block;">
-				<img src="images/mainLog.PNG" align="middle" style="margin: 5px;"> 예약
+				<img src="img/mainLog.PNG" align="middle" style="margin: 5px;"> 예약
 			</div>
 			<div id="areaBtnReservInfo" style="display: inline-block; float: right; margin: 5px;">
 				예약 확인
@@ -107,6 +107,6 @@
 		${description}
 	</script>
 	
-	<script type="text/javascript" src="javascript/index.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

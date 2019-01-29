@@ -14,7 +14,7 @@ function addPromotions() {
 	var element= document.getElementById('areaPromotion');
 	var template= document.querySelector('#promotionTemplate').innerHTML;
 	
-	sendGetAjaxRequest('test/mockdata.txt', function() {
+	sendGetAjaxRequest(function() {
 		/*TODO promotion 아이템 리스트를 가져오는 요청을 서버에 보내도록 변경*/
 		if (this.status == 200) {
 			var txt = this.responseText;
@@ -22,14 +22,15 @@ function addPromotions() {
 			/*animate(element, template, mock_data.items, 0);*/
 			
 			var children= [];
-			var leng= mock_data.items.length;
+			var leng= mock_data.length;
 			for(var i=0; i<leng; i++) {
 				var tmp= document.createElement('div');
-				tmp.innerHTML= template.replace("${path}", mock_data.items[i].img);
+				var base64= Convert.ToBase64String(mock_data[i].img);
+				tmp.innerHTML= template.replace("${path}", 'data:image/PNG;base64,' + base64);
 				children[i]= tmp.firstElementChild;
 			}
 			
-			animate(element, children, template, mock_data.items, 0, 1, 0);
+			animate(element, children, template, mock_data, 0, 1, 0);
 		}
 	});
 }
@@ -91,11 +92,10 @@ function addCategoryClickEventListener() {
 			code= this.getAttribute('code');
 			console.log('code [' + code + ']');
 			
-			sendGetAjaxRequest('test/mockdata.txt', function() {
+			sendGetAjaxRequest(function() {
 				if(this.status == 200) {
 					var response= this.responseText;
-					products= JSON.parse(response).items;
-					
+					products= JSON.parse(response);
 					setProductCount();
 					displayProduct();
 				}
@@ -132,10 +132,10 @@ function displayProduct() {
 	}
 }
 
-function sendGetAjaxRequest(url, callback) {
+function sendGetAjaxRequest(callback) {
 	var req = new XMLHttpRequest();
 	req.addEventListener("load", callback);
-	req.open("GET", url, true);
+	req.open("GET", 'http://localhost:8080/edwith.reserve.service/api/products', true);
 	req.send();
 }
 
