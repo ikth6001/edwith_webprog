@@ -4,9 +4,21 @@
 
 <mapper namespace="com.ikth.apps.reserve.product.dao.ProductDao">
 
-	<select id="selectAll"
-		resultType="com.ikth.apps.reserve.product.vo.AccMstVO">
-		SELECT OP_BRCH as opBrch, AMT as amt FROM ACC_MST
+	<select id="selectAllProduct"
+		resultType="com.ikth.apps.reserve.product.vo.ProductVO">
+		SELECT NAME as name
+				, description as description
+				, place as place
+				, typeCd as typeCd
+				, promotion as promotion
+				, TO_BASE64(img) as imgBase64 
+		FROM product;
 	</select>
+
+	<insert id="insertProduct"
+		parameterType="com.ikth.apps.reserve.product.vo.ProductVO">
+		INSERT INTO PRODUCT(NAME, DESCRIPTION, PLACE, TYPECD, PROMOTION, IMG)
+		VALUES(#{name}, #{description}, #{place}, #{typeCd}, #{promotion}, CONVERT(#{imgBase64}, BINARY))
+	</insert>
 	
 </mapper>

@@ -15,17 +15,14 @@ function addPromotions() {
 	var template= document.querySelector('#promotionTemplate').innerHTML;
 	
 	sendGetAjaxRequest(function() {
-		/*TODO promotion 아이템 리스트를 가져오는 요청을 서버에 보내도록 변경*/
 		if (this.status == 200) {
 			var txt = this.responseText;
 			var mock_data= JSON.parse(txt);
-			/*animate(element, template, mock_data.items, 0);*/
 			
 			var children= [];
 			var leng= mock_data.length;
 			for(var i=0; i<leng; i++) {
 				var tmp= document.createElement('div');
-				/*var base64= Convert.ToBase64String(mock_data[i].img);*/
 				tmp.innerHTML= template.replace("${path}", 'data:image/PNG;base64,' + mock_data[i].imgBase64);
 				children[i]= tmp.firstElementChild;
 			}
@@ -61,18 +58,6 @@ function animate(element, children, template, items, firstIdx, secondIdx, cnt) {
 		animate(element, children, template, items, firstIdx, secondIdx, cnt);
 	});
 }
-
-/*function animate(element, template, items, idx) {
-	window.setTimeout(function() {
-		if(idx == items.length) {
-			idx= 0;
-		}
-		var path= items[idx].img;
-		var html= template.replace("${path}", path);
-		element.innerHTML= html;
-		animate(element, template, items, idx+1);
-	}, 2000)
-}*/
 
 var products;
 var initialSize= 4;

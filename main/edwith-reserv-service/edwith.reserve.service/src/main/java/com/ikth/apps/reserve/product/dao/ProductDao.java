@@ -1,8 +1,11 @@
 package com.ikth.apps.reserve.product.dao;
 
-import com.ikth.apps.reserve.product.vo.AccMstVO;
+import java.util.List;
+
+import com.ikth.apps.reserve.product.vo.ProductVO;
 
 public interface ProductDao 
 {
-	AccMstVO selectAll();
+	List<ProductVO> selectAllProduct();
+	int insertProduct(ProductVO product);
 }
