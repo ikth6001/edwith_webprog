@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ikth.apps.reserve.product.dao.ProductDao">
+
+	<select id="selectAll"
+		resultType="com.ikth.apps.reserve.product.vo.AccMstVO">
+		SELECT OP_BRCH as opBrch, AMT as amt FROM ACC_MST
+	</select>
+	
+</mapper>
