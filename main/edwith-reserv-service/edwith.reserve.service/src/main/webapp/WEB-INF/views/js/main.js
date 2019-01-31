@@ -14,20 +14,20 @@ function addPromotions() {
 	var element= document.getElementById('areaPromotion');
 	var template= document.querySelector('#promotionTemplate').innerHTML;
 	
-	sendGetAjaxRequest(function() {
+	sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/promotioned', function() {
 		if (this.status == 200) {
 			var txt = this.responseText;
-			var mock_data= JSON.parse(txt);
+			var promotioned= JSON.parse(txt);
 			
 			var children= [];
-			var leng= mock_data.length;
+			var leng= promotioned.length;
 			for(var i=0; i<leng; i++) {
 				var tmp= document.createElement('div');
-				tmp.innerHTML= template.replace("${path}", 'data:image/PNG;base64,' + mock_data[i].imgBase64);
+				tmp.innerHTML= template.replace("${path}", 'data:image/PNG;base64,' + promotioned[i].imgBase64);
 				children[i]= tmp.firstElementChild;
 			}
 			
-			animate(element, children, template, mock_data, 0, 1, 0);
+			animate(element, children, template, promotioned, 0, 1, 0);
 		}
 	});
 }
@@ -59,8 +59,7 @@ function animate(element, children, template, items, firstIdx, secondIdx, cnt) {
 	});
 }
 
-var products;
-var initialSize= 4;
+var size= 4;
 
 function addCategoryClickEventListener() {
 	var elements = document.getElementsByClassName("categoryBtn");
@@ -73,29 +72,30 @@ function addCategoryClickEventListener() {
 			}
 			this.style.color = "green";
 			this.style.textDecoration = "underline";
-			
 			code= this.getAttribute('code');
-			console.log('code [' + code + ']');
 			
-			sendGetAjaxRequest(function() {
+			sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/products/' + code + '/' + size, function() {
 				if(this.status == 200) {
 					var response= this.responseText;
-					products= JSON.parse(response);
-					setProductCount();
-					displayProduct();
+					var products= JSON.parse(response);
+					setProductCount(code);
+					displayProduct(products);
 				}
 			});
 		}, false);
 	}
 }
 
-function setProductCount() {
-	var innerText= '예약 가능한 공연이 ' + products.length + '개 있습니다.';
-	var element= document.getElementById('areaCount');
-	element.innerText= innerText;
+function setProductCount(code) {
+	sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/count/' + code, function() {
+		var leng= this.responseText;
+		var innerText= '예약 가능한 공연이 ' + leng + '개 있습니다.';
+		var element= document.getElementById('areaCount');
+		element.innerText= innerText;
+	})
 }
 
-function displayProduct() {
+function displayProduct(products) {
 	var html= document.querySelector('#productTemplate').innerHTML;
 	var leng= products.length > 4 ? 4 : products.length;
 	var area= document.getElementsByClassName('areaProduct');
@@ -117,17 +117,20 @@ function displayProduct() {
 	}
 }
 
-function sendGetAjaxRequest(callback) {
+function sendGetAjaxRequest(url, callback) {
 	var req = new XMLHttpRequest();
 	req.addEventListener("load", callback);
-	req.open("GET", 'http://localhost:8080/edwith.reserve.service/api/products', true);
+	req.open("GET", url, true);
 	req.send();
 }
 
 function addMoreBtnEvent() {
 	var ele= document.getElementById('areaBtnMore');
 	ele.addEventListener("click", function() {
-		var displayedProducts= document.getElementsByClassName('product');
+		
+		/*고민좀 해보자...*/
+		
+		/*var displayedProducts= document.getElementsByClassName('product');
 		var productLeng= displayedProducts.length;
 		var toAdd= productLeng < products.length ? products.length - productLeng : -1;
 		toAdd= toAdd > 4 ? 4 : toAdd;
@@ -136,7 +139,7 @@ function addMoreBtnEvent() {
 			this.style.display= 'none';
 			return;
 		}
-		
+		 현재 전역 변수에 저장된 데이터를 가져오는데.. 페이징 조회로 변경하자 
 		var area= document.getElementsByClassName('areaProduct');
 		var html= document.querySelector('#productTemplate').innerHTML;
 		for(var i=productLeng; i<productLeng + toAdd; i++) {
@@ -154,7 +157,7 @@ function addMoreBtnEvent() {
 		
 		if( (productLeng + toAdd) === products.length ) {
 			this.style.display= 'none';
-		}
+		}*/
 	});
 }
 

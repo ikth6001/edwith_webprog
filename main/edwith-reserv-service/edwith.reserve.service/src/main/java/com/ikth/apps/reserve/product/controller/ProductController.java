@@ -1,44 +1,43 @@
 package com.ikth.apps.reserve.product.controller;
 
-import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ikth.apps.reserve.product.dao.ProductDao;
+import com.ikth.apps.reserve.product.service.IProductSc;
 import com.ikth.apps.reserve.product.vo.ProductVO;
 
 @RestController
-@RequestMapping(path="/api/products")
 public class ProductController 
 {
 	@Autowired
-	private ProductDao productDao;
+	private IProductSc productSc; 
 	
-	@GetMapping(
-//			value="/get-image-with-media-type",
-			produces=MediaType.IMAGE_PNG_VALUE)
-	public @ResponseBody byte[] getImage() {
-		List<ProductVO> products= productDao.selectAllProduct();
-		return Base64.getDecoder().decode(products.get(0).getImgBase64());
+	@RequestMapping(method= RequestMethod.GET, value= "/api/promotioned")
+	public List<ProductVO> getPromotionedProducts()
+	{
+		return productSc.getPromotionedProducts();
 	}
 	
+	@RequestMapping(method= RequestMethod.GET, value= "/api/products/{code}/{cnt}")
+	public List<ProductVO> getProducts(@PathVariable String code, @PathVariable int cnt)
+	{
+		return productSc.getProducts(code, cnt);
+	}
 	
-//	@GetMapping
-//	public List<ProductVO> getAllProduct()
-//	{
-//		return productDao.selectAllProduct();
-//	}
+	@RequestMapping(method= RequestMethod.GET, value= "/api/count/{code}")
+	public int getProductsCnt(@PathVariable String code)
+	{
+		return productSc.getProductCnt(code);
+	}
 	
-	
-	/**
-	 * 잠시 테스트 데이터좀 만드느라 사용 함..
-	 */
+//	/**
+//	 * 잠시 테스트 데이터좀 만드느라 사용 함..
+//	 */
 //	@GetMapping
 //	public String createProducts()
 //	{
@@ -66,36 +65,4 @@ public class ProductController
 //		
 //		return "finish";
 //	}
-//	
-//	private String encodingBase64(byte[] binary) {
-//		return Base64.getEncoder().encodeToString(binary);
-//	}
-//	
-//	private String getImgBase64(String path) {
-//		InputStream inStrm= null;
-//		ByteArrayOutputStream baos= null;
-//		
-//		try {
-//			inStrm= new FileInputStream(path);
-//			baos= new ByteArrayOutputStream();
-//			
-//			byte[] bf= new byte[1024];
-//			int rLen= inStrm.read(bf);
-//			
-//			while(rLen != -1) {
-//				baos.write(bf, 0, rLen);
-//				rLen= inStrm.read(bf);
-//			}
-//			
-//			return encodingBase64(baos.toByteArray());
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return "";
-//		} finally {
-//			if(baos != null) try { baos.close(); } catch(Exception e) { }
-//			if(baos != null) try { inStrm.close(); } catch(Exception e) { }
-//		}
-//	}
-	
 }
