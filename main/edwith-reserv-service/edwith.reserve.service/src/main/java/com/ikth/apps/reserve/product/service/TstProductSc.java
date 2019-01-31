@@ -11,7 +11,7 @@ import com.ikth.apps.reserve.product.vo.ProductVO;
 
 @Service("productSc")
 @Profile("BwG")
-public class BwgProductSc implements IProductSc
+public class TstProductSc implements IProductSc
 {
 	@Autowired
 	private ProductDao tstProductDao;
@@ -35,6 +35,6 @@ public class BwgProductSc implements IProductSc
 	@Override
 	public int getProductCnt(String code) 
 	{
-		return tstProductDao.selectCountProduct(code);
+		return tstProductDao.selectCountProducts(code);
 	}
 }

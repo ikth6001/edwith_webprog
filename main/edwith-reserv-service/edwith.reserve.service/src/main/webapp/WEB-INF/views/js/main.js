@@ -60,6 +60,7 @@ function animate(element, children, template, items, firstIdx, secondIdx, cnt) {
 }
 
 var size= 4;
+var selectedCd;
 
 function addCategoryClickEventListener() {
 	var elements = document.getElementsByClassName("categoryBtn");
@@ -73,7 +74,9 @@ function addCategoryClickEventListener() {
 			this.style.color = "green";
 			this.style.textDecoration = "underline";
 			code= this.getAttribute('code');
+			selectedCd= code;
 			
+			size= 4;
 			sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/products/' + code + '/' + size, function() {
 				if(this.status == 200) {
 					var response= this.responseText;
@@ -112,9 +115,11 @@ function displayProduct(products) {
 							 .replace('${place}', product.place)
 							 .replace('${description}', product.description);
 		
-		console.log('idx ' + (i%2) );
 		area[i%2].appendChild(child);
 	}
+	
+	var ele= document.getElementById('areaBtnMore');
+	ele.style.display= '';
 }
 
 function sendGetAjaxRequest(url, callback) {
@@ -127,37 +132,37 @@ function sendGetAjaxRequest(url, callback) {
 function addMoreBtnEvent() {
 	var ele= document.getElementById('areaBtnMore');
 	ele.addEventListener("click", function() {
+		var displayedProducts= document.getElementsByClassName('product');
+		size= size + 4;
 		
-		/*고민좀 해보자...*/
-		
-		/*var displayedProducts= document.getElementsByClassName('product');
-		var productLeng= displayedProducts.length;
-		var toAdd= productLeng < products.length ? products.length - productLeng : -1;
-		toAdd= toAdd > 4 ? 4 : toAdd;
-		
-		if(toAdd <= 0) {
-			this.style.display= 'none';
-			return;
-		}
-		 현재 전역 변수에 저장된 데이터를 가져오는데.. 페이징 조회로 변경하자 
-		var area= document.getElementsByClassName('areaProduct');
-		var html= document.querySelector('#productTemplate').innerHTML;
-		for(var i=productLeng; i<productLeng + toAdd; i++) {
-			var child= document.createElement('div');
-			child.setAttribute('style', 'margin-bottom: 15px;')
-			child.setAttribute('class', 'product');
-			var product= products[i];
-			child.innerHTML= html.replace('${path}', 'data:image/PNG;base64,' + product.imgBase64)
-								 .replace('${name}', product.name)
-								 .replace('${place}', product.place)
-								 .replace('${description}', product.description);
+		/* 다음 건이 있는지 확인하기 위해 1건 더 조회한다 */
+		sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/products/' + selectedCd + '/' + (size + 1), function() {
+			var response= this.responseText;
+			var products= JSON.parse(response);
 			
-			area[i%2].appendChild(child);
-		}
-		
-		if( (productLeng + toAdd) === products.length ) {
-			this.style.display= 'none';
-		}*/
+			if(products.length <= size) {
+				ele.style.display= 'none';
+			}
+			
+			var productLeng= products.length == (size + 1) ? productLeng= products.length - 1 : products.length;
+			
+			var area= document.getElementsByClassName('areaProduct');
+			area[0].innerHTML= '';
+			area[1].innerHTML= '';
+			var html= document.querySelector('#productTemplate').innerHTML;
+			for(var i=0; i<productLeng; i++) {
+				var child= document.createElement('div');
+				child.setAttribute('style', 'margin-bottom: 15px;')
+				child.setAttribute('class', 'product');
+				var product= products[i];
+				child.innerHTML= html.replace('${path}', 'data:image/PNG;base64,' + product.imgBase64)
+									 .replace('${name}', product.name)
+									 .replace('${place}', product.place)
+									 .replace('${description}', product.description);
+				
+				area[i%2].appendChild(child);
+			}
+		});
 	});
 }
 

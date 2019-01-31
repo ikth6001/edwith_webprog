@@ -62,7 +62,7 @@ public class TstProductDao implements ProductDao
 	}
 	
 	@Override
-	public int selectCountProduct(String code) 
+	public int selectCountProducts(String code) 
 	{
 		int cnt= 0;
 		for(int i=0; i<tstDataAll.size(); i++) {
@@ -93,12 +93,6 @@ public class TstProductDao implements ProductDao
 		}
 		
 		return res;
-	}
-	
-	@Override
-	public int insertProduct(ProductVO product) 
-	{
-		return 0;
 	}
 
 	private String encodingBase64(byte[] binary) {
