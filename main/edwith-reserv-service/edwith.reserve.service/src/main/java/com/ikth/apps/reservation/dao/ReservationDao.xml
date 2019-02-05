@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ikth.apps.reservation.dao.ReservationDao">
+
+	<select id="getAllCategories"
+		resultType="com.ikth.apps.reservation.dto.Category">
+		SELECT 
+			ID as id
+			, NAME as name
+		FROM 
+			category
+	</select>
+	
+	<select id="getPromotionedProducts"
+		resultType="com.ikth.apps.reservation.dto.Product">
+		SELECT 
+			DI.id as displayInfoId
+		    , DI.place_name as placeName
+		    , PD.content as productContent
+		    , PD.description as productDescription
+		    , PD.id as productId
+		    , concat('img/', FI.file_name) as productImageUrl
+		FROM
+			product as PD
+			, display_info as DI
+			, product_image as PI
+			, promotion as PM
+			, file_info as FI
+		WHERE
+			PD.id= DI.product_id
+			and PD.id= PI.product_id
+			and PD.id= PM.product_id
+			and PI.file_id= FI.id
+		GROUP BY 
+			productId	
+	</select>
+	
+	<select id="getProducts"
+		resultType="com.ikth.apps.reservation.dto.Product">
+		select 
+			DI.id as displayInfoId
+		    , DI.place_name as placeName
+		    , PD.content as productContent
+		    , PD.description as productDescription
+		    , PD.id as productId
+		    , concat('img/', FI.file_name) as productImageUrl
+		from
+			product as PD
+			, display_info as DI
+			, product_image as PI
+			, file_info as FI
+		where
+			PD.id= DI.product_id
+			and PD.id= PI.product_id
+			and PI.file_id= FI.id
+			<if test="categoryId > 0">
+			and PD.category_id= #{categoryId}
+			</if>
+		group by 
+			productId
+		limit #{start}, 4;	
+	</select>
+	
+	<select id="getProductCount"
+		resultType="int">
+		select 
+			count(*)
+		from product
+		<if test="categoryId > 0">
+		where
+			category_id= #{categoryId}
+		</if>
+			
+	</select>
+	
+</mapper>

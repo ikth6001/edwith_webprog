@@ -5,8 +5,7 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 function initInternal() {
-	addCategoryClickEventListener();
-	document.getElementsByClassName("categoryBtn")[0].click();
+	configureCategory();
 	addPromotions();
 }
 
@@ -14,16 +13,16 @@ function addPromotions() {
 	var element= document.getElementById('areaPromotion');
 	var template= document.querySelector('#promotionTemplate').innerHTML;
 	
-	sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/promotioned', function() {
+	sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/promotions', function() {
 		if (this.status == 200) {
 			var txt = this.responseText;
-			var promotioned= JSON.parse(txt);
+			var promotioned= JSON.parse(txt).items;
 			
 			var children= [];
 			var leng= promotioned.length;
 			for(var i=0; i<leng; i++) {
 				var tmp= document.createElement('div');
-				tmp.innerHTML= template.replace("${path}", 'data:image/PNG;base64,' + promotioned[i].imgBase64);
+				tmp.innerHTML= template.replace("${path}", promotioned[i].productImageUrl);
 				children[i]= tmp.firstElementChild;
 			}
 			
@@ -62,7 +61,32 @@ function animate(element, children, template, items, firstIdx, secondIdx, cnt) {
 var size= 4;
 var selectedCd;
 
-function addCategoryClickEventListener() {
+function configureCategory() {
+	sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/categories', function() {
+		if(this.status == 200) {
+			var response= this.responseText;
+			var categories= JSON.parse(response).items;
+			var ele= document.getElementById('areaCategory');
+			
+			var htmlTemplate= document.getElementById("categoryTemplate").innerText;
+			categories.forEach(function(item, index, array) {
+				var name= item.name;
+				var categoryId= item.id;
+				
+				var child= document.createElement('template');
+				var innerHTML= htmlTemplate.replace("${categoryId}", categoryId)
+										   .replace("${name}", name);
+				child.innerHTML= innerHTML.trim();
+				ele.appendChild(child.content.firstChild);
+			});
+			
+			addCategoryEvent();
+			document.getElementsByClassName("categoryBtn")[0].click();
+		}
+	});
+}
+
+function addCategoryEvent() {
 	var elements = document.getElementsByClassName("categoryBtn");
 	for (var i=0; i<elements.length; i++) {
 		var ele = elements[i];
@@ -73,15 +97,15 @@ function addCategoryClickEventListener() {
 			}
 			this.style.color = "green";
 			this.style.textDecoration = "underline";
-			code= this.getAttribute('code');
+			code= this.getAttribute('categoryId');
 			selectedCd= code;
 			
-			size= 4;
-			sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/products/' + code + '/' + size, function() {
+			var qs= 'categoryId=' + code +'&start=0';
+			sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/products?' + qs, function() {
 				if(this.status == 200) {
 					var response= this.responseText;
 					var products= JSON.parse(response);
-					setProductCount(code);
+					setProductCount(products);
 					displayProduct(products);
 				}
 			});
@@ -89,31 +113,31 @@ function addCategoryClickEventListener() {
 	}
 }
 
-function setProductCount(code) {
-	sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/count/' + code, function() {
-		var leng= this.responseText;
-		var innerText= '예약 가능한 공연이 ' + leng + '개 있습니다.';
-		var element= document.getElementById('areaCount');
-		element.innerText= innerText;
-	})
+function setProductCount(products) {
+	var innerText= '예약 가능한 공연이 ' + products.totalCount + '개 있습니다.';
+	var element= document.getElementById('areaCount');
+	element.innerText= innerText;
 }
 
 function displayProduct(products) {
 	var html= document.querySelector('#productTemplate').innerHTML;
-	var leng= products.length > 4 ? 4 : products.length;
+	var items= products.items;
 	var area= document.getElementsByClassName('areaProduct');
 	area[0].innerHTML= '';
 	area[1].innerHTML= '';
 	
-	for(var i=0; i<leng; i++) {
+	for(var i=0; i<4; i++) {
 		var child= document.createElement('div');
 		child.setAttribute('style', 'margin-bottom: 15px;')
 		child.setAttribute('class', 'product');
-		var product= products[i];
-		child.innerHTML= html.replace('${path}', 'data:image/PNG;base64,' + product.imgBase64)
-							 .replace('${name}', product.name)
-							 .replace('${place}', product.place)
-							 .replace('${description}', product.description);
+		child.setAttribute('productId', items[i].productId)
+		
+		var description= items[i].productContent;
+		description= description.length > 50 ? description.substring(0, 50) + '...' : description
+		child.innerHTML= html.replace('${path}', items[i].productImageUrl)
+							 .replace('${name}', items[i].productDescription)
+							 .replace('${place}', items[i].placeName)
+							 .replace('${description}', description);
 		
 		area[i%2].appendChild(child);
 	}
@@ -133,32 +157,32 @@ function addMoreBtnEvent() {
 	var ele= document.getElementById('areaBtnMore');
 	ele.addEventListener("click", function() {
 		var displayedProducts= document.getElementsByClassName('product');
-		size= size + 4;
+		size= displayedProducts.length;
+		
+		var qs= 'categoryId=' + selectedCd + "&start=" + size;
 		
 		/* 다음 건이 있는지 확인하기 위해 1건 더 조회한다 */
-		sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/products/' + selectedCd + '/' + (size + 1), function() {
+		sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/products?' + qs, function() {
 			var response= this.responseText;
 			var products= JSON.parse(response);
+			var items= products.items;
 			
-			if(products.length <= size) {
+			if(products.totalCount <= (size + 4)) {
 				ele.style.display= 'none';
 			}
 			
-			var productLeng= products.length == (size + 1) ? productLeng= products.length - 1 : products.length;
-			
 			var area= document.getElementsByClassName('areaProduct');
-			area[0].innerHTML= '';
-			area[1].innerHTML= '';
 			var html= document.querySelector('#productTemplate').innerHTML;
-			for(var i=0; i<productLeng; i++) {
+			for(var i=0; i<items.length; i++) {
 				var child= document.createElement('div');
 				child.setAttribute('style', 'margin-bottom: 15px;')
 				child.setAttribute('class', 'product');
-				var product= products[i];
-				child.innerHTML= html.replace('${path}', 'data:image/PNG;base64,' + product.imgBase64)
-									 .replace('${name}', product.name)
-									 .replace('${place}', product.place)
-									 .replace('${description}', product.description);
+				var description= items[i].productContent;
+				description= description.length > 50 ? description.substring(0, 50) + '...' : description
+				child.innerHTML= html.replace('${path}', items[i].productImageUrl)
+									 .replace('${name}', items[i].productDescription)
+									 .replace('${place}', items[i].placeName)
+									 .replace('${description}', description);
 				
 				area[i%2].appendChild(child);
 			}

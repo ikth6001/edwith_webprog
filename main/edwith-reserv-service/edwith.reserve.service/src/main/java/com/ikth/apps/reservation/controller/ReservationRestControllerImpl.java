@@ -1,10 +1,13 @@
 package com.ikth.apps.reservation.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ikth.apps.reservation.dto.Category;
 import com.ikth.apps.reservation.dto.CategoryResponse;
 import com.ikth.apps.reservation.dto.CommentResponse;
 import com.ikth.apps.reservation.dto.DisplayInfoResponse;
@@ -21,14 +25,18 @@ import com.ikth.apps.reservation.dto.ProductResponse;
 import com.ikth.apps.reservation.dto.ReservationInfoResponse;
 import com.ikth.apps.reservation.dto.ReservationParam;
 import com.ikth.apps.reservation.dto.ReservationResponse;
+import com.ikth.apps.reservation.service.ReservationSc;
 
 import io.swagger.annotations.ApiParam;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-05T12:37:37.915+09:00")
 
 @RestController
-public class ProductRestControllerImpl implements ProductRestController {
+public class ReservationRestControllerImpl implements ReservationRestController {
 
-    private static final Logger log = LoggerFactory.getLogger(ProductRestControllerImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReservationRestControllerImpl.class);
+    
+    @Autowired
+    private ReservationSc reservationSc;
 
 //    private final ObjectMapper objectMapper;
 //    private final HttpServletRequest request;
@@ -68,17 +76,12 @@ public class ProductRestControllerImpl implements ProductRestController {
     }
 
     public ResponseEntity<CategoryResponse> getCategoriesUsingGET() {
-//        String accept = request.getHeader("Accept");
-//        if (accept != null && accept.contains("")) {
-//            try {
-//                return new ResponseEntity<CategoryResponse>(objectMapper.readValue("", CategoryResponse.class), HttpStatus.NOT_IMPLEMENTED);
-//            } catch (IOException e) {
-//                log.error("Couldn't serialize response for content type ", e);
-//                return new ResponseEntity<CategoryResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//        }
-
-        return new ResponseEntity<CategoryResponse>(HttpStatus.NOT_IMPLEMENTED);
+    	List<Category> categories= reservationSc.getAllCategories();
+    	logger.debug("{} EA categories is detected.", categories.size());
+    	
+    	CategoryResponse responseBody= new CategoryResponse();
+    	responseBody.setItems(categories);
+    	return new ResponseEntity<CategoryResponse>(responseBody, HttpStatus.OK);
     }
 
     public ResponseEntity<DisplayInfoResponse> getProductDisplayInfoUsingGET(@ApiParam(value = "displayInfoId",required=true) @PathVariable("displayInfoId") Integer displayInfoId) {
@@ -96,31 +99,15 @@ public class ProductRestControllerImpl implements ProductRestController {
     }
 
     public ResponseEntity<ProductResponse> getProductsUsingGET(@ApiParam(value = "카테고리 아이디") @Valid @RequestParam(value = "categoryId", required = false) Integer categoryId,@ApiParam(value = "시작 위치", defaultValue = "0") @Valid @RequestParam(value = "start", required = false, defaultValue="0") Integer start) {
-//        String accept = request.getHeader("Accept");
-//        if (accept != null && accept.contains("")) {
-//            try {
-//                return new ResponseEntity<ProductResponse>(objectMapper.readValue("", ProductResponse.class), HttpStatus.NOT_IMPLEMENTED);
-//            } catch (IOException e) {
-//                log.error("Couldn't serialize response for content type ", e);
-//                return new ResponseEntity<ProductResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//        }
+    	logger.debug("requested parameter category id [{}], start [{}]", categoryId, start);
 
-        return new ResponseEntity<ProductResponse>(HttpStatus.NOT_IMPLEMENTED);
+    	ProductResponse responseBody= reservationSc.getProducts(categoryId, start);
+    	return new ResponseEntity<ProductResponse>(responseBody, HttpStatus.OK);
     }
 
     public ResponseEntity<ProductResponse> getPromotionsUsingGET() {
-//        String accept = request.getHeader("Accept");
-//        if (accept != null && accept.contains("")) {
-//            try {
-//                return new ResponseEntity<ProductResponse>(objectMapper.readValue("", ProductResponse.class), HttpStatus.NOT_IMPLEMENTED);
-//            } catch (IOException e) {
-//                log.error("Couldn't serialize response for content type ", e);
-//                return new ResponseEntity<ProductResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//        }
-
-        return new ResponseEntity<ProductResponse>(HttpStatus.NOT_IMPLEMENTED);
+    	ProductResponse responseBody= reservationSc.getPromotionedProducts();
+    	return new ResponseEntity<ProductResponse>(responseBody, HttpStatus.OK);
     }
 
     public ResponseEntity<ReservationInfoResponse> getReservationsUsingGET(@NotNull @ApiParam(value = "reservationEmail", required = true) @Valid @RequestParam(value = "reservationEmail", required = true) String reservationEmail) {

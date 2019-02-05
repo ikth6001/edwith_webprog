@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@MapperScan("com.ikth.apps.reservation.configuration")
+@MapperScan("com.ikth.apps.reservation")
 @PropertySource({"classpath:application.properties", "classpath:datasource.properties"})
 public class DataAccessObjectConfiguration 
 {
@@ -55,6 +56,11 @@ public class DataAccessObjectConfiguration
 	
 	@Value("${jdbc.pass}")
 	private String password;
+	
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer getPropertyConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
 	
 	@Bean
 	public DataSource getDataSource()

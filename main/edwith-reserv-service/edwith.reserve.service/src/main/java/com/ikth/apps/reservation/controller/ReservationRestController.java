@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiResponses;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-05T12:37:37.915+09:00")
 @Api(value = "api", description = "the api API")
-public interface ProductRestController {
+public interface ReservationRestController {
 
     @ApiOperation(value = "예약취소하기", nickname = "cancelReservationUsingPUT", notes = "[PJT-5] 예약취소하기는 실제 DB 에 적용된 값이 아닌, Random 으로 생성된 예약 객체를 반환한다.", response = ReservationResponse.class, tags={ "예약 API", })
     @ApiResponses(value = { 
@@ -70,7 +70,7 @@ public interface ProductRestController {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/categories",
-        produces = { "*/*" }, 
+        produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<CategoryResponse> getCategoriesUsingGET();
 
@@ -94,7 +94,7 @@ public interface ProductRestController {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/products",
-        produces = { "*/*" }, 
+        produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<ProductResponse> getProductsUsingGET(@ApiParam(value = "카테고리 아이디") @Valid @RequestParam(value = "categoryId", required = false) Integer categoryId,@ApiParam(value = "시작 위치", defaultValue = "0") @Valid @RequestParam(value = "start", required = false, defaultValue="0") Integer start);
 
@@ -106,7 +106,7 @@ public interface ProductRestController {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/promotions",
-        produces = { "*/*" }, 
+        produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<ProductResponse> getPromotionsUsingGET();
 

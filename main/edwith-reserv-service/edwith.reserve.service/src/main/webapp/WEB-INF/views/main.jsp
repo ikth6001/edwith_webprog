@@ -39,13 +39,13 @@
 			cursor: pointer;
 		}
 		
-		.categoryBtn {
+		/* .categoryBtn {
 			display: inline-block;
 			margin-left: 20px;
 			margin-right: 20px;
 			font-weight: bold;
 			cursor: pointer;
-		}
+		} */
 		
 		.areaProduct {
 			display: inline-block;
@@ -71,12 +71,15 @@
 		</div>
 		<div id="areaPromotion" style="vertical-align: top; height: 200px; width: 600px; overflow: hidden;"></div>
 		<div id="areaCategory">
-			<div class="categoryBtn" code="ALL">전체 리스트</div>
+			<div class="categoryBtn" categoryId="0" style="display: inline-block; margin-left: 20px; margin-right: 20px; font-weight: bold; cursor: pointer;">
+				전체 리스트
+			</div>
+			<!-- <div class="categoryBtn" code="ALL">전체 리스트</div>
 			<div class="categoryBtn" code="DPL">전시</div>
 			<div class="categoryBtn" code="MSC">뮤지컬</div>
 			<div class="categoryBtn" code="CRT">콘서트</div>
 			<div class="categoryBtn" code="CLS">클래식</div>
-			<div class="categoryBtn" code="THT">연극</div>
+			<div class="categoryBtn" code="THT">연극</div> -->
 		</div>
 		<div id="areaCount" style="text-align: center; margin-bottom: 15px;">
 			예약 가능한 공연이 ${count}개 있습니다.
@@ -97,6 +100,12 @@
 	<script id="promotionTemplate" type="text/template">
 		<div class="promotionItem" style="position: relative; display: inline;">
 			<img src="${path}" width="600" height="200">
+		</div>
+	</script>
+	
+	<script id="categoryTemplate" type="text/template">
+		<div class="categoryBtn" categoryId="${categoryId}" style="display: inline-block; margin-left: 20px; margin-right: 20px; font-weight: bold; cursor: pointer;">
+			${name}
 		</div>
 	</script>
 	

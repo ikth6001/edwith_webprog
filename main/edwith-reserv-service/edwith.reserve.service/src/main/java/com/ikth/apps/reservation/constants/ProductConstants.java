@@ -1,4 +1,4 @@
-package com.ikth.apps.reservation.product.constants;
+package com.ikth.apps.reservation.constants;
 
 public interface ProductConstants 
 {
