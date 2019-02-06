@@ -75,6 +75,7 @@ public class ReservationRestControllerImpl implements ReservationRestController 
         return new ResponseEntity<CommentResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
+    @Override
     public ResponseEntity<CategoryResponse> getCategoriesUsingGET() {
     	List<Category> categories= reservationSc.getAllCategories();
     	logger.debug("{} EA categories is detected.", categories.size());
