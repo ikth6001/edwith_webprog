@@ -3,6 +3,7 @@ package com.ikth.apps.reservation.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
@@ -29,7 +30,6 @@ import com.ikth.apps.reservation.service.ReservationSc;
 
 import io.swagger.annotations.ApiParam;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-05T12:37:37.915+09:00")
-
 @RestController
 public class ReservationRestControllerImpl implements ReservationRestController {
 
@@ -99,7 +99,7 @@ public class ReservationRestControllerImpl implements ReservationRestController 
         return new ResponseEntity<DisplayInfoResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<ProductResponse> getProductsUsingGET(@ApiParam(value = "카테고리 아이디") @Valid @RequestParam(value = "categoryId", required = false) Integer categoryId,@ApiParam(value = "시작 위치", defaultValue = "0") @Valid @RequestParam(value = "start", required = false, defaultValue="0") Integer start) {
+    public ResponseEntity<ProductResponse> getProductsUsingGET(@ApiParam(value = "카테고리 아이디") @Valid @RequestParam(value = "categoryId", required = false) Integer categoryId, @ApiParam(value = "시작 위치", defaultValue = "0") @Min(0L) @RequestParam(value = "start", required = false, defaultValue="0") Integer start) {
     	logger.debug("requested parameter category id [{}], start [{}]", categoryId, start);
 
     	ProductResponse responseBody= reservationSc.getProducts(categoryId, start);

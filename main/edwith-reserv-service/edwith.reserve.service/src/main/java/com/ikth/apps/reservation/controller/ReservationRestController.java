@@ -6,6 +6,7 @@
 package com.ikth.apps.reservation.controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.http.ResponseEntity;
@@ -96,7 +97,7 @@ public interface ReservationRestController {
     @RequestMapping(value = "/api/products",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<ProductResponse> getProductsUsingGET(@ApiParam(value = "카테고리 아이디") @Valid @RequestParam(value = "categoryId", required = false) Integer categoryId,@ApiParam(value = "시작 위치", defaultValue = "0") @Valid @RequestParam(value = "start", required = false, defaultValue="0") Integer start);
+    ResponseEntity<ProductResponse> getProductsUsingGET(@ApiParam(value = "카테고리 아이디") @Valid @RequestParam(value = "categoryId", required = false) Integer categoryId, @ApiParam(value = "시작 위치", defaultValue = "0") @Min(value=0) @RequestParam(value = "start", required = false, defaultValue="0") Integer start);
 
 
     @ApiOperation(value = "프로모션 목록 구하기", nickname = "getPromotionsUsingGET", notes = "[PJT-3]", response = ProductResponse.class, tags={ "프로모션 API", })
