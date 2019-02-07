@@ -1,9 +1,11 @@
 package com.ikth.apps.reservation.controller.advice;
 
 import java.net.URI;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.slf4j.Logger;
@@ -23,7 +25,9 @@ public class ControllerExceptionAdvice
 	public ResponseEntity<?> redirectToErrorPage(Exception ex, HttpServletRequest req, HttpServletResponse res) {
 		logger.error("detected application exception", ex);
 		HttpHeaders header= new HttpHeaders();
-		URI redirectUri= URI.create("error?cause=" + ex.getMessage().replaceAll("\\s", "%20"));
+		Throwable cause= ex.getCause();
+		String causeMsg= (cause == null) ? "" : cause.getMessage();
+		URI redirectUri= URI.create("error?cause=" + causeMsg.replaceAll("\\s", "%20"));
 		logger.debug("redirect response uri [{}]", redirectUri.toString());
 		
 		header.setLocation(redirectUri);
@@ -31,11 +35,19 @@ public class ControllerExceptionAdvice
 	}
 	
 	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<?> noticeInvalidParameterRequest(Exception ex) {
-		logger.debug("####################################################################");
-		logger.debug("####################################################################");
-		logger.debug("####################################################################");
+	public ResponseEntity<?> noticeInvalidParameterRequest(ConstraintViolationException ex) {
+		Iterator<ConstraintViolation<?>> iter= ex.getConstraintViolations().iterator();
 		
-		return null;
+		StringBuilder causeMsg= new StringBuilder();
+		
+		HttpHeaders responseHeader = new HttpHeaders();
+	    responseHeader.add("Content-Type", "application/json;charset=UTF-8");
+		
+		while(iter.hasNext()) {
+			ConstraintViolation<?> v= iter.next();
+			causeMsg.append(v.getMessage()).append(System.getProperty("line.separator"));
+		}
+		
+		return new ResponseEntity<String>(causeMsg.toString(), responseHeader, HttpStatus.BAD_REQUEST);
 	}
 }
