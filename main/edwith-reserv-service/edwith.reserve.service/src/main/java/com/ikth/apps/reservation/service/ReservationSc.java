@@ -3,6 +3,7 @@ package com.ikth.apps.reservation.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.ikth.apps.reservation.dao.ReservationDao;
@@ -10,8 +11,9 @@ import com.ikth.apps.reservation.dto.Category;
 import com.ikth.apps.reservation.dto.Product;
 import com.ikth.apps.reservation.dto.ProductResponse;
 
+@Profile("!BwG")
 @Service
-public class ReservationSc 
+public class ReservationSc implements IReservationSc
 {
 	@Autowired
 	private ReservationDao reservationDao;

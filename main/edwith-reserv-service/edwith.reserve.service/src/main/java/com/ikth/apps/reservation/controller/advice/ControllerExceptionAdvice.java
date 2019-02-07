@@ -4,6 +4,7 @@ import java.net.URI;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,5 +28,14 @@ public class ControllerExceptionAdvice
 		
 		header.setLocation(redirectUri);
 		return new ResponseEntity<HttpHeaders>(header, HttpStatus.MOVED_PERMANENTLY);
+	}
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<?> noticeInvalidParameterRequest(Exception ex) {
+		logger.debug("####################################################################");
+		logger.debug("####################################################################");
+		logger.debug("####################################################################");
+		
+		return null;
 	}
 }

@@ -14,7 +14,8 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @Import({ ServiceLayerConfiguration.class
-		  , DataAccessObjectConfiguration.class })
+		  , DataAccessObjectConfiguration.class
+		  , SwaggerConfiguration.class })
 @ComponentScan({"com.ikth.apps.reservation.controller"})
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 {

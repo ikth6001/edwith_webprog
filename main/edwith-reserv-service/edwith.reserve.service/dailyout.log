@@ -543,3 +543,4 @@ Caused by: java.lang.IllegalStateException: WebApplicationObjectSupport instance
 	... 54 more
 Thread-0> [2019-02-06 17:20:05] [DisposableBeanAdapter] [374] [WARN] Invocation of destroy method 'close' failed on bean with name 'getSqlSessionTemplate': java.lang.UnsupportedOperationException: Manual close is not allowed over a Spring managed SqlSession 
 Thread-0> [2019-02-06 17:21:01] [DisposableBeanAdapter] [374] [WARN] Invocation of destroy method 'close' failed on bean with name 'getSqlSessionTemplate': java.lang.UnsupportedOperationException: Manual close is not allowed over a Spring managed SqlSession 
+main> [2019-02-07 21:33:09] [PageNotFound] [1147] [WARN] No mapping found for HTTP request with URI [/api/productadsfs] in DispatcherServlet with name '' 

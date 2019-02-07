@@ -14,7 +14,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@MapperScan("com.ikth.apps.reservation")
+@MapperScan("com.ikth.apps.reservation.dao")
 @PropertySource({"classpath:application.properties", "classpath:datasource.properties"})
 public class DataAccessObjectConfiguration 
 {

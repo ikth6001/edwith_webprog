@@ -35,6 +35,11 @@ public class ReservationRestControllerTest {
 	@Test
 	public void doTest() throws Exception
 	{
+		/**
+		 * TODO
+		 * controller에 적용된 Hibernate Validator가 적용 안되고 있음 여기선..
+		 * 추가적으로 controller가 사용하는 SC의 Autowiring도 현재 mock object가 적용되는데 실제 Spring bean이 적용되도록 하고싶음.
+		 */
 		mockMvc.perform(get("/api/products?categoryId=4&start=-1"))
 			   .andExpect(status().isOk());
 	}
