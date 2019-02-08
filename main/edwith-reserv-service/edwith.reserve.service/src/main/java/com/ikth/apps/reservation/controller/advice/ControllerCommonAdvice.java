@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ControllerExceptionAdvice 
+public class ControllerCommonAdvice 
 {
-	private final static Logger logger= LoggerFactory.getLogger(ControllerExceptionAdvice.class);
+	private final static Logger logger= LoggerFactory.getLogger(ControllerCommonAdvice.class);
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> redirectToErrorPage(Exception ex, HttpServletRequest req, HttpServletResponse res) {

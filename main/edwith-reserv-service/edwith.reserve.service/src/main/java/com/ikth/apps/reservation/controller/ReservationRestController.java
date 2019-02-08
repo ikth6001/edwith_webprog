@@ -40,9 +40,9 @@ import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-05T12:37:37.915+09:00")
 @Validated
 @RestController
-public class ReservationRestControllerImpl {
+public class ReservationRestController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ReservationRestControllerImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReservationRestController.class);
     
     @Autowired
     private IReservationSc reservationSc;
@@ -157,8 +157,14 @@ public class ReservationRestControllerImpl {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     public ResponseEntity<ProductResponse> getProductsUsingGET(
-    		@ApiParam(value = "카테고리 아이디") @Min(value=0, message= "알 수 없는 카테고리입니다.") @RequestParam(value = "categoryId", required = false) Integer categoryId
-    		, @ApiParam(value = "시작 위치", defaultValue = "0") @Min(value=0, message= "시작 값은 0보다 커야 합니다.") @RequestParam(value = "start", required = false, defaultValue="0") Integer start) {
+    		@ApiParam(value = "카테고리 아이디") 
+    		@Min(value=0, message= "알 수 없는 카테고리입니다.") 
+    		@RequestParam(value = "categoryId", required = false) 
+    		Integer categoryId
+    		, @ApiParam(value = "시작 위치", defaultValue = "0") 
+    		@Min(value=0, message= "시작 값은 0보다 커야 합니다.") 
+    		@RequestParam(value = "start", required = false, defaultValue="0") 
+    		Integer start) {
     	logger.debug("requested parameter category id [{}], start [{}]", categoryId, start);
     	ProductResponse responseBody= reservationSc.getProducts(categoryId, start);
     	return new ResponseEntity<ProductResponse>(responseBody, HttpStatus.OK);
