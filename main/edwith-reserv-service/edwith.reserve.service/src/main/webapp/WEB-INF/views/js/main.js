@@ -114,9 +114,10 @@ function addCategoryEvent() {
 }
 
 function setProductCount(products) {
-	var innerText= '예약 가능한 공연이 ' + products.totalCount + '개 있습니다.';
+	var cnt= products.totalCount;
+	var messageFormat= document.getElementById('label.product.count').innerText;
 	var element= document.getElementById('areaCount');
-	element.innerText= innerText;
+	element.innerText= messageFormat.replace('{0}', cnt);
 }
 
 function displayProduct(products) {

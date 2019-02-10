@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>예약 서비스</title>
+	<title><spring:message code="title.site"/></title>
 	
 	<style type="text/css">
 		#container {
@@ -66,13 +70,13 @@
 				<img src="img/mainLog.png" align="middle" style="margin: 5px;"> 예약
 			</div>
 			<div id="areaBtnReservInfo" style="display: inline-block; float: right; margin: 5px;">
-				예약 확인
+				<spring:message code="label.nologin"/>
 			</div>
 		</div>
 		<div id="areaPromotion" style="vertical-align: top; height: 200px; width: 600px; overflow: hidden;"></div>
 		<div id="areaCategory">
 			<div class="categoryBtn" categoryId="0" style="display: inline-block; margin-left: 20px; margin-right: 20px; font-weight: bold; cursor: pointer;">
-				전체 리스트
+				<spring:message code="category.all"/>
 			</div>
 			<!-- <div class="categoryBtn" code="ALL">전체 리스트</div>
 			<div class="categoryBtn" code="DPL">전시</div>
@@ -82,14 +86,14 @@
 			<div class="categoryBtn" code="THT">연극</div> -->
 		</div>
 		<div id="areaCount" style="text-align: center; margin-bottom: 15px;">
-			예약 가능한 공연이 ${count}개 있습니다.
+			<c:out value="${productCountMessage}"></c:out>
 		</div>
 		<div id="areaProductList">
 			<div class="areaProduct" id="productLeft"></div>
 			<div class="areaProduct" id="productRight"></div>
 		</div>
 		<div id="areaBtnMore" style="text-align: center;">
-			더 보기
+			<spring:message code="btn.more"/>
 		</div>
 		<div id="areaBtnToTop" style="text-align: center;">
 			^ TOP
@@ -114,6 +118,10 @@
 		<b>${name}</b><br>
 		${place}<br>
 		${description}
+	</script>
+	
+	<script id="label.product.count" type="text/message">
+		<spring:message code="label.product.count"/>
 	</script>
 	
 	<script type="text/javascript" src="js/main.js"></script>

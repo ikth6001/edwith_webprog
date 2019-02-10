@@ -1,5 +1,7 @@
 package com.ikth.apps.reservation.controller;
 
+import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,8 @@ public class MainController
 	private final static Logger logger= LoggerFactory.getLogger(MainController.class);
 	
 	@GetMapping(path="/")
-	public String main() {
+	public String main(Locale locale) {
+		logger.debug("requested locale [{}]", locale);
 		return "main";
 	}
 	
