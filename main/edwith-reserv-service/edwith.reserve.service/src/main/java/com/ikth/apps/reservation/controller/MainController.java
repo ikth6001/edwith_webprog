@@ -1,5 +1,7 @@
 package com.ikth.apps.reservation.controller;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -36,22 +38,19 @@ public class MainController
 		
 		model.addAttribute("title", response.getDisplayInfo().getProductDescription());
 		
-//		final String hiddenImgs= 
-//				"img/1_th_1.png,10_th_27.png";
-//		model.addAttribute("hiddenImgs", hiddenImgs);
-//		
-//		model.addAttribute("productMainImg", "img/1_ma_2.png");
-//		model.addAttribute("imgCount", 2);
 		model.addAttribute("productContents", response.getDisplayInfo().getProductContent());
 		model.addAttribute("eventContents", response.getDisplayInfo().getProductEvent());
+		
+		model.addAttribute("scoreImg", "img/score_sample.png");
 		model.addAttribute("avgScore", response.getAverageScore());
+		
 		model.addAttribute("commentCnt", response.getComments().size());
 		
 		Comment fstComment= response.getComments().get(0);
 		model.addAttribute("commentContents", fstComment.getComment());
 		model.addAttribute("score", fstComment.getScore());
-		model.addAttribute("userId", fstComment.getReservationEmail());
-		model.addAttribute("wDate", "2019-01-01");
+		model.addAttribute("userMail", fstComment.getReservationEmail());
+		model.addAttribute("wDate", fstComment.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")));
 		
 		/**
 		 * TODO

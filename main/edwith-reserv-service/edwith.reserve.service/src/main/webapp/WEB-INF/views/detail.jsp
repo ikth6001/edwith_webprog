@@ -121,6 +121,8 @@
 			font-weight: bold;
 			font-size: large;
 			
+			cursor: pointer;
+			
 			width: 49%;
 		}
 	</style>
@@ -138,13 +140,6 @@
 		</div>
 		<div id="titleArea">
 			<img src="<c:out value="${productMainImg}"></c:out>" width="100%" height="200px">
-			<%-- <div id="topLeft">
-				<img src="img/reserv_icon.png" width="60px" height="30px">
-			</div>
-			
-			<div id="topRight" style="font-weight: bold; color: white;">
-				<spring:message code="label.nologin"/>
-			</div> --%>
 			
 			<div id="imgCount">
 				1 / <c:out value="${imgCount}"></c:out>
@@ -162,7 +157,7 @@
 		</div>
 		<div>
 			<div class="textContentsArea" id="productContents" style="height: 100px; overflow: hidden;">
-				<c:out value="${productContents}"></c:out>
+				<c:out value="${productContents}" escapeXml="false"></c:out>
 			</div>
 			<div id="btnCollapseSpand"><spring:message code="btn.expand"/>▽</div>
 		</div>
@@ -179,7 +174,7 @@
 				<div class="textContentsArea"><b><spring:message code="label.comment"/></b></div>
 				<div>
 					<div class="textContentsArea" style="display: inline-block;">
-						<img src="a"> <b><c:out value="${avgScore}"></c:out></b> / 5.0
+						<img src="<c:out value="${scoreImg}"></c:out>" width="100px" height="30px"> <b><c:out value="${avgScore}"></c:out></b> / 5.0
 					</div>
 					<div class="textContentsArea" style="float: right;">
 						<c:out value="${commentCnt}"></c:out>건 등록
@@ -188,8 +183,8 @@
 				</div>
 			</div>
 			<div>
-				<div class="textContentsArea"><c:out value="${commentContents}"></c:out></div>
-				<div class="textContentsArea"><b><c:out value="${score}"></c:out></b>&nbsp;&nbsp; <c:out value="${userId}"></c:out> &nbsp;&nbsp;<c:out value="${wDate}"></c:out></div>
+				<div class="textContentsArea"><c:out value="${commentContents}" escapeXml="false"></c:out></div>
+				<div class="textContentsArea"><b><c:out value="${score}"></c:out></b>&nbsp;&nbsp; <c:out value="${userMail}"></c:out> &nbsp;&nbsp;<c:out value="${wDate}"></c:out></div>
 			</div>
 		</div>
 		<div id="btnCommentMore">
@@ -200,14 +195,24 @@
 			<div class="tabMenu" id="tabArea"><spring:message code="tab.detial"/></div>
 			<div class="tabMenu" id="mainArea"><spring:message code="tab.map"/></div>
 			<hr width="100%">
-			<div class="textContentsArea">
-				<c:out value="${reserveDetail}"></c:out>
-			</div>
+			<div class="textContentsArea"></div>
 		</div>
 	</div>
 	
-	<script id=hiddenImgs" type="text/hiddenData">
-		<c:out value="${hiddenImgs}"></c:out>
+	<script id="detailMainTemplate" type="text/template">
+		[주의]
+		예약에 주의할 사항 및 공지사항이 있습니다.<br>
+		아래 사항을 꼭 읽어 보시기 바랍니다.
+		<br><br>
+		<img src="img/20_et_52.png">
+	</script>
+	
+	<script id="mapMainTemplate" type="text/template">
+		<img src="img_map/1_map_1.png">
+
+		<H1>${place_name}</H1>
+		${place_address}<br>
+		${phone_number}<br>
 	</script>
 	
 	<script id="label.comment.ctn" type="text/message">
