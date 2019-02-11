@@ -4,15 +4,23 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ikth.apps.reservation.dto.Comment;
+import com.ikth.apps.reservation.dto.DisplayInfoResponse;
+import com.ikth.apps.reservation.service.IReservationSc;
+
 @Controller
 public class MainController 
 {
 	private final static Logger logger= LoggerFactory.getLogger(MainController.class);
+	
+	@Autowired
+	private IReservationSc reservationSc;
 	
 	@GetMapping(path="/")
 	public String main(Locale locale) {
@@ -21,22 +29,34 @@ public class MainController
 	}
 	
 	@GetMapping(path="/detail")
-	public String detail(ModelMap model, @RequestParam("productId") int productId) {
-		logger.debug("requested product id to show detail information is [{}]", productId);
+	public String detail(ModelMap model, @RequestParam("displayInfoId") int displayInfoId) {
+		logger.debug("requested product id to show detail information is [{}]", displayInfoId);
 		
-		model.addAttribute("title", "선택된 상품 제목");
-		model.addAttribute("productContents", "상품 정보");
+		DisplayInfoResponse response= reservationSc.getDisplayInfo(displayInfoId);
 		
-		model.addAttribute("eventContents", "이벤트 정보");
+		model.addAttribute("title", response.getDisplayInfo().getProductDescription());
 		
-		model.addAttribute("avgScore", "3.5");
-		model.addAttribute("commentCnt", "10");
+//		final String hiddenImgs= 
+//				"img/1_th_1.png,10_th_27.png";
+//		model.addAttribute("hiddenImgs", hiddenImgs);
+//		
+//		model.addAttribute("productMainImg", "img/1_ma_2.png");
+//		model.addAttribute("imgCount", 2);
+		model.addAttribute("productContents", response.getDisplayInfo().getProductContent());
+		model.addAttribute("eventContents", response.getDisplayInfo().getProductEvent());
+		model.addAttribute("avgScore", response.getAverageScore());
+		model.addAttribute("commentCnt", response.getComments().size());
 		
-		model.addAttribute("commentContents", "재미있었고 많은 것을 생각할 수 있는 공연이었습니다.");
-		model.addAttribute("score", "4.0");
-		model.addAttribute("userId", "ikth****");
-		model.addAttribute("wDate", "2019.02.09");
+		Comment fstComment= response.getComments().get(0);
+		model.addAttribute("commentContents", fstComment.getComment());
+		model.addAttribute("score", fstComment.getScore());
+		model.addAttribute("userId", fstComment.getReservationEmail());
+		model.addAttribute("wDate", "2019-01-01");
 		
+		/**
+		 * TODO
+		 * 고정 정보로 jsp 변경
+		 */
 		model.addAttribute("reserveDetail", "예약 상세 정보");
 		
 		return "detail";

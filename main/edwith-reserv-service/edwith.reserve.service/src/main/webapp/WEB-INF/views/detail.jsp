@@ -38,11 +38,34 @@
 			right: 16px;
 		}
 		
+		#imgCount {
+			position: absolute;
+			top: 25%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-weight: bold;;
+			color: white;
+		}
+		
 		#center {
 			position: absolute;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
+		}
+		
+		#btnPrev {
+			position: absolute;
+			top: 50%;
+			left: 16px;
+			transform: translate(0%, -50%);
+		}
+		
+		#btnNext {
+			position: absolute;
+			top: 50%;
+			right: 16px;
+			transform: translate(0%, -50%);
 		}
 		
 		#btnCollapseSpand {
@@ -105,15 +128,32 @@
 </head>
 <body>
 	<div id="container">
+		<div id="areaGnb">
+			<div id="areaBtnToMain" style="display: inline-block;">
+				<img src="img/mainLog.png" align="middle" style="margin: 5px;"> 예약
+			</div>
+			<div id="areaBtnReservInfo" style="display: inline-block; float: right; margin: 5px;">
+				<spring:message code="label.nologin"/>
+			</div>
+		</div>
 		<div id="titleArea">
-			<img src="img/1_ma_2.png" width="100%" height="300px">
-			
-			<div id="topLeft">
+			<img src="<c:out value="${productMainImg}"></c:out>" width="100%" height="200px">
+			<%-- <div id="topLeft">
 				<img src="img/reserv_icon.png" width="60px" height="30px">
 			</div>
 			
 			<div id="topRight" style="font-weight: bold; color: white;">
 				<spring:message code="label.nologin"/>
+			</div> --%>
+			
+			<div id="imgCount">
+				1 / <c:out value="${imgCount}"></c:out>
+			</div>
+			<div id="btnPrev">
+				<img src="img/btn_prev.png">
+			</div>
+			<div id="btnNext">
+				<img src="img/btn_next.png">
 			</div>
 			
 			<div id="center" style="font-weight: bold; color: white; font-size: xx-large;">
@@ -165,6 +205,10 @@
 			</div>
 		</div>
 	</div>
+	
+	<script id=hiddenImgs" type="text/hiddenData">
+		<c:out value="${hiddenImgs}"></c:out>
+	</script>
 	
 	<script id="label.comment.ctn" type="text/message">
 		<spring:message code="label.comment.ctn"/>

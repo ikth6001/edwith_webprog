@@ -144,7 +144,7 @@ public class ReservationRestController {
 //            }
 //        }
 
-        return new ResponseEntity<DisplayInfoResponse>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<DisplayInfoResponse>(reservationSc.getDisplayInfo(displayInfoId), HttpStatus.OK);
     }
     
     @ApiOperation(value = "상품 목록 구하기", nickname = "getProductsUsingGET", notes = "[PJT-3]", response = ProductResponse.class, tags={ "상품 API", })

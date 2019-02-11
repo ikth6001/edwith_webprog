@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ikth.apps.reservation.dao.ReservationDao;
 import com.ikth.apps.reservation.dto.Category;
+import com.ikth.apps.reservation.dto.DisplayInfoResponse;
 import com.ikth.apps.reservation.dto.Product;
 import com.ikth.apps.reservation.dto.ProductResponse;
 
@@ -41,5 +42,11 @@ public class ReservationSc implements IReservationSc
 		response.setTotalCount(categoryCnt);
 		
 		return response;
+	}
+
+	@Override
+	public DisplayInfoResponse getDisplayInfo(int displayInfoId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

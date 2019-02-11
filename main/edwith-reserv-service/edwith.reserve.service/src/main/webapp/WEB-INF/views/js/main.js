@@ -20,13 +20,22 @@ function addPromotions() {
 			
 			var children= [];
 			var leng= promotioned.length;
+			
+			if(leng == 1) {
+				promotioned[1]= JSON.parse(JSON.stringify(promotioned[0]));
+				leng= 2;
+			}
+			
 			for(var i=0; i<leng; i++) {
 				var tmp= document.createElement('div');
 				tmp.innerHTML= template.replace("${path}", promotioned[i].productImageUrl);
 				children[i]= tmp.firstElementChild;
 			}
 			
-			animate(element, children, template, promotioned, 0, 1, 0);
+
+			if(children.length > 0) {
+				animate(element, children, template, promotioned, 0, 1, 0);
+			}
 		}
 	});
 }
@@ -127,7 +136,8 @@ function displayProduct(products) {
 	area[0].innerHTML= '';
 	area[1].innerHTML= '';
 	
-	for(var i=0; i<4; i++) {
+	var leng= items.length < 4 ? items.length : 4;
+	for(var i=0; i<leng; i++) {
 		var child= document.createElement('div');
 		child.setAttribute('style', 'margin-bottom: 15px;')
 		child.setAttribute('class', 'product');
