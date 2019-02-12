@@ -59,6 +59,8 @@
 			top: 50%;
 			left: 16px;
 			transform: translate(0%, -50%);
+			
+			cursor: pointer;
 		}
 		
 		#btnNext {
@@ -66,6 +68,8 @@
 			top: 50%;
 			right: 16px;
 			transform: translate(0%, -50%);
+			
+			cursor: pointer;
 		}
 		
 		#btnCollapseSpand {
@@ -139,9 +143,9 @@
 			</div>
 		</div>
 		<div id="titleArea">
-			<img src="<c:out value="${productMainImg}"></c:out>" width="100%" height="200px">
+			<img id="titleImage" src="" width="100%" height="200px">
 			
-			<div id="imgCount">
+			<div id="imgCount" style="background-color: gray;">
 				1 / <c:out value="${imgCount}"></c:out>
 			</div>
 			<div id="btnPrev">
@@ -156,7 +160,7 @@
 			</div>
 		</div>
 		<div>
-			<div class="textContentsArea" id="productContents" style="height: 100px; overflow: hidden;">
+			<div class="textContentsArea" id="productContents" style="height: 70px; overflow: hidden;">
 				<c:out value="${productContents}" escapeXml="false"></c:out>
 			</div>
 			<div id="btnCollapseSpand"><spring:message code="btn.expand"/>▽</div>
@@ -192,10 +196,14 @@
 		</div>
 		<hr width="100%" style="border: 0; height: 10px; background: #ccc;">
 		<div id="reservInfoTabContainer">
-			<div class="tabMenu" id="tabArea"><spring:message code="tab.detial"/></div>
-			<div class="tabMenu" id="mainArea"><spring:message code="tab.map"/></div>
+			<div class="tabMenu" id="detailArea"><spring:message code="tab.detial"/></div>
+			<div class="tabMenu" id="mapArea"><spring:message code="tab.map"/></div>
 			<hr width="100%">
-			<div class="textContentsArea"></div>
+			<div class="textContentsArea" id="mainArea"></div>
+		</div>
+		
+		<div id="displayInfoId" style="display: none;">
+			<c:out value="${displayInfoId }"></c:out>
 		</div>
 	</div>
 	
@@ -204,19 +212,23 @@
 		예약에 주의할 사항 및 공지사항이 있습니다.<br>
 		아래 사항을 꼭 읽어 보시기 바랍니다.
 		<br><br>
-		<img src="img/20_et_52.png">
+		<img src="{{notice_img}}" width="400px" height="600px">
 	</script>
 	
 	<script id="mapMainTemplate" type="text/template">
 		<img src="img_map/1_map_1.png">
 
-		<H1>${place_name}</H1>
-		${place_address}<br>
-		${phone_number}<br>
+		<H1>{{place_name}}</H1>
+		{{place_address}}<br>
+		{{phone_number}}<br>
 	</script>
 	
 	<script id="label.comment.ctn" type="text/message">
 		<spring:message code="label.comment.ctn"/>
 	</script>
+	
+	<script type='text/javascript' src='js/handlebars-v4.1.0.js'></script>
+	<script type="text/javascript" src="js/detail.js"></script>
+	
 </body>
 </html>

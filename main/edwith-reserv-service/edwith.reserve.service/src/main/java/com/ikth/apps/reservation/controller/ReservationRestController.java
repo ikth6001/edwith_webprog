@@ -131,7 +131,7 @@ public class ReservationRestController {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/products/{displayInfoId}",
-        produces = { "*/*" }, 
+        produces = { "application/json" }, 
         method = RequestMethod.GET)
     public ResponseEntity<DisplayInfoResponse> getProductDisplayInfoUsingGET(@ApiParam(value = "displayInfoId",required=true) @PathVariable("displayInfoId") Integer displayInfoId) {
 //        String accept = request.getHeader("Accept");

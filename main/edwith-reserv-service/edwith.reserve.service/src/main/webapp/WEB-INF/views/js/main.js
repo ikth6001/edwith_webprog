@@ -142,6 +142,11 @@ function displayProduct(products) {
 		child.setAttribute('style', 'margin-bottom: 15px;')
 		child.setAttribute('class', 'product');
 		child.setAttribute('productId', items[i].productId)
+		child.setAttribute('style', 'cursor: pointer;');
+		child.addEventListener("click", function() {
+			var qs= 'displayInfoId=' + this.getAttribute('productId');
+			window.location.href= 'http://localhost:8080/edwith.reserve.service/detail?' + qs
+		});
 		
 		var description= items[i].productContent;
 		description= description.length > 50 ? description.substring(0, 50) + '...' : description

@@ -1,7 +1,7 @@
 package com.ikth.apps.reservation.controller;
 
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -37,6 +37,7 @@ public class MainController
 		DisplayInfoResponse response= reservationSc.getDisplayInfo(displayInfoId);
 		
 		model.addAttribute("title", response.getDisplayInfo().getProductDescription());
+		model.addAttribute("imgCount", response.getProductImages().size());
 		
 		model.addAttribute("productContents", response.getDisplayInfo().getProductContent());
 		model.addAttribute("eventContents", response.getDisplayInfo().getProductEvent());
@@ -52,13 +53,24 @@ public class MainController
 		model.addAttribute("userMail", fstComment.getReservationEmail());
 		model.addAttribute("wDate", fstComment.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")));
 		
-		/**
-		 * TODO
-		 * 고정 정보로 jsp 변경
-		 */
-		model.addAttribute("reserveDetail", "예약 상세 정보");
+		model.addAttribute("displayInfoId", displayInfoId);
 		
 		return "detail";
+	}
+	
+	@GetMapping(path="/comments")
+	public String comments(ModelMap model, @RequestParam("displayInfoId") int displayInfoId) {
+		logger.debug("requested product id to show detail information is [{}]", displayInfoId);
+		
+		DisplayInfoResponse response= reservationSc.getDisplayInfo(displayInfoId);
+		List<Comment> comments= response.getComments();
+		
+		model.addAttribute("scoreImg", "img/score_sample.png");
+		model.addAttribute("avgScore", response.getAverageScore());
+		model.addAttribute("commentCnt", response.getComments().size());
+		model.addAttribute("comments", comments);
+		
+		return "comments";
 	}
 	
 	@GetMapping(path="/error")

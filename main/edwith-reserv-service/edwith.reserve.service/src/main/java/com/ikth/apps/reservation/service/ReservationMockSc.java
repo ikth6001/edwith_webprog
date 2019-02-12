@@ -177,7 +177,7 @@ public class ReservationMockSc implements IReservationSc
 			Comment comm= new Comment();
 			comm.setCommentId(2);
 			comm.setProductId(1);
-			comm.setReservationName("iljy6001@yahoo.co.kr");
+			comm.setReservationEmail("iljy6001@yahoo.co.kr");
 			comm.setComment("남자친구는 재밌게 봤다는데.. 저는 지루해서 졸았어요..");
 			comm.setScore(2.0d);
 			comm.setCreateDate(OffsetDateTime.now());
