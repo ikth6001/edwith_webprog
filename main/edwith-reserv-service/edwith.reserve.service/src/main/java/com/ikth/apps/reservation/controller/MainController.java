@@ -42,16 +42,20 @@ public class MainController
 		model.addAttribute("productContents", response.getDisplayInfo().getProductContent());
 		model.addAttribute("eventContents", response.getDisplayInfo().getProductEvent());
 		
-		model.addAttribute("scoreImg", "img/score_sample.png");
+		model.addAttribute("scoreImg", "img/score_sample.png"); /** TODO */
 		model.addAttribute("avgScore", response.getAverageScore());
 		
 		model.addAttribute("commentCnt", response.getComments().size());
 		
-		Comment fstComment= response.getComments().get(0);
-		model.addAttribute("commentContents", fstComment.getComment());
-		model.addAttribute("score", fstComment.getScore());
-		model.addAttribute("userMail", fstComment.getReservationEmail());
-		model.addAttribute("wDate", fstComment.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")));
+		List<Comment> comments= response.getComments();
+		
+		if(comments.size() > 0) {
+			Comment fstComment= comments.get(0);
+			model.addAttribute("commentContents", fstComment.getComment());
+			model.addAttribute("score", fstComment.getScore());
+			model.addAttribute("userMail", fstComment.getReservationEmail());
+			model.addAttribute("wDate", fstComment.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")));
+		}
 		
 		model.addAttribute("displayInfoId", displayInfoId);
 		

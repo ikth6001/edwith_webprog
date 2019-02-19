@@ -139,12 +139,13 @@ function displayProduct(products) {
 	var leng= items.length < 4 ? items.length : 4;
 	for(var i=0; i<leng; i++) {
 		var child= document.createElement('div');
-		child.setAttribute('style', 'margin-bottom: 15px;')
+		child.setAttribute('style', 'margin-bottom: 15px;');
 		child.setAttribute('class', 'product');
-		child.setAttribute('productId', items[i].productId)
+		child.setAttribute('productId', items[i].productId);
+		child.setAttribute('displayInfoId', items[i].displayInfoId);
 		child.setAttribute('style', 'cursor: pointer;');
 		child.addEventListener("click", function() {
-			var qs= 'displayInfoId=' + this.getAttribute('productId');
+			var qs= 'displayInfoId=' + this.getAttribute('displayInfoId');
 			window.location.href= 'http://localhost:8080/edwith.reserve.service/detail?' + qs
 		});
 		

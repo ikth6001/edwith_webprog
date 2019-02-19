@@ -4,14 +4,26 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.TypeHandler;
+import org.hsqldb.util.DatabaseManagerSwing;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.MethodInvokingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+
+import com.ikth.apps.reservation.typehandle.CustomEnumTypeHandler;
+import com.ikth.apps.reservation.typehandle.CustomOffSetDateHandler;
 
 @Configuration
 @MapperScan("com.ikth.apps.reservation.dao")
@@ -23,8 +35,11 @@ public class DataAccessObjectConfiguration
 	{
 		SqlSessionFactoryBean sqlSessionFactory= new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(dataSource);
-//		sqlSessionFactory.setMapperLocations(
-//				new ClassPathResource[] { new ClassPathResource("com/ikth/apps/reserve/**/*.xml")});
+		sqlSessionFactory.setTypeHandlers(new TypeHandler[] {
+				new CustomEnumTypeHandler()
+				, new CustomOffSetDateHandler()
+		});
+		
 		try {
 			return sqlSessionFactory.getObject();
 		} catch (Exception e) {
@@ -34,7 +49,7 @@ public class DataAccessObjectConfiguration
 	}
 	
 	@Bean
-	public SqlSessionTemplate getSqlSessionTemplate(SqlSessionFactory sqlSessionFactory)
+	public SqlSessionTemplate getSqlSessionTemplate(@Qualifier("getSqlSessionFactory") SqlSessionFactory sqlSessionFactory)
 	{
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
@@ -63,6 +78,7 @@ public class DataAccessObjectConfiguration
 	}
 	
 	@Bean
+	@Profile("PRODUCT")
 	public DataSource getDataSource()
 	{
 		if("jdbc".equals(dataSourceType)) {
@@ -72,6 +88,33 @@ public class DataAccessObjectConfiguration
 		} else {
 			return loadJdbcDataSource();
 		}
+	}
+	
+	@Bean("h2DataSource")
+	@Profile("DEVELOP")
+	public DataSource getEmbeddedDataSource()
+	{
+		EmbeddedDatabaseBuilder builder= new EmbeddedDatabaseBuilder();
+		EmbeddedDatabase db= builder
+								.setType(EmbeddedDatabaseType.H2)
+								.setName("reservationDB;DATABASE_TO_UPPER=false;MODE=MYSQL")
+								.addScript("classpath:sqls/reservation_ddl.sql")
+								.addScript("classpath:sqls/reservation_dml.sql")
+								.build();
+		
+		return db;
+	}
+	
+	@Bean
+	@DependsOn(value="h2DataSource")
+	@Profile("DEVELOP")
+	public MethodInvokingBean openDatabaseManager() {
+		MethodInvokingBean manager= new MethodInvokingBean();
+		manager.setTargetClass(DatabaseManagerSwing.class);
+		manager.setTargetMethod("main");
+		manager.setArguments(new Object[] {"--url", "jdbc:h2:mem:reservationDB", "--user", "sa", "--password", ""});
+		
+		return manager;
 	}
 
 	private DataSource loadJdbcDataSource() {

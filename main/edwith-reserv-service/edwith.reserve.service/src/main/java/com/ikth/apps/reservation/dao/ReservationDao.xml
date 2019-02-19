@@ -17,11 +17,11 @@
 		resultType="com.ikth.apps.reservation.dto.Product">
 		SELECT 
 			DI.id as displayInfoId
-		    , DI.place_name as placeName
-		    , PD.content as productContent
-		    , PD.description as productDescription
-		    , PD.id as productId
-		    , concat('img/', FI.file_name) as productImageUrl
+			, DI.place_name as placeName
+			, PD.content as productContent
+			, PD.description as productDescription
+			, PD.id as productId
+			, concat('img/', FI.file_name) as productImageUrl
 		FROM
 			product as PD
 			, display_info as DI
@@ -33,8 +33,7 @@
 			and PD.id= PI.product_id
 			and PD.id= PM.product_id
 			and PI.file_id= FI.id
-		GROUP BY 
-			productId	
+			and FI.file_name like '%_ma_%'
 	</select>
 	
 	<select id="getProducts"
@@ -55,11 +54,10 @@
 			PD.id= DI.product_id
 			and PD.id= PI.product_id
 			and PI.file_id= FI.id
+			and FI.file_name like '%_ma_%'
 			<if test="categoryId > 0">
 			and PD.category_id= #{categoryId}
 			</if>
-		group by 
-			productId
 		limit #{start}, 4;	
 	</select>
 	
@@ -72,7 +70,89 @@
 		where
 			category_id= #{categoryId}
 		</if>
-			
+	</select>
+	
+	<select id="getDisplayInfo"
+		resultType="com.ikth.apps.reservation.dto.DisplayInfo">
+		SELECT
+			DI.ID as id
+			, DI.PRODUCT_ID as productId
+			, DI.OPENING_HOURS as openingHours
+			, DI.PLACE_NAME as placeName
+			, DI.PLACE_LOT as placeLot
+			, DI.PLACE_STREET as placeStreet
+			, DI.TEL as telephone
+			, DI.HOMEPAGE as homepage
+			, DI.EMAIL as email
+			, DI.CREATE_DATE as createDate
+			, DI.MODIFY_DATE as modifyDate
+			, PD.CONTENT as productContent
+			, PD.EVENT as productEvent
+		FROM
+			DISPLAY_INFO AS DI
+			, PRODUCT AS PD
+		WHERE 
+			DI.PRODUCT_ID = PD.ID 
+			AND DI.ID = #{id}
+	</select>
+	
+	<select id="getComments"
+		resultType="com.ikth.apps.reservation.dto.Comment">
+		SELECT
+			ID as Id
+			, PRODUCT_ID as productId
+			, RESERVATION_INFO_ID as reservationInfoId
+			, SCORE as score
+			, COMMENT as comment
+			, CREATE_DATE as createDate
+			, MODIFY_DATE as modifyDate
+		FROM
+			RESERVATION_USER_COMMENT
+		WHERE PRODUCT_ID=#{productId};
+	</select>
+	
+	<select id="getDisplayInfoImage"
+		resultType="com.ikth.apps.reservation.dto.DisplayInfoImage">
+		SELECT
+			ID as Id
+			, DISPLAY_INFO_ID as displayInfoId
+			, FILE_ID as fileId
+		FROM
+			DISPLAY_INFO_IMAGE
+		WHERE 
+			DISPLAY_INFO_ID=#{displayInfoId};
+	</select>
+	
+	<select id="getProductImages"
+		resultType="com.ikth.apps.reservation.dto.ProductImage">
+		SELECT
+			PI.ID as id
+			, PI.PRODUCT_ID as productId
+			, PI.TYPE as type
+			, PI.FILE_ID as fileInfoId
+			, concat('img/', FI.FILE_NAME) AS fileName
+		FROM
+			PRODUCT_IMAGE AS PI
+			, FILE_INFO AS FI
+		WHERE 
+			PI.FILE_ID=FI.ID
+			AND PI.PRODUCT_ID=#{productId}
+	</select>
+	
+	<select id="getProductPrices"
+		resultType="com.ikth.apps.reservation.dto.ProductPrice">
+		SELECT
+			ID as Id
+			, PRODUCT_ID as productId
+			, PRICE_TYPE_NAME as priceTypeName
+			, PRICE as price
+			, DISCOUNT_RATE as discountRate
+			, CREATE_DATE as createDate
+			, MODIFY_DATE as modifyDate
+		FROM
+			PRODUCT_PRICE
+		WHERE 
+			PRODUCT_ID=#{productId}
 	</select>
 	
 </mapper>

@@ -70,8 +70,12 @@ public class ProductImage   {
     public String toString() {
       return String.valueOf(value);
     }
+    
+    public String getValue() {
+		return value;
+	}
 
-    @JsonCreator
+	@JsonCreator
     public static TypeEnum fromValue(String text) {
       for (TypeEnum b : TypeEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {

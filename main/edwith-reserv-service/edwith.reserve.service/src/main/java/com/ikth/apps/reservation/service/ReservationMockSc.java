@@ -16,6 +16,7 @@ import com.ikth.apps.reservation.dto.ProductImage;
 import com.ikth.apps.reservation.dto.ProductImage.TypeEnum;
 import com.ikth.apps.reservation.dto.ProductResponse;
 
+@Deprecated
 @Profile("BwG")
 @Service
 public class ReservationMockSc implements IReservationSc
