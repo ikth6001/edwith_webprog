@@ -99,16 +99,20 @@
 	<select id="getComments"
 		resultType="com.ikth.apps.reservation.dto.Comment">
 		SELECT
-			ID as Id
-			, PRODUCT_ID as productId
-			, RESERVATION_INFO_ID as reservationInfoId
-			, SCORE as score
-			, COMMENT as comment
-			, CREATE_DATE as createDate
-			, MODIFY_DATE as modifyDate
+			RUC.ID as Id
+			, RUC.PRODUCT_ID as productId
+			, RUC.RESERVATION_INFO_ID as reservationInfoId
+			, RUC.SCORE as score
+			, RUC.COMMENT as comment
+			, RUC.CREATE_DATE as createDate
+			, RUC.MODIFY_DATE as modifyDate
+			, RI.RESERVATION_EMAIL as reservationEmail
 		FROM
-			RESERVATION_USER_COMMENT
-		WHERE PRODUCT_ID=#{productId};
+			RESERVATION_USER_COMMENT as RUC
+			, RESERVATION_INFO as RI
+		WHERE 
+			RUC.PRODUCT_ID=#{productId}
+			AND RUC.RESERVATION_INFO_ID=RI.ID
 	</select>
 	
 	<select id="getDisplayInfoImage"
