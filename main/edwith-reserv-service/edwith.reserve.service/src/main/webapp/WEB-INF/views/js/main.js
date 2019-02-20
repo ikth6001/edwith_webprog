@@ -78,7 +78,19 @@ function configureCategory() {
 			var ele= document.getElementById('areaCategory');
 			
 			var htmlTemplate= document.getElementById("categoryTemplate").innerText;
-			categories.forEach(function(item, index, array) {
+//			categories.forEach(function(item, index, array) {
+//				var name= item.name;
+//				var categoryId= item.id;
+//				
+//				var child= document.createElement('template');
+//				var innerHTML= htmlTemplate.replace("${categoryId}", categoryId)
+//										   .replace("${name}", name);
+//				child.innerHTML= innerHTML.trim();
+//				ele.appendChild(child.content.firstChild);
+//			});
+			var leng= categories.length;
+			for(var i=0; i<leng; i++ ) {
+				var item= categories[i];
 				var name= item.name;
 				var categoryId= item.id;
 				
@@ -87,7 +99,7 @@ function configureCategory() {
 										   .replace("${name}", name);
 				child.innerHTML= innerHTML.trim();
 				ele.appendChild(child.content.firstChild);
-			});
+			};
 			
 			addCategoryEvent();
 			document.getElementsByClassName("categoryBtn")[0].click();

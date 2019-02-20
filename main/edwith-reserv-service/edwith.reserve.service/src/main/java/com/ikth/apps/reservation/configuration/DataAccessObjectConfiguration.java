@@ -5,16 +5,13 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.TypeHandler;
-import org.hsqldb.util.DatabaseManagerSwing;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.MethodInvokingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -54,9 +51,6 @@ public class DataAccessObjectConfiguration
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 	
-	@Value("${datasource.type}")
-	private String dataSourceType;
-	
 	@Value("${jndiName}")
 	private String jndiName;
 	
@@ -81,13 +75,7 @@ public class DataAccessObjectConfiguration
 	@Profile("PRODUCT")
 	public DataSource getDataSource()
 	{
-		if("jdbc".equals(dataSourceType)) {
-			return loadJdbcDataSource();
-		} else if("jndi".equals(dataSourceType)) {
-			return null;
-		} else {
-			return loadJdbcDataSource();
-		}
+		return loadJdbcDataSource();
 	}
 	
 	@Bean("h2DataSource")
@@ -105,6 +93,9 @@ public class DataAccessObjectConfiguration
 		return db;
 	}
 	
+	/**
+	 * Spring boot에선 UI로 제공 해준다(application.properties 참고) http://localhost:8080/${context_name}/${configured_uri}
+	 */
 //	@Bean
 //	@DependsOn(value="h2DataSource")
 //	@Profile("DEVELOP")
