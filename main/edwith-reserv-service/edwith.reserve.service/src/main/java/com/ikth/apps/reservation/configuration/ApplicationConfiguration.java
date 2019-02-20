@@ -67,12 +67,14 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) 
 	{
-		registry.addResourceHandler("img/**").addResourceLocations("WEB-INF/views/img/");
-		registry.addResourceHandler("img_map/**").addResourceLocations("WEB-INF/views/img_map/");
-		registry.addResourceHandler("js/**").addResourceLocations("WEB-INF/views/js/");
+		registry.addResourceHandler("img/**").addResourceLocations("/WEB-INF/views/img/");
+		registry.addResourceHandler("img_map/**").addResourceLocations("/WEB-INF/views/img_map/");
+		registry.addResourceHandler("js/**").addResourceLocations("/WEB-INF/views/js/");
 		
 		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+		
+		registry.addResourceHandler("/favicon.ico").addResourceLocations("/WEB-INF/views/img/favicon.ico");
 	}
 	
 	@Bean

@@ -105,7 +105,7 @@ public class ReservationRestController {
 
         return new ResponseEntity<CommentResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
-
+    
     @ApiOperation(value = "카테고리 목록 구하기", nickname = "getCategoriesUsingGET", notes = "[PJT-3]", response = CategoryResponse.class, tags={ "카테고리 API", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = CategoryResponse.class),
@@ -116,6 +116,7 @@ public class ReservationRestController {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     public ResponseEntity<CategoryResponse> getCategoriesUsingGET() {
+    	
     	List<Category> categories= reservationSc.getAllCategories();
     	logger.debug("{} EA categories is detected.", categories.size());
     	

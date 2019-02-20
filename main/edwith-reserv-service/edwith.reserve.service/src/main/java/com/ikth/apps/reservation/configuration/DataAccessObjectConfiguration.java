@@ -105,17 +105,17 @@ public class DataAccessObjectConfiguration
 		return db;
 	}
 	
-	@Bean
-	@DependsOn(value="h2DataSource")
-	@Profile("DEVELOP")
-	public MethodInvokingBean openDatabaseManager() {
-		MethodInvokingBean manager= new MethodInvokingBean();
-		manager.setTargetClass(DatabaseManagerSwing.class);
-		manager.setTargetMethod("main");
-		manager.setArguments(new Object[] {"--url", "jdbc:h2:mem:reservationDB", "--user", "sa", "--password", ""});
-		
-		return manager;
-	}
+//	@Bean
+//	@DependsOn(value="h2DataSource")
+//	@Profile("DEVELOP")
+//	public MethodInvokingBean openDatabaseManager() {
+//		MethodInvokingBean manager= new MethodInvokingBean();
+//		manager.setTargetClass(DatabaseManagerSwing.class);
+//		manager.setTargetMethod("main");
+//		manager.setArguments(new Object[] {"--url", "jdbc:h2:mem:reservationDB", "--user", "sa", "--password", ""});
+//		
+//		return manager;
+//	}
 
 	private DataSource loadJdbcDataSource() {
 		BasicDataSource dataSource= new BasicDataSource();
