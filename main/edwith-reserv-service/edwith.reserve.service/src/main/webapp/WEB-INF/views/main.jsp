@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page isELIgnored="false" %> <!-- Templating 때문에 EL 표기법 사용 안 함 > 취소. EL을 사용 안하면 JSTL이 동작 안함;; -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
@@ -103,27 +104,28 @@
 	
 	<script id="promotionTemplate" type="text/template">
 		<div class="promotionItem" style="position: relative; display: inline;">
-			<img src="${path}" width="600" height="200">
+			<img src="{{path}}" width="600" height="200">
 		</div>
 	</script>
 	
 	<script id="categoryTemplate" type="text/template">
-		<div class="categoryBtn" categoryId="${categoryId}" style="display: inline-block; margin-left: 20px; margin-right: 20px; font-weight: bold; cursor: pointer;">
-			${name}
+		<div class="categoryBtn" categoryId="{{categoryId}}" style="display: inline-block; margin-left: 20px; margin-right: 20px; font-weight: bold; cursor: pointer;">
+			{{name}}
 		</div>
 	</script>
 	
 	<script id="productTemplate" type="text/template">
-		<img src="${path}" height="350" width="280"><br>
-		<b>${name}</b><br>
-		${place}<br>
-		${description}
+		<img src="{{path}}" height="350" width="280"><br>
+		<b>{{name}}</b><br>
+		{{place}}<br>
+		{{description}}
 	</script>
 	
 	<script id="label.product.count" type="text/message">
 		<spring:message code="label.product.count"/>
 	</script>
 	
+	<script type='text/javascript' src='js/handlebars-v4.1.0.js'></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

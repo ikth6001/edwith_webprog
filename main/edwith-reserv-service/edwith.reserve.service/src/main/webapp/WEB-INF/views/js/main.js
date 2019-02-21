@@ -11,7 +11,7 @@ function initInternal() {
 
 function addPromotions() {
 	var element= document.getElementById('areaPromotion');
-	var template= document.querySelector('#promotionTemplate').innerHTML;
+	var htmlTemplate= document.querySelector('#promotionTemplate').innerHTML;
 	
 	sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/promotions', function() {
 		if (this.status == 200) {
@@ -28,7 +28,10 @@ function addPromotions() {
 			
 			for(var i=0; i<leng; i++) {
 				var tmp= document.createElement('div');
-				tmp.innerHTML= template.replace("${path}", promotioned[i].productImageUrl);
+				
+				var template= Handlebars.compile(htmlTemplate);
+				var context= {path: promotioned[i].productImageUrl};
+				tmp.innerHTML= template(context);
 				children[i]= tmp.firstElementChild;
 			}
 			
@@ -89,14 +92,15 @@ function configureCategory() {
 //				ele.appendChild(child.content.firstChild);
 //			});
 			var leng= categories.length;
+			var template= Handlebars.compile(htmlTemplate);
 			for(var i=0; i<leng; i++ ) {
 				var item= categories[i];
 				var name= item.name;
 				var categoryId= item.id;
 				
+				var context={categoryId: categoryId, name: name};
 				var child= document.createElement('template');
-				var innerHTML= htmlTemplate.replace("${categoryId}", categoryId)
-										   .replace("${name}", name);
+				var innerHTML= template(context);
 				child.innerHTML= innerHTML.trim();
 				ele.appendChild(child.content.firstChild);
 			};
@@ -148,6 +152,7 @@ function displayProduct(products) {
 	area[0].innerHTML= '';
 	area[1].innerHTML= '';
 	
+	var template= Handlebars.compile(html);
 	var leng= items.length < 4 ? items.length : 4;
 	for(var i=0; i<leng; i++) {
 		var child= document.createElement('div');
@@ -163,11 +168,12 @@ function displayProduct(products) {
 		
 		var description= items[i].productContent;
 		description= description.length > 50 ? description.substring(0, 50) + '...' : description
-		child.innerHTML= html.replace('${path}', items[i].productImageUrl)
-							 .replace('${name}', items[i].productDescription)
-							 .replace('${place}', items[i].placeName)
-							 .replace('${description}', description);
-		
+				
+		var context= {path: items[i].productImageUrl
+					  , name: items[i].productDescription
+					  , place: items[i].placeName
+					  , description: description};
+		child.innerHTML= template(context);
 		area[i%2].appendChild(child);
 	}
 	
@@ -202,16 +208,20 @@ function addMoreBtnEvent() {
 			
 			var area= document.getElementsByClassName('areaProduct');
 			var html= document.querySelector('#productTemplate').innerHTML;
+			var template= Handlebars.compile(html);
 			for(var i=0; i<items.length; i++) {
 				var child= document.createElement('div');
 				child.setAttribute('style', 'margin-bottom: 15px;')
 				child.setAttribute('class', 'product');
 				var description= items[i].productContent;
 				description= description.length > 50 ? description.substring(0, 50) + '...' : description
-				child.innerHTML= html.replace('${path}', items[i].productImageUrl)
-									 .replace('${name}', items[i].productDescription)
-									 .replace('${place}', items[i].placeName)
-									 .replace('${description}', description);
+						
+						
+				var context= {path: items[i].productImageUrl
+							  , name: items[i].productDescription
+							  , place: items[i].placeName
+							  , description: description};
+				child.innerHTML= template(context);
 				
 				area[i%2].appendChild(child);
 			}
