@@ -7,9 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 import com.ikth.apps.reservation.configuration.ApplicationConfiguration;
+import com.ikth.apps.reservation.configuration.SecurityConfiguration;
 
 @SpringBootApplication
-@Import(ApplicationConfiguration.class)
+@Import({ApplicationConfiguration.class, SecurityConfiguration.class})
 public class ApplicationBoot 
 {
 	public static void main(String[] args) 

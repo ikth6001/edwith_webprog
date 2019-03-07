@@ -71,7 +71,10 @@
 				<img src="img/mainLog.png" align="middle" style="margin: 5px;"> 예약
 			</div>
 			<div id="areaBtnReservInfo" style="display: inline-block; float: right; margin: 5px;">
-				<spring:message code="label.nologin"/>
+				<div style="display: inline-block;">
+					<c:out value="${userName}"/>
+					<a href= "<c:out value="${loginReqUrl}"/>"><c:out value="${logInOut}"/></a> 
+				</div>
 			</div>
 		</div>
 		<div id="areaPromotion" style="vertical-align: top; height: 200px; width: 600px; overflow: hidden;"></div>

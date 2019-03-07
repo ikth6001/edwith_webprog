@@ -1,8 +1,8 @@
 package com.ikth.apps.reservation.controller;
 
+import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +25,19 @@ public class MainController
 	private IReservationSc reservationSc;
 	
 	@GetMapping(path="/")
-	public String main(Locale locale) {
-		logger.debug("requested locale [{}]", locale);
+	public String main(ModelMap model, Principal principal) {
+		if(principal == null) {
+			logger.debug("no login session is detected");
+			model.addAttribute("loginReqUrl", "login");
+			model.addAttribute("logInOut", "로그인");
+		} else {
+			final String name= principal.getName();
+			logger.debug("login user name is [{}]", name);
+			model.addAttribute("loginReqUrl", "logout");
+			model.addAttribute("logInOut", "로그아웃");
+			model.addAttribute("userName", name);
+		}
+		
 		return "main";
 	}
 	
@@ -60,6 +71,15 @@ public class MainController
 		model.addAttribute("displayInfoId", displayInfoId);
 		
 		return "detail";
+	}
+	
+	@GetMapping(path="/reservation")
+	public String doReservation()
+	{
+		/**
+		 * TODO
+		 */
+		return "main";
 	}
 	
 	@GetMapping(path="/comments")
