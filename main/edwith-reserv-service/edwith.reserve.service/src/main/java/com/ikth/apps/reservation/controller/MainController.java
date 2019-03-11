@@ -4,6 +4,9 @@ import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,9 @@ public class MainController
 	private IReservationSc reservationSc;
 	
 	@GetMapping(path="/")
-	public String main(ModelMap model, Principal principal) {
+	public String main(
+			HttpServletRequest req, HttpServletResponse res,
+			ModelMap model, Principal principal) {
 		if(principal == null) {
 			logger.debug("no login session is detected");
 			model.addAttribute("loginReqUrl", "login");
