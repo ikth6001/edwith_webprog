@@ -21,8 +21,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 				.antMatchers("/reservation/**").hasRole("USER")
 				.antMatchers("/**").permitAll()
 				.and()
-			.formLogin()
-				.and()
+			
+			/**
+			 * form login 사용 안함.
+			 */
+//			.formLogin()
+//				.and()
 			.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // Get으로 요청하기 위해.. CSRF 공격에 취약함
 				.logoutSuccessUrl("/");
