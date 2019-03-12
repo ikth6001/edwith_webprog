@@ -33,11 +33,11 @@ public class JwtAuthTokenFilter extends GenericFilterBean
 		logger.debug("The specified token value is [{}]", token);
 		
 		Authentication auth= tokenManager.getAutentication(token);
-		if(auth == null) {
-			chain.doFilter(request, response);
-		} else if(tokenManager.validateToken(token)){
-			SecurityContextHolder.getContext().setAuthentication(auth);
-			chain.doFilter(request, response);
+		if(auth != null) {
+			if(tokenManager.validateToken(token)) {
+				SecurityContextHolder.getContext().setAuthentication(auth);
+			}
 		}
+		chain.doFilter(request, response);
 	}
 }

@@ -13,8 +13,7 @@ import com.ikth.apps.reservation.configuration.SecurityConfiguration;
 @Import({ApplicationConfiguration.class, SecurityConfiguration.class})
 public class ApplicationBoot 
 {
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args) {
 		System.setProperty("spring.profiles.active", "DEVELOP");
 		SpringApplication.run(ApplicationBoot.class, args);
 	}

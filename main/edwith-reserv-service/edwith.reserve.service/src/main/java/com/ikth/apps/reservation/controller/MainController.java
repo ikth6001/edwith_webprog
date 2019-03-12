@@ -33,7 +33,7 @@ public class MainController
 			ModelMap model, Principal principal) {
 		if(principal == null) {
 			logger.debug("no login session is detected");
-			model.addAttribute("loginReqUrl", "login");
+			model.addAttribute("loginReqUrl", "loginView");
 			model.addAttribute("logInOut", "로그인");
 		} else {
 			final String name= principal.getName();

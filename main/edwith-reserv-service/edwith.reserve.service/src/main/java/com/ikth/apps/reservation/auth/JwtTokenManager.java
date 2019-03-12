@@ -67,7 +67,6 @@ public class JwtTokenManager implements ITokenManager {
 		return bearer.substring(BEARER_PREFIX.length());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public String createToken(String userName) {
 		Claims claims= Jwts.claims().setSubject(userName);

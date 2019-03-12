@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -28,6 +29,11 @@ public class AuthController {
 	
 	@Autowired
 	private AuthenticationManager authManager;
+	
+	@RequestMapping(value="/loginView", method= RequestMethod.GET)
+	public String loginView() {
+		return "loginView";
+	}
 	
 	@RequestMapping(value="/login" , method= RequestMethod.GET)
 	public ResponseEntity<AuthToken> login(@NotEmpty @RequestParam("id") String id
