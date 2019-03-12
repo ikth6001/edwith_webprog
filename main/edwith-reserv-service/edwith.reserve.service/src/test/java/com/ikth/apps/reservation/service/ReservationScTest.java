@@ -1,6 +1,6 @@
 package com.ikth.apps.reservation.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 

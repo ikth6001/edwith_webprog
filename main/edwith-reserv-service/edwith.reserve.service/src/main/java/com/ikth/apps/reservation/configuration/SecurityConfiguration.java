@@ -1,28 +1,21 @@
 package com.ikth.apps.reservation.configuration;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.ikth.apps.reservation.auth.JwtConfigurer;
+import com.ikth.apps.reservation.auth.SimpleUserDetailsService;
 
 @Configuration
-@ComponentScan({"com.ikth.apps.reservation.auth"})
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception 
 	{
@@ -47,10 +40,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 				.logoutSuccessUrl("/");
 	}
 	
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.inMemoryAuthentication()
-			.passwordEncoder(bCryptPasswordEncoder())
-			.withUser("user").password(bCryptPasswordEncoder().encode("password")).roles("USER");
+//	@Override
+//	public void configure(AuthenticationManagerBuilder auth) throws Exception 
+//	{
+//		auth.inMemoryAuthentication()
+//			.withUser("bxm").password("password").roles("USER");
+//	}
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception 
+	{
+		auth.authenticationProvider(authenticationProvider());
+	}
+	
+	private DaoAuthenticationProvider authenticationProvider()
+	{
+		DaoAuthenticationProvider ap= new DaoAuthenticationProvider();
+		ap.setUserDetailsService(new SimpleUserDetailsService());
+		
+		return ap;
 	}
 }
