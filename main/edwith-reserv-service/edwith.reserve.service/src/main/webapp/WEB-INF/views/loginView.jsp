@@ -17,42 +17,17 @@
 			margin-left: auto;
 			margin-right: auto;
 		}
-		
-		.areaLabel {
-			width: 30%;
-			text-align: center;
-		}
-		
-		.areaInput {
-			width: 65%;
-		}
-		
-		#areaSubmit {
-		}
-		
-		.formItem {
-			padding-bottom: 5px;
-		}
 	</style>
 	
 </head>
 <body>
 	<div id="container">
-		<form action="edwith.reserve.service/login">
-			<div class="formItem">
-				<div class="areaLabel"  style="display: inline-block;"><b>아이디</b></div>
-				<input class="areaInput" type="text" name="id" style="display: inline-block;">
-			</div>
-			
-			<div class="formItem">
-				<div class="areaLabel"  style="display: inline-block;"><b>비밀번호</b></div>
-				<input class="areaInput" type="password" name="passwd" style="display: inline-block;">
-			</div>
-			
-			<div id="areaSubmit" class="formItem" >
-				<input type="submit" value="로그인"/>
-			</div>
-		</form>
+		<input id="txtId" type="text" name="id" placeholder="아이디">
+		<input id="txtPw" type="password" name="passwd" placeholder="비밀번호">
+		<input id="btnLogin" type="submit" value="로그인"/>
+		<div id="areaMsg"></div>
 	</div>
+	
+    <script type="text/javascript" src="js/loginView.js"></script>
 </body>
 </html>

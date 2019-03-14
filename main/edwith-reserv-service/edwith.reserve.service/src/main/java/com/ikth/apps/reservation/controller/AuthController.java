@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -43,6 +42,13 @@ public class AuthController {
 		/**
 		 * TODO User Service
 		 */
+		if( !"password".equals(passwd) ) {
+			AuthToken token= new AuthToken();
+			token.setSuccess(false);
+			token.setFailMsg("Invalid password.");
+			return new ResponseEntity<>(token, HttpStatus.OK);
+		}
+		
 		authManager.authenticate(new UsernamePasswordAuthenticationToken(id, passwd));
 		
 		AuthToken token= new AuthToken();

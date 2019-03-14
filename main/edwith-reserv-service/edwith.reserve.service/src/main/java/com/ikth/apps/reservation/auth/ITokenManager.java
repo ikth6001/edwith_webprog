@@ -11,6 +11,8 @@ public interface ITokenManager {
 	Authentication getAutentication(final String token);
 	
 	String resolveToken(ServletRequest request);
+	
+//	void removeToken(ServletRequest request);
 
 	boolean validateToken(final String token);
 }

@@ -31,7 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 				.apply(new JwtConfigurer())
 			.and()
 			/**
-			 * form login 사용 안함.
+			 * form login 사용 안함 
+			 * -> form login을 사용하고, Success/Error Handler를 구현해야 할듯 함(추가로 Rest에 맞도록 변형 필요)
+			 * -> 이게 맞을까?? form login은 사용 안하고 JS 단에서 redirect 등등을 구현 하는게 맞을거 같음. REST 니까..
 			 */
 //			.formLogin()
 //				.and()

@@ -3,6 +3,7 @@ package com.ikth.apps.reservation.auth;
 import java.util.Date;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -35,7 +37,7 @@ public class JwtTokenManager implements ITokenManager {
 		/**
 		 * TODO UserService?? 매번 조회를..??
 		 */
-		return new UsernamePasswordAuthenticationToken(new User(userName, "password"), "");
+		return new UsernamePasswordAuthenticationToken(new User(userName, "password"), "password");
 	}
 	
 	private String getUserName(String token) {
@@ -44,8 +46,13 @@ public class JwtTokenManager implements ITokenManager {
 	
 	@Override
 	public boolean validateToken(String token) {
-		Jws<Claims> claims=
-				Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+		Jws<Claims> claims= null;
+		
+		try {
+			claims= Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+		} catch (ExpiredJwtException e) {
+			return false;
+		}
 		
 		if(claims.getBody().getExpiration().before(new Date())) {
 			return false;
@@ -57,10 +64,19 @@ public class JwtTokenManager implements ITokenManager {
 	@Override
 	public String resolveToken(ServletRequest request) 
 	{
-		String bearer= ((HttpServletRequest) request).getHeader("Authorization");
+		HttpServletRequest hReq= (HttpServletRequest) request;
+		String bearer= hReq.getHeader("Authorization");
 		
 		if(StringUtils.isEmpty(bearer)
 				|| !bearer.startsWith(BEARER_PREFIX)) {
+			Cookie[] cookies= hReq.getCookies();
+
+			for(Cookie cookie : cookies) {
+				if(BEARER_PREFIX.equals(cookie.getName())) {
+					return cookie.getValue();
+				}
+			}
+			
 			return null;
 		}
 		
@@ -82,5 +98,17 @@ public class JwtTokenManager implements ITokenManager {
 				   .compact();
 	}
 
+//	@Override
+//	public void removeToken(ServletRequest request) {
+//		HttpServletRequest hReq= (HttpServletRequest) request;
+//		Cookie[] cookies= hReq.getCookies();
+//
+//		for(Cookie cookie : cookies) {
+//			if(BEARER_PREFIX.equals(cookie.getName())) {
+//				cookie.setValue("");
+//				cookie.setMaxAge(0);
+//			}
+//		}
+//	}
 	
 }
