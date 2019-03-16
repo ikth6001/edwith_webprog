@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.ikth.apps.reservation.auth.User;
 import com.ikth.apps.reservation.dto.Category;
 import com.ikth.apps.reservation.dto.Comment;
 import com.ikth.apps.reservation.dto.DisplayInfo;
@@ -31,4 +32,6 @@ public interface ReservationDao
 	List<ProductImage> getProductImages(@Param("productId") int productId);
 	
 	List<ProductPrice> getProductPrices(@Param("productId") int productId);
+	
+	User getUserById(@Param("userId") String userId);
 }

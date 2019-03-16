@@ -159,4 +159,15 @@
 			PRODUCT_ID=#{productId}
 	</select>
 	
+	<select id="getUserById"
+		resultType="com.ikth.apps.reservation.auth.User">
+		SELECT
+			USER_ID as userName
+			, USER_ENC_PW as password
+		FROM
+			RESERVATION_USER
+		WHERE 
+			USER_ID=#{userId}
+	</select>
+	
 </mapper>

@@ -26,8 +26,7 @@ function init() {
 					areaMsg.innerText= '';
 //					localStorage.setItem('token', res.token);
 					document.cookie='Bearer=' + res.token;
-					console.log(res.token);
-					
+					window.history.back();
 				} else {
 					areaMsg.innerText= res.failMsg;
 				}

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 public class JwtAuthTokenFilter extends GenericFilterBean
@@ -29,10 +30,15 @@ public class JwtAuthTokenFilter extends GenericFilterBean
 			, ServletResponse response
 			, FilterChain chain) throws IOException, ServletException {
 		
+		/**
+		 * TODO if auth need..
+		 */
+		
 		final String token= tokenManager.resolveToken(request);
 		logger.debug("The specified token value is [{}]", token);
 		
-		if(tokenManager.validateToken(token)) {
+		if(StringUtils.hasText(token)
+				&& tokenManager.validateToken(token)) {
 			Authentication auth= tokenManager.getAutentication(token);
 			SecurityContextHolder.getContext().setAuthentication(auth);
 		}

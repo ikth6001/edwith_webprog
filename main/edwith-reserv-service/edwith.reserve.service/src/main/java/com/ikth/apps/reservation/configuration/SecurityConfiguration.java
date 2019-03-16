@@ -1,5 +1,7 @@
 package com.ikth.apps.reservation.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -7,15 +9,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.ikth.apps.reservation.auth.JwtConfigurer;
 import com.ikth.apps.reservation.auth.SimpleUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
+@ComponentScan("com.ikth.apps.reservation.auth")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
+	@Autowired
+	private SimpleUserDetailsService simpleUserDetailsService;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception 
 	{
@@ -29,17 +34,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 				.antMatchers("/**").permitAll()
 				.and()
 				.apply(new JwtConfigurer())
-			.and()
 			/**
 			 * form login 사용 안함 
 			 * -> form login을 사용하고, Success/Error Handler를 구현해야 할듯 함.
 			 * -> form login은 사용 안하고 JS에서 redirect 등등을 구현 하는게 맞을거 같음. REST 니까.. (확정)
 			 */
+//			.and()
 //			.formLogin()
-//				.and()
-			.logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/");
+//			.and()
+//			.logout()
+//				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//				.logoutSuccessUrl("/");
+			;
 	}
 	
 //	@Override
@@ -58,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	private DaoAuthenticationProvider authenticationProvider()
 	{
 		DaoAuthenticationProvider ap= new DaoAuthenticationProvider();
-		ap.setUserDetailsService(new SimpleUserDetailsService());
+		ap.setUserDetailsService(simpleUserDetailsService);
 		
 		return ap;
 	}

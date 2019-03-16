@@ -32,15 +32,15 @@ public class JwtTokenManager implements ITokenManager {
 			return null;
 		}
 		
-		final String userName= getUserName(token);
+		String subject= getSubject(token);
+		String[] segments= subject.split(":");
+		String id= segments[0];
+		String pw= segments[1];
 		
-		/**
-		 * TODO UserService?? 매번 조회를..??
-		 */
-		return new UsernamePasswordAuthenticationToken(new User(userName, "password"), "password");
+		return new UsernamePasswordAuthenticationToken(new User(id, pw), pw);
 	}
 	
-	private String getUserName(String token) {
+	private String getSubject(String token) {
 		return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
 	}
 	
@@ -71,9 +71,12 @@ public class JwtTokenManager implements ITokenManager {
 				|| !bearer.startsWith(BEARER_PREFIX)) {
 			Cookie[] cookies= hReq.getCookies();
 
-			for(Cookie cookie : cookies) {
-				if(BEARER_PREFIX.equals(cookie.getName())) {
-					return cookie.getValue();
+			if(cookies != null
+					&& cookies.length > 0) {
+				for(Cookie cookie : cookies) {
+					if(BEARER_PREFIX.equals(cookie.getName())) {
+						return cookie.getValue();
+					}
 				}
 			}
 			
@@ -84,8 +87,8 @@ public class JwtTokenManager implements ITokenManager {
 	}
 
 	@Override
-	public String createToken(String userName) {
-		Claims claims= Jwts.claims().setSubject(userName);
+	public String createToken(String userName, String userEncPw) {
+		Claims claims= Jwts.claims().setSubject(userName + ":" + userEncPw);
 		
 		Date now= new Date();
 		Date expiration= new Date(now.getTime() + EXPIRATION);

@@ -13,6 +13,8 @@ drop table if exists product;
 drop table if exists file_info;
 drop table if exists category;
 
+drop table if exists reservation_user;
+
 
 -- -----------------------------------------------------
 -- Table `category`
@@ -202,3 +204,12 @@ CREATE TABLE `reservation_user_comment_image` (
   REFERENCES `reservation_user_comment` (`id`),
   FOREIGN KEY (`file_id`)
   REFERENCES `file_info` (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  
+  
+-- -----------------------------------------------------
+-- Table `reservation_user`
+-- -----------------------------------------------------
+CREATE TABLE `reservation_user` (
+  `user_id` VARCHAR(50) NOT NULL COMMENT '유저 아이디',
+  `user_enc_pw` VARCHAR(50) NOT NULL COMMENT '암호화된 유저 암호',
+  PRIMARY KEY (`user_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -38,7 +38,7 @@ public class MainController
 		} else {
 			final String name= principal.getName();
 			logger.debug("login user name is [{}]", name);
-			model.addAttribute("loginReqUrl", "logout");
+			model.addAttribute("loginReqUrl", "userLogout");
 			model.addAttribute("logInOut", "로그아웃");
 			model.addAttribute("userName", name);
 		}

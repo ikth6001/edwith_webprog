@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 
 public interface ITokenManager {
 	
-	String createToken(String userName);
+	String createToken(String userName, String userEncPw);
 	
 	Authentication getAutentication(final String token);
 	
