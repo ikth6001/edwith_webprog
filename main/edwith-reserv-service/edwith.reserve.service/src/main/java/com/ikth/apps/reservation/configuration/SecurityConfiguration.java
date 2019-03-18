@@ -1,6 +1,7 @@
 package com.ikth.apps.reservation.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 import com.ikth.apps.reservation.auth.JwtConfigurer;
 import com.ikth.apps.reservation.auth.SimpleUserDetailsService;
@@ -25,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	protected void configure(HttpSecurity http) throws Exception 
 	{
 		http
+//			.httpBasic().authenticationEntryPoint(authenticationEntryPoint())
 			.httpBasic().disable()
 			.csrf().disable() /** FOR REST API TODO CORS */
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -67,5 +70,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		ap.setUserDetailsService(simpleUserDetailsService);
 		
 		return ap;
+	}
+	
+	@Bean
+	public AuthenticationEntryPoint authenticationEntryPoint() {
+		return null;
 	}
 }
