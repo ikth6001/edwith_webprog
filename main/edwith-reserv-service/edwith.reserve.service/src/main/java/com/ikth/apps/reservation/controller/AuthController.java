@@ -50,7 +50,7 @@ public class AuthController {
 		} catch (BadCredentialsException e) {
 			AuthToken token= new AuthToken();
 			token.setSuccess(false);
-			token.setFailMsg("Invalid password.");
+			token.setFailMsg("It is invalid user or password.");
 			return new ResponseEntity<>(token, HttpStatus.OK);
 		} catch(Exception e) {
 			logger.error(e.getMessage(), e);

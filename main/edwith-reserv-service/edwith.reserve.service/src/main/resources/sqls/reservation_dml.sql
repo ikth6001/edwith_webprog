@@ -1153,7 +1153,7 @@ insert into reservation_user_comment_image(id, reservation_info_id, reservation_
 
 insert into reservation_user_comment_image(id, reservation_info_id, reservation_user_comment_id, file_id) values (2, 1, 2, 2);
 
-insert into reservation_user(user_id, user_enc_pw) values ('user', 'user');
+insert into reservation_user(user_id, user_enc_pw) values ('ikth6001@naver.com', 'ikth6001');
 
 
 --

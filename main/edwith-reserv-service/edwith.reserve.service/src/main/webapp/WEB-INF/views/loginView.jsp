@@ -16,17 +16,47 @@
 			width: 600px;
 			margin-left: auto;
 			margin-right: auto;
+			
+			background-color: silver;
 		}
+		
+		.loginFormArea {
+			width: 300px;
+
+			margin-bottom: 10px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		.inputForm {
+			width: 290px;
+			height: 30px;
+		}
+		
+		.btnForm {
+			width: 294px;
+			height: 36px;
+		}
+		
 	</style>
 	
 </head>
 <body>
 	<div id="container">
-		<input id="txtId" type="text" name="id" placeholder="아이디">
-		<input id="txtPw" type="password" name="passwd" placeholder="비밀번호">
-		<input id="btnLogin" type="submit" value="로그인"/>
-		<div id="areaMsg"></div>
-	</div>
+		<div style="text-align: center;">
+			<H1>예약</H1>
+		</div>
+		<div class="loginFormArea">
+			<input class="inputForm" id="txtId" type="text" name="id" placeholder="  예약자 이메일 입력">
+		</div>
+		<div class="loginFormArea">
+			<input class="inputForm" id="txtPw" type="password" name="passwd" placeholder="  비밀번호">
+		</div>
+		<div id="areaMsg" style="text-align: center; margin-bottom: 10px;"></div>
+		<div class="loginFormArea">
+			<input class="btnForm" id="btnLogin" type="button" value="로그인">
+		</div>
+	</div>		
 	
     <script type="text/javascript" src="js/loginView.js"></script>
 </body>
