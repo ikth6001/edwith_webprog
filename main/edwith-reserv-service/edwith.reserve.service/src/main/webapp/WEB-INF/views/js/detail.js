@@ -74,13 +74,7 @@ function configureBtns() {
 	
 	var btnReserve= document.getElementById('btnReserveArea');
 	btnReserve.addEventListener('click', function() {
-		sendGetAjaxRequest('/edwith.reserve.service/reservation', function() {
-			if (this.status == 200) {
-				document.write(this.responseText);
-			} else if (this.status == 403) {
-				window.location.href= '/edwith.reserve.service/loginView';
-			}
-		})
+		window.location.href='/edwith.reserve.service/reservation'
 	});
 	
 	btnDetailArea.click();
