@@ -14,7 +14,21 @@ function init() {
 		var id= txtId.value;
 		var pw= txtPw.value;
 		
-		// TODO 정규 표현식을 통한 입력값 검증
+		if(id) {
+			var idRegEx= /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+/;
+			if( !idRegEx.test(id) ) {
+				printErrMsg('아이디의 형식이 잘못 되었습니다. 아이디는 이메일 형식으로 작성합니다.');				
+				return;
+			}
+		} else {
+			printErrMsg('아이디를 입력 하십시오.');
+			return;
+		}
+		
+		if( !pw ) {
+			printErrMsg('비밀번호를 입력 하십시오.');
+			return;
+		}
 		
 		var req= new XMLHttpRequest();
 		req.addEventListener("load", function() {
@@ -28,13 +42,19 @@ function init() {
 					document.cookie='Bearer=' + res.token;
 					window.history.back();
 				} else {
-					areaMsg.innerHTML= '<font color=\'red\'>' + res.failMsg + '</font>';
+					printErrMsg(res.failMsg);
 				}
 			} else {
-				areaMsg.innerHTML= '<font color=\'red\'>Auth server internal error..</font>';
+				printErrMsg('서버 에러 발생..');
 			}
 		});
-		req.open("GET", 'http://localhost:8080/edwith.reserve.service/login?id=' + id + '&passwd=' + pw, true);
+		req.open("GET", '/edwith.reserve.service/login?id=' + id + '&passwd=' + pw, true);
 		req.send();
 	});
+}
+
+function printErrMsg(msg) {
+	var areaMsg= document.getElementById('areaMsg');
+	areaMsg.innerHTML= '<font color=\'red\'>' + msg + '</font>';
+	
 }

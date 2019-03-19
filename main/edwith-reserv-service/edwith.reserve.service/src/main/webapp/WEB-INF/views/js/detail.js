@@ -38,7 +38,7 @@ function configureBtns() {
 	var btnCommentMore= document.getElementById('btnCommentMore');
 	btnCommentMore.addEventListener('click', function() {
 		var displayInfoId= document.getElementById('displayInfoId').innerText;
-		window.location.href= 'http://localhost:8080/edwith.reserve.service/comments?displayInfoId=' + displayInfoId; 
+		window.location.href= '/edwith.reserve.service/comments?displayInfoId=' + displayInfoId; 
 	});
 	
 	var btnDetailArea= document.getElementById('detailArea');
@@ -72,6 +72,17 @@ function configureBtns() {
 		document.getElementById('detailArea').setAttribute('style', 'color: black;');
 	});
 	
+	var btnReserve= document.getElementById('btnReserveArea');
+	btnReserve.addEventListener('click', function() {
+		sendGetAjaxRequest('/edwith.reserve.service/reservation', function() {
+			if (this.status == 200) {
+				document.write(this.responseText);
+			} else if (this.status == 403) {
+				window.location.href= '/edwith.reserve.service/loginView';
+			}
+		})
+	});
+	
 	btnDetailArea.click();
 }
 
@@ -85,7 +96,7 @@ function setImageAndCountText(idx) {
 
 function loadProductImages() {
 	var displayInfoId= document.getElementById('displayInfoId').innerText;
-	sendGetAjaxRequest('http://localhost:8080/edwith.reserve.service/api/products/' + displayInfoId, function() {
+	sendGetAjaxRequest('/edwith.reserve.service/api/products/' + displayInfoId, function() {
 		if(this.status == 200) {
 			var responseText= this.responseText;
 			var responseObj= JSON.parse(responseText);

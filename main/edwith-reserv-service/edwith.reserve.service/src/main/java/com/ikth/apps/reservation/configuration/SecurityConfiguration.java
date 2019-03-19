@@ -1,7 +1,6 @@
 package com.ikth.apps.reservation.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.AuthenticationEntryPoint;
 
 import com.ikth.apps.reservation.auth.JwtConfigurer;
 import com.ikth.apps.reservation.auth.SimpleUserDetailsService;
@@ -27,7 +25,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	protected void configure(HttpSecurity http) throws Exception 
 	{
 		http
+//			/**
+//			 * 이상한건 아는데.. REST API와 MVC가 한 서버에서 동작하다 보니...;
+//			 * 일단 이렇게.. auth 실패 시, 에러 코드 대신 redirect 하도록 하자;
+//			 */
 //			.httpBasic().authenticationEntryPoint(authenticationEntryPoint())
+//			.and()
 			.httpBasic().disable()
 			.csrf().disable() /** FOR REST API TODO CORS */
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -48,6 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 //			.logout()
 //				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 //				.logoutSuccessUrl("/");
+			.and()
+			.exceptionHandling().accessDeniedPage("/loginView")
 			;
 	}
 	
@@ -70,10 +75,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		ap.setUserDetailsService(simpleUserDetailsService);
 		
 		return ap;
-	}
-	
-	@Bean
-	public AuthenticationEntryPoint authenticationEntryPoint() {
-		return null;
 	}
 }

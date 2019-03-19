@@ -102,9 +102,9 @@ public class MainController
 		return "comments";
 	}
 	
-	@GetMapping(path="/error")
-	public String error(ModelMap model, @RequestParam("cause") String cause) {
-		model.addAttribute("cause", cause);
-		return "error";
-	}
+//	@GetMapping(path="/error")
+//	public String error(ModelMap model, @RequestParam("cause") String cause) {
+//		model.addAttribute("cause", cause);
+//		return "error";
+//	}
 }

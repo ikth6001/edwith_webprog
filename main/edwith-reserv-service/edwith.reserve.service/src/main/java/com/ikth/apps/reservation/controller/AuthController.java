@@ -50,7 +50,7 @@ public class AuthController {
 		} catch (BadCredentialsException e) {
 			AuthToken token= new AuthToken();
 			token.setSuccess(false);
-			token.setFailMsg("It is invalid user or password.");
+			token.setFailMsg("존재하지 않는 아이디이거나 암호가 잘못 되었습니다.");
 			return new ResponseEntity<>(token, HttpStatus.OK);
 		} catch(Exception e) {
 			logger.error(e.getMessage(), e);
@@ -69,9 +69,6 @@ public class AuthController {
 	
 	@RequestMapping(value="/userLogout", method= RequestMethod.GET)
 	public String logout(HttpServletRequest req, HttpServletResponse res) {
-		/**
-		 * do nothing -> 그냥 간단히 여기서..
-		 */
 		Cookie[] cookies= req.getCookies();
 		
 		if(cookies == null
