@@ -74,7 +74,8 @@ function configureBtns() {
 	
 	var btnReserve= document.getElementById('btnReserveArea');
 	btnReserve.addEventListener('click', function() {
-		window.location.href='/edwith.reserve.service/reservation'
+		var displayInfoId= document.getElementById('displayInfoId').innerText;
+		window.location.href='/edwith.reserve.service/reservationView?displayInfoId=' + displayInfoId;
 	});
 	
 	btnDetailArea.click();

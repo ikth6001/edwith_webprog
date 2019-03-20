@@ -78,6 +78,9 @@ public class ReservationRestController {
 //            }
 //        }
 
+    	/**
+    	 * TODO
+    	 */
         return new ResponseEntity<ReservationResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
@@ -103,6 +106,9 @@ public class ReservationRestController {
 //            }
 //        }
 
+    	/**
+    	 * TODO
+    	 */
         return new ResponseEntity<CommentResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
     
@@ -205,6 +211,9 @@ public class ReservationRestController {
 //            }
 //        }
 
+    	/**
+    	 * TODO
+    	 */
         return new ResponseEntity<ReservationInfoResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
@@ -230,6 +239,9 @@ public class ReservationRestController {
 //            }
 //        }
 
+    	/**
+    	 * TODO
+    	 */
         return new ResponseEntity<ReservationResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 

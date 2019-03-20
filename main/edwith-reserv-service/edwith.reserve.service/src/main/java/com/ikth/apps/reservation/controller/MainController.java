@@ -78,13 +78,19 @@ public class MainController
 		return "detail";
 	}
 	
-	@GetMapping(path="/reservation")
-	public String doReservation()
+	@GetMapping(path="/reservationView")
+	public String doReservation(
+			ModelMap model
+			, @RequestParam("displayInfoId") int displayInfoId)
 	{
-		/**
-		 * TODO
-		 */
-		return "main";
+//		DisplayInfoResponse displayInfo= reservationSc.getDisplayInfo(displayInfoId);
+//		String title= displayInfo.getDisplayInfo().getProductDescription();
+//		String img= displayInfo.getDisplayInfoImage().getFileName();
+//		String place= displayInfo.getDisplayInfo().getPlaceStreet();
+//		String openingHour= displayInfo.getDisplayInfo().getOpeningHours();
+//		List<ProductPrice> prices= displayInfo.getProductPrices();
+		model.addAttribute("displayInfoId", displayInfoId);
+		return "reservationView";
 	}
 	
 	@GetMapping(path="/comments")
