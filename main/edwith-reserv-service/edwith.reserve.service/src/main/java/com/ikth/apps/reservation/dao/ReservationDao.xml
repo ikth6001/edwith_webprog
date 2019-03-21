@@ -86,6 +86,7 @@
 			, DI.EMAIL as email
 			, DI.CREATE_DATE as createDate
 			, DI.MODIFY_DATE as modifyDate
+			, PD.DESCRIPTION as productDescription
 			, PD.CONTENT as productContent
 			, PD.EVENT as productEvent
 		FROM
@@ -118,13 +119,15 @@
 	<select id="getDisplayInfoImage"
 		resultType="com.ikth.apps.reservation.dto.DisplayInfoImage">
 		SELECT
-			ID as Id
-			, DISPLAY_INFO_ID as displayInfoId
-			, FILE_ID as fileId
+			DI.ID as Id
+			, DI.DISPLAY_INFO_ID as displayInfoId
+			, DI.FILE_ID as fileId
+			, concat('img/', FI.FILE_NAME) AS fileName
 		FROM
-			DISPLAY_INFO_IMAGE
-		WHERE 
-			DISPLAY_INFO_ID=#{displayInfoId};
+			DISPLAY_INFO_IMAGE DI, FILE_INFO FI
+		WHERE
+		    DI.FILE_ID=FI.ID
+			AND DISPLAY_INFO_ID=#{displayInfoId};
 	</select>
 	
 	<select id="getProductImages"

@@ -83,12 +83,17 @@ public class MainController
 			ModelMap model
 			, @RequestParam("displayInfoId") int displayInfoId)
 	{
-//		DisplayInfoResponse displayInfo= reservationSc.getDisplayInfo(displayInfoId);
+		DisplayInfoResponse displayInfo= reservationSc.getDisplayInfo(displayInfoId);
 //		String title= displayInfo.getDisplayInfo().getProductDescription();
 //		String img= displayInfo.getDisplayInfoImage().getFileName();
 //		String place= displayInfo.getDisplayInfo().getPlaceStreet();
 //		String openingHour= displayInfo.getDisplayInfo().getOpeningHours();
 //		List<ProductPrice> prices= displayInfo.getProductPrices();
+		model.addAttribute("mainImg", displayInfo.getProductImages().get(0).getFileName());
+		model.addAttribute("mainTxt", displayInfo.getDisplayInfo().getProductDescription());
+		model.addAttribute("place", displayInfo.getDisplayInfo().getPlaceLot());
+		model.addAttribute("openingHours", displayInfo.getDisplayInfo().getOpeningHours());
+		model.addAttribute("price", "금액 어떻게 구하기 TODO");
 		model.addAttribute("displayInfoId", displayInfoId);
 		return "reservationView";
 	}
