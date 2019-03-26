@@ -156,6 +156,7 @@
 			, DISCOUNT_RATE as discountRate
 			, CREATE_DATE as createDate
 			, MODIFY_DATE as modifyDate
+			, ID as productPriceId
 		FROM
 			PRODUCT_PRICE
 		WHERE 

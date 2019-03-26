@@ -92,7 +92,7 @@ public class MainController
 		model.addAttribute("mainImg", displayInfo.getProductImages().get(0).getFileName());
 		model.addAttribute("mainTxt", displayInfo.getDisplayInfo().getProductDescription());
 		model.addAttribute("place", displayInfo.getDisplayInfo().getPlaceLot());
-		model.addAttribute("openingHours", displayInfo.getDisplayInfo().getOpeningHours().replace("\n", "<br/>"));
+		model.addAttribute("openingHours", displayInfo.getDisplayInfo().getOpeningHours());
 		model.addAttribute("displayInfoId", displayInfoId);
 		return "reservationView";
 	}

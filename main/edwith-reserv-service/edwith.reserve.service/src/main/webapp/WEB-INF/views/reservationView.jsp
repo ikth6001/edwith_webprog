@@ -6,7 +6,10 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:set var="newline" value="<%= \"\n\" %>" />
+<%
+    pageContext.setAttribute("newline", "\n"); 
+    pageContext.setAttribute("br", "<br>"); 
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -125,7 +128,8 @@
 			</div>
 			<div id="productTime" class="textContainer needBottomPadding">
                 <b>관람시간</b><br>
-                <c:out value="${openingHours}" escapeXml="false"/>
+                <c:set var="openingHours" value="${openingHours}"/>
+                ${fn:replace(openingHours, newline, br)}
 			</div>
 			<div id="productPrice" class="textContainer needBottomPadding">
 			</div>
@@ -164,7 +168,7 @@
     </script>
     
     <script id="priceTemplate" type="text/template">
-		<div id="{{productPriceId}}">
+		<div>
 			<div id="priceLeft" class="textContainer" style="display:inline-block; width: 45%">
 				<div>
 					<b>{{priceTypeName}}<br>{{price}}</b>
@@ -174,7 +178,7 @@
 				</div>
 			</div>
 			<div id="priceRight" style="display:inline-block; width: 45%">
-				<div style="vertical-align: middle;">
+				<div id="{{productPriceId}}" style="vertical-align: middle;">
 				   <div class="priceBtn" id="btnPriceMinus{{idx}}">-</div>
 				   <div class="priceBtn" id="btnTicketCnt{{idx}}" >0</div>
 				   <div class="priceBtn" id="btnPricePlus{{idx}}" >+</div>

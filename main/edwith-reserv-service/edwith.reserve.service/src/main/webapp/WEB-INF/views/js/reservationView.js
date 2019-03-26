@@ -29,10 +29,33 @@ function initBtnReseve() {
 		var ticketCnt= parseInt(document.getElementById('totalCount').innerText);
 		if(status) {
 			if(ticketCnt > 0) {
-				/**
-				 * TODO send reservation request;
-				 */
-				alert('Not implemented yet')
+				
+				var prices= new Array();
+				for(var i=0; i<pCnt; i++) {
+					var price= {
+						count: document.getElementById('btnTicketCnt' + i).innerText
+						, productPriceId: document.getElementById('btnTicketCnt' + i).parentNode.id
+					};
+					
+					prices[i]= price;
+				}
+				
+				var parameters= {
+					displayInfoId: document.getElementById('displayInfoId').innerText
+					, prices: prices
+					, reservationEmail: essentialEles[2].input.value
+					, reservationName: essentialEles[0].input.value
+					, reservationTelephone: essentialEles[1].input.value
+					, reservationYearMonthDay: new Date().toISOString().slice(0,10).replace(/-/g,"")
+				};
+				
+				sendPostAjaxRequest('/edwith.reserve.service/api/reservations', parameters, function() {
+					if(this.status == 200) {
+						alert('예약을 완료 했습니다...')
+					} else {
+						alert('예약에 실패 했습니다...');
+					}
+				});
 			} else {
 				alert('예매할 티켓을 선택 해주십시오.');
 			}
@@ -135,6 +158,8 @@ function essential(label, input, errEle, regEx, regExMsg) {
 	}
 }
 
+var pCnt= 0;
+
 function initPrice() {
 	var displayInfoId= document.getElementById('displayInfoId').innerText;
 	
@@ -210,6 +235,8 @@ function initPrice() {
 				var btnMinus= document.getElementById("btnPriceMinus" + i);
 				var btnPlus= document.getElementById("btnPricePlus" + i);
 				
+				pCnt= pCnt + 1;
+				
 				/**
 				 * 솔직히 이해 하나도 안감.
 				 * 자바스크립트의 scope 및 closure에 대해서 알아볼 필요 있음.
@@ -265,3 +292,12 @@ function sendGetAjaxRequest(url, callback) {
 	req.open("GET", url, true);
 	req.send();
 }
+
+function sendPostAjaxRequest(url, parameters, callback) {
+	var req= new XMLHttpRequest();
+	req.addEventListener("load", callback);
+	req.open("POST", url, true);
+	req.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+	req.send(JSON.stringify((parameters)));
+}
+

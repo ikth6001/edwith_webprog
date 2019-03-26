@@ -225,7 +225,7 @@ public class ReservationRestController {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/reservations",
-        produces = { "*/*" }, 
+        produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
     public ResponseEntity<ReservationResponse> reserveProductUsingPOST(@ApiParam(value = "reservationParam" ,required=true )  @Valid @RequestBody ReservationParam reservationParam) {
@@ -238,11 +238,11 @@ public class ReservationRestController {
 //                return new ResponseEntity<ReservationResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
 //            }
 //        }
-
+    	
     	/**
-    	 * TODO
+    	 * 단순 INSERT 하는 부분..
     	 */
-        return new ResponseEntity<ReservationResponse>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<ReservationResponse>(HttpStatus.OK);
     }
 
 }
