@@ -24,8 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ikth.apps.reservation.dto.Category;
 import com.ikth.apps.reservation.dto.CategoryResponse;
 import com.ikth.apps.reservation.dto.CommentResponse;
+import com.ikth.apps.reservation.dto.DisplayInfo;
 import com.ikth.apps.reservation.dto.DisplayInfoResponse;
 import com.ikth.apps.reservation.dto.ProductResponse;
+import com.ikth.apps.reservation.dto.ReservationInfo;
 import com.ikth.apps.reservation.dto.ReservationInfoResponse;
 import com.ikth.apps.reservation.dto.ReservationParam;
 import com.ikth.apps.reservation.dto.ReservationResponse;
@@ -198,7 +200,7 @@ public class ReservationRestController {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/reservations",
-        produces = { "*/*" }, 
+        produces = { "application/json" }, 
         method = RequestMethod.GET)
     public ResponseEntity<ReservationInfoResponse> getReservationsUsingGET(@NotNull @ApiParam(value = "reservationEmail", required = true) @Valid @RequestParam(value = "reservationEmail", required = true) String reservationEmail) {
 //        String accept = request.getHeader("Accept");
@@ -212,9 +214,56 @@ public class ReservationRestController {
 //        }
 
     	/**
-    	 * TODO
+    	 * TODO SC, DAO
     	 */
-        return new ResponseEntity<ReservationInfoResponse>(HttpStatus.NOT_IMPLEMENTED);
+    	ReservationInfoResponse response= new ReservationInfoResponse();
+    	
+    	{
+    		ReservationInfo info= new ReservationInfo();
+    		
+    		DisplayInfo display= new DisplayInfo();
+    		display.setProductContent("라이언킹");
+    		display.setOpeningHours("2019.03.01 ~ 2019.03.30");
+    		display.setPlaceName("서초구 예술의전당");
+    		info.setDisplayInfo(display);
+    		
+    		info.setTotalPrice(150000L);
+    		info.cancelYn(false);
+    		
+    		response.addReservationsItem(info);
+    	}
+    	
+    	{
+    		ReservationInfo info= new ReservationInfo();
+    		
+    		DisplayInfo display= new DisplayInfo();
+    		display.setProductContent("신데렐라");
+    		display.setOpeningHours("2019.02.01 ~ 2019.04.30");
+    		display.setPlaceName("송파구 샤로떼띠어떠");
+    		info.setDisplayInfo(display);
+    		
+    		info.setTotalPrice(350000L);
+    		info.cancelYn(false);
+    		
+    		response.addReservationsItem(info);
+    	}
+    	
+    	{
+    		ReservationInfo info= new ReservationInfo();
+    		
+    		DisplayInfo display= new DisplayInfo();
+    		display.setProductContent("신데렐라");
+    		display.setOpeningHours("2019.02.01 ~ 2019.02.25");
+    		display.setPlaceName("잠실 올림픽 공원");
+    		info.setDisplayInfo(display);
+    		
+    		info.setTotalPrice(50000L);
+    		info.cancelYn(true);
+    		
+    		response.addReservationsItem(info);
+    	}
+    	
+    	return new ResponseEntity<ReservationInfoResponse>(response, HttpStatus.OK);
     }
 
     @ApiOperation(value = "예약하기", nickname = "reserveProductUsingPOST", notes = "[PJT-5] 예약하기는 실제 DB 에 적용된 값이 아닌, Random 으로 생성된 예약 객체를 반환한다.", response = ReservationResponse.class, tags={ "예약 API", })

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,25 +13,8 @@
             width: 600px;
             margin-left: auto;
             margin-right: auto;
-        }
-        
-        #overview {
-            text-align: center;
-            padding-left: 0px;
-            padding-right: 0px;
-            width: 100%;
-        }
-        
-        .inOverview {
-            color: white;
-            font-weight: bold;
-            background-color: green;
-            text-align: center;
-            display: inline-block;
-            width: 49%;
             
-            margin-left: 0px;
-            margin-right: 0px;
+            border: solid 1px silver;
         }
         
         #details {
@@ -43,6 +27,9 @@
             text-align: center;
             display: table-cell;
             vertical-align: middle;
+            
+            height: 50px;
+            width: 600px;
         }
         
         #cancelLabel {
@@ -51,49 +38,52 @@
             text-align: center;
             display: table-cell;
             vertical-align: middle;
+            
+            height: 50px;
+            width: 600px;
+        }
+        
+        .contentsContainer {
+        	width: 50%;
+        	margin-left: auto;
+        	margin-right: auto;
+        	margin-bottom: 30px;
+        }
+        
+        .inActive{
+        	/* javascript에서 event 중 onmouseover, onmouseleave가 있음  */
+        	cursor: pointer;
+        }
+        
+        .btnCancel {
+        	background-color: silver;
+        	font-weight: bold;
+        	color: white;
+        	text-align: center;
         }
     </style>
 </head>
 <body>
     <div id="container">
-        <div id="overview">
-            <div id="activeCnt" class="inOverview">
-                <div>예약확정</div>
-                <div>2</div>
-            </div>
-            <div id="cancelCnt" class="inOverview">
-                <div>예약취소</div>
-                <div>1</div>
-            </div>
-        </div>
         <div id="details">
             <div id="active">
-                <div id="activeLabel"><h2>예약확정</h2></div>
-                <div id="titleArea">
-                    <h3>상품 명</h3>
-                </div>
-                <div id="contentsArea">
-                    <div><font color="gray">일정</font> 2009.03.12</div>
-                    <div><font color="gray">내역</font> 내역이 없습니다.</div>
-                    <div><font color="gray">장소</font> 예술의 전당</div>
-                    <div>결제 예정 금액 <font color="red">150000</font>원</div>
-                </div>
+                <div id="activeLabel"><h3> 예약확정(N개) </h3></div>
             </div>
             <div id="canceled">
-                <div id="cancelLabel"><h2>예약취소</h2></div>
-                <div id="titleArea">
-                    <h3>상품 명</h3>
-                </div>
-                <div id="contentsArea">
-                    <div><font color="gray">일정</font> 2009.03.12</div>
-                    <div><font color="gray">내역</font> 내역이 없습니다.</div>
-                    <div><font color="gray">장소</font> 예술의 전당</div>
-                    <div>결제 예정 금액 <font color="red">150000</font>원</div>
-                </div>
+                <div id="cancelLabel"><h3>예약취소(N개)</h3></div>
             </div>
         </div>
-    
     </div>
-
+    
+    <script type="text/template" id="reservationTempalte">
+        	<h3>{{productName}}</h3>
+            <div><font color="gray">일정</font> {{openingHours}}</div>
+            <div><font color="gray">내역</font> 내역이 없습니다.</div>
+            <div><font color="gray">장소</font> {{place}}</div>
+            <div>결제 예정 금액 <font color="red">{{price}}</font>원</div>
+	</script>
+    
+    <script type='text/javascript' src='js/handlebars-v4.1.0.js'></script>
+	<script type="text/javascript" src="js/reservationList.js"></script>
 </body>
 </html>
