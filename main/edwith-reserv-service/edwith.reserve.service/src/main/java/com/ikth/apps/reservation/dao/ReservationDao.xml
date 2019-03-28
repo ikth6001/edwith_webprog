@@ -174,4 +174,38 @@
 			USER_ID=#{userId}
 	</select>
 	
+	<insert id="addReservation"
+	   parameterType="com.ikth.apps.reservation.dto.ReservationParam"
+	   useGeneratedKeys="true"
+	   keyProperty="id">
+	   
+	   INSERT INTO RESERVATION_INFO
+	       (RESERVATION_NAME
+	       , RESERVATION_TEL
+	       , RESERVATION_EMAIL
+	       , RESERVATION_DATE
+	       , PRODUCT_ID
+	       , DISPLAY_INFO_ID)
+        VALUES
+            (#{reservationName}
+            , #{reservationTelephone}
+            , #{reservationEmail}
+            , PARSEDATETIME (#{reservationYearMonthDay}, 'yyyyMMdd')
+            , #{productId}
+            , #{displayInfoId})
+    </insert>
+    
+    <insert id="addPrice"
+        parameterType="com.ikth.apps.reservation.dto.ReservationPrice">
+        
+        INSERT INTO RESERVATION_INFO_PRICE
+            (RESERVATION_INFO_ID
+            , PRODUCT_PRICE_ID
+            , COUNT)
+        VALUES
+            (#{reservationInfoId}
+            , #{productPriceId}
+            , #{count})
+        
+    </insert>
 </mapper>

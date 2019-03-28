@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ikth.apps.reservation.dao.ReservationDao;
 import com.ikth.apps.reservation.dto.Category;
@@ -17,10 +19,14 @@ import com.ikth.apps.reservation.dto.Product;
 import com.ikth.apps.reservation.dto.ProductImage;
 import com.ikth.apps.reservation.dto.ProductPrice;
 import com.ikth.apps.reservation.dto.ProductResponse;
+import com.ikth.apps.reservation.dto.ReservationParam;
+import com.ikth.apps.reservation.dto.ReservationPrice;
 
 @Service
 public class ReservationSc implements IReservationSc
 {
+	private final static org.slf4j.Logger logger= LoggerFactory.getLogger(ReservationSc.class);
+	
 	@Autowired
 	private ReservationDao reservationDao;
 
@@ -96,5 +102,28 @@ public class ReservationSc implements IReservationSc
 			double result= score / comments.size();
 			return BigDecimal.valueOf(result).setScale(1, RoundingMode.HALF_UP).doubleValue();
 		}
+	}
+
+	@Override
+	@Transactional
+	public boolean reservation(ReservationParam reservationParam) 
+	{
+		/** product id 관리할 필요 없으니까 일단.. */
+		reservationParam.setProductId(reservationParam.getDisplayInfoId());
+		int cnt= reservationDao.addReservation(reservationParam);
+		
+		if(cnt == 1) {
+			int id= reservationParam.getId();
+			logger.debug("auto incremented reservation id is [{}]", id);
+			
+			for(ReservationPrice price : reservationParam.getPrices()) {
+				price.setReservationInfoId(id);
+				reservationDao.addPrice(price);
+			}
+		} else {
+			return false;
+		}
+
+		return true;
 	}
 }

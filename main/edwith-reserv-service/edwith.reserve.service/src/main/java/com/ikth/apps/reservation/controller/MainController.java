@@ -112,6 +112,11 @@ public class MainController
 		return "comments";
 	}
 	
+	@GetMapping(path="/reservationList")
+	public String getReservationList() {
+		return "reservationList";
+	}
+	
 //	@GetMapping(path="/error")
 //	public String error(ModelMap model, @RequestParam("cause") String cause) {
 //		model.addAttribute("cause", cause);

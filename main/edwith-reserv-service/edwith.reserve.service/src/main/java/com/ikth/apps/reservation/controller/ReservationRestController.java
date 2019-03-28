@@ -229,20 +229,12 @@ public class ReservationRestController {
         consumes = { "application/json" },
         method = RequestMethod.POST)
     public ResponseEntity<ReservationResponse> reserveProductUsingPOST(@ApiParam(value = "reservationParam" ,required=true )  @Valid @RequestBody ReservationParam reservationParam) {
-//        String accept = request.getHeader("Accept");
-//        if (accept != null && accept.contains("")) {
-//            try {
-//                return new ResponseEntity<ReservationResponse>(objectMapper.readValue("", ReservationResponse.class), HttpStatus.NOT_IMPLEMENTED);
-//            } catch (IOException e) {
-//                log.error("Couldn't serialize response for content type ", e);
-//                return new ResponseEntity<ReservationResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//        }
-    	
-    	/**
-    	 * 단순 INSERT 하는 부분..
-    	 */
-        return new ResponseEntity<ReservationResponse>(HttpStatus.OK);
+    	boolean status= reservationSc.reservation(reservationParam);
+    	if(status) {
+    		return new ResponseEntity<ReservationResponse>(HttpStatus.OK);
+    	} else {
+    		return new ResponseEntity<ReservationResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
     }
 
 }

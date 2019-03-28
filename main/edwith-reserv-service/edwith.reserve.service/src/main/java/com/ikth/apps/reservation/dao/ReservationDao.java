@@ -12,6 +12,8 @@ import com.ikth.apps.reservation.dto.DisplayInfoImage;
 import com.ikth.apps.reservation.dto.Product;
 import com.ikth.apps.reservation.dto.ProductImage;
 import com.ikth.apps.reservation.dto.ProductPrice;
+import com.ikth.apps.reservation.dto.ReservationParam;
+import com.ikth.apps.reservation.dto.ReservationPrice;
 
 public interface ReservationDao 
 {
@@ -34,4 +36,8 @@ public interface ReservationDao
 	List<ProductPrice> getProductPrices(@Param("productId") int productId);
 	
 	User getUserById(@Param("userId") String userId);
+	
+	int addReservation(ReservationParam param);
+	
+	int addPrice(ReservationPrice price);
 }

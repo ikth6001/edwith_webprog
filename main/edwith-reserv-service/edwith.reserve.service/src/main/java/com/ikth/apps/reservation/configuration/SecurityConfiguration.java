@@ -30,6 +30,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	{
 		http
 			/**
+			 * H2 console이 동작 안해서 추가 했는데.. 자세한 사항은 나중에 알아보자.
+			 */
+			.headers().frameOptions().sameOrigin()
+			.and()
+			/**
 			 * 이상한건 아는데.. REST API와 MVC가 한 서버에서 동작하다 보니...;
 			 * 일단 이렇게.. auth 실패 시, 에러 코드 대신 redirect 하도록 하자;
 			 */
@@ -40,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeRequests()
-				.antMatchers("/reservation/**", "/reservationView/**").hasRole("USER")
+				.antMatchers("/api/reservations/**", "/reservationView/**").hasRole("USER")
 				.antMatchers("/**").permitAll()
 				.and()
 				.apply(new JwtConfigurer())

@@ -50,8 +50,6 @@ CREATE TABLE `product` (
   `create_date` DATETIME NULL DEFAULT NULL COMMENT '생성시간',
   `modify_date` DATETIME NULL DEFAULT NULL COMMENT '수정시간',
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`category_id`)
-  REFERENCES `category` (`id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -71,8 +69,6 @@ CREATE TABLE `display_info` (
   `create_date` DATETIME NULL DEFAULT NULL COMMENT '생성시간',
   `modify_date` DATETIME NULL DEFAULT NULL COMMENT '수정시간',
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`product_id`)
-  REFERENCES `product` (`id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -85,8 +81,6 @@ CREATE TABLE `product_image` (
   `type` VARCHAR(2) NOT NULL COMMENT '이미지 type, th: 썸네일, ma: 메인, et: 기타 (etc)',
   `file_id` INT(11) NOT NULL COMMENT 'file id',
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`product_id`)
-  REFERENCES `product` (`id`),
   FOREIGN KEY (`file_id`)
   REFERENCES `file_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

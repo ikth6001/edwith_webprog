@@ -20,227 +20,238 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-02-05T12:37:37.915+09:00")
 
-public class ReservationParam   {
-  @JsonProperty("displayInfoId")
-  private Integer displayInfoId = null;
+public class ReservationParam {
 
-  @JsonProperty("prices")
-  @Valid
-  private List<ReservationPrice> prices = null;
+	private int id;
 
-  @JsonProperty("productId")
-  private Integer productId = null;
+	@JsonProperty("displayInfoId")
+	private Integer displayInfoId = null;
 
-  @JsonProperty("reservationEmail")
-  private String reservationEmail = null;
+	@JsonProperty("prices")
+	@Valid
+	private List<ReservationPrice> prices = null;
 
-  @JsonProperty("reservationName")
-  private String reservationName = null;
+	@JsonProperty("productId")
+	private Integer productId = null;
 
-  @JsonProperty("reservationTelephone")
-  private String reservationTelephone = null;
+	@JsonProperty("reservationEmail")
+	private String reservationEmail = null;
 
-  @JsonProperty("reservationYearMonthDay")
-  private String reservationYearMonthDay = null;
+	@JsonProperty("reservationName")
+	private String reservationName = null;
 
-  public ReservationParam displayInfoId(Integer displayInfoId) {
-    this.displayInfoId = displayInfoId;
-    return this;
-  }
+	@JsonProperty("reservationTelephone")
+	private String reservationTelephone = null;
 
-  /**
-   * 전시상품 Id
-   * @return displayInfoId
-  **/
-  @ApiModelProperty(value = "전시상품 Id")
+	@JsonProperty("reservationYearMonthDay")
+	private String reservationYearMonthDay = null;
 
+	public ReservationParam displayInfoId(Integer displayInfoId) {
+		this.displayInfoId = displayInfoId;
+		return this;
+	}
 
-  public Integer getDisplayInfoId() {
-    return displayInfoId;
-  }
+	/**
+	 * 전시상품 Id
+	 * 
+	 * @return displayInfoId
+	 **/
+	@ApiModelProperty(value = "전시상품 Id")
 
-  public void setDisplayInfoId(Integer displayInfoId) {
-    this.displayInfoId = displayInfoId;
-  }
+	public Integer getDisplayInfoId() {
+		return displayInfoId;
+	}
 
-  public ReservationParam prices(List<ReservationPrice> prices) {
-    this.prices = prices;
-    return this;
-  }
+	public int getId() {
+		return id;
+	}
 
-  public ReservationParam addPricesItem(ReservationPrice pricesItem) {
-    if (this.prices == null) {
-      this.prices = new ArrayList<ReservationPrice>();
-    }
-    this.prices.add(pricesItem);
-    return this;
-  }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-  /**
-   * 예약 가격 정보
-   * @return prices
-  **/
-  @ApiModelProperty(value = "예약 가격 정보")
+	public void setDisplayInfoId(Integer displayInfoId) {
+		this.displayInfoId = displayInfoId;
+	}
 
-  @Valid
+	public ReservationParam prices(List<ReservationPrice> prices) {
+		this.prices = prices;
+		return this;
+	}
 
-  public List<ReservationPrice> getPrices() {
-    return prices;
-  }
+	public ReservationParam addPricesItem(ReservationPrice pricesItem) {
+		if (this.prices == null) {
+			this.prices = new ArrayList<ReservationPrice>();
+		}
+		this.prices.add(pricesItem);
+		return this;
+	}
 
-  public void setPrices(List<ReservationPrice> prices) {
-    this.prices = prices;
-  }
+	/**
+	 * 예약 가격 정보
+	 * 
+	 * @return prices
+	 **/
+	@ApiModelProperty(value = "예약 가격 정보")
 
-  public ReservationParam productId(Integer productId) {
-    this.productId = productId;
-    return this;
-  }
+	@Valid
 
-  /**
-   * 상품 Id
-   * @return productId
-  **/
-  @ApiModelProperty(value = "상품 Id")
+	public List<ReservationPrice> getPrices() {
+		return prices;
+	}
 
+	public void setPrices(List<ReservationPrice> prices) {
+		this.prices = prices;
+	}
 
-  public Integer getProductId() {
-    return productId;
-  }
+	public ReservationParam productId(Integer productId) {
+		this.productId = productId;
+		return this;
+	}
 
-  public void setProductId(Integer productId) {
-    this.productId = productId;
-  }
+	/**
+	 * 상품 Id
+	 * 
+	 * @return productId
+	 **/
+	@ApiModelProperty(value = "상품 Id")
 
-  public ReservationParam reservationEmail(String reservationEmail) {
-    this.reservationEmail = reservationEmail;
-    return this;
-  }
+	public Integer getProductId() {
+		return productId;
+	}
 
-  /**
-   * 예약자 이메일
-   * @return reservationEmail
-  **/
-  @ApiModelProperty(value = "예약자 이메일")
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
 
+	public ReservationParam reservationEmail(String reservationEmail) {
+		this.reservationEmail = reservationEmail;
+		return this;
+	}
 
-  public String getReservationEmail() {
-    return reservationEmail;
-  }
+	/**
+	 * 예약자 이메일
+	 * 
+	 * @return reservationEmail
+	 **/
+	@ApiModelProperty(value = "예약자 이메일")
 
-  public void setReservationEmail(String reservationEmail) {
-    this.reservationEmail = reservationEmail;
-  }
+	public String getReservationEmail() {
+		return reservationEmail;
+	}
 
-  public ReservationParam reservationName(String reservationName) {
-    this.reservationName = reservationName;
-    return this;
-  }
+	public void setReservationEmail(String reservationEmail) {
+		this.reservationEmail = reservationEmail;
+	}
 
-  /**
-   * 예약자명
-   * @return reservationName
-  **/
-  @ApiModelProperty(value = "예약자명")
+	public ReservationParam reservationName(String reservationName) {
+		this.reservationName = reservationName;
+		return this;
+	}
 
+	/**
+	 * 예약자명
+	 * 
+	 * @return reservationName
+	 **/
+	@ApiModelProperty(value = "예약자명")
 
-  public String getReservationName() {
-    return reservationName;
-  }
+	public String getReservationName() {
+		return reservationName;
+	}
 
-  public void setReservationName(String reservationName) {
-    this.reservationName = reservationName;
-  }
+	public void setReservationName(String reservationName) {
+		this.reservationName = reservationName;
+	}
 
-  public ReservationParam reservationTelephone(String reservationTelephone) {
-    this.reservationTelephone = reservationTelephone;
-    return this;
-  }
+	public ReservationParam reservationTelephone(String reservationTelephone) {
+		this.reservationTelephone = reservationTelephone;
+		return this;
+	}
 
-  /**
-   * 예약자 전화번호
-   * @return reservationTelephone
-  **/
-  @ApiModelProperty(value = "예약자 전화번호")
+	/**
+	 * 예약자 전화번호
+	 * 
+	 * @return reservationTelephone
+	 **/
+	@ApiModelProperty(value = "예약자 전화번호")
 
+	public String getReservationTelephone() {
+		return reservationTelephone;
+	}
 
-  public String getReservationTelephone() {
-    return reservationTelephone;
-  }
+	public void setReservationTelephone(String reservationTelephone) {
+		this.reservationTelephone = reservationTelephone;
+	}
 
-  public void setReservationTelephone(String reservationTelephone) {
-    this.reservationTelephone = reservationTelephone;
-  }
+	public ReservationParam reservationYearMonthDay(String reservationYearMonthDay) {
+		this.reservationYearMonthDay = reservationYearMonthDay;
+		return this;
+	}
 
-  public ReservationParam reservationYearMonthDay(String reservationYearMonthDay) {
-    this.reservationYearMonthDay = reservationYearMonthDay;
-    return this;
-  }
+	/**
+	 * 예약일
+	 * 
+	 * @return reservationYearMonthDay
+	 **/
+	@ApiModelProperty(value = "예약일")
 
-  /**
-   * 예약일
-   * @return reservationYearMonthDay
-  **/
-  @ApiModelProperty(value = "예약일")
+	public String getReservationYearMonthDay() {
+		return reservationYearMonthDay;
+	}
 
+	public void setReservationYearMonthDay(String reservationYearMonthDay) {
+		this.reservationYearMonthDay = reservationYearMonthDay;
+	}
 
-  public String getReservationYearMonthDay() {
-    return reservationYearMonthDay;
-  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		ReservationParam reservationParam = (ReservationParam) o;
+		return Objects.equals(this.displayInfoId, reservationParam.displayInfoId)
+				&& Objects.equals(this.prices, reservationParam.prices)
+				&& Objects.equals(this.productId, reservationParam.productId)
+				&& Objects.equals(this.reservationEmail, reservationParam.reservationEmail)
+				&& Objects.equals(this.reservationName, reservationParam.reservationName)
+				&& Objects.equals(this.reservationTelephone, reservationParam.reservationTelephone)
+				&& Objects.equals(this.reservationYearMonthDay, reservationParam.reservationYearMonthDay);
+	}
 
-  public void setReservationYearMonthDay(String reservationYearMonthDay) {
-    this.reservationYearMonthDay = reservationYearMonthDay;
-  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(displayInfoId, prices, productId, reservationEmail, reservationName, reservationTelephone,
+				reservationYearMonthDay);
+	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class ReservationParam {\n");
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    ReservationParam reservationParam = (ReservationParam) o;
-    return Objects.equals(this.displayInfoId, reservationParam.displayInfoId) &&
-        Objects.equals(this.prices, reservationParam.prices) &&
-        Objects.equals(this.productId, reservationParam.productId) &&
-        Objects.equals(this.reservationEmail, reservationParam.reservationEmail) &&
-        Objects.equals(this.reservationName, reservationParam.reservationName) &&
-        Objects.equals(this.reservationTelephone, reservationParam.reservationTelephone) &&
-        Objects.equals(this.reservationYearMonthDay, reservationParam.reservationYearMonthDay);
-  }
+		sb.append("    displayInfoId: ").append(toIndentedString(displayInfoId)).append("\n");
+		sb.append("    prices: ").append(toIndentedString(prices)).append("\n");
+		sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
+		sb.append("    reservationEmail: ").append(toIndentedString(reservationEmail)).append("\n");
+		sb.append("    reservationName: ").append(toIndentedString(reservationName)).append("\n");
+		sb.append("    reservationTelephone: ").append(toIndentedString(reservationTelephone)).append("\n");
+		sb.append("    reservationYearMonthDay: ").append(toIndentedString(reservationYearMonthDay)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(displayInfoId, prices, productId, reservationEmail, reservationName, reservationTelephone, reservationYearMonthDay);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class ReservationParam {\n");
-    
-    sb.append("    displayInfoId: ").append(toIndentedString(displayInfoId)).append("\n");
-    sb.append("    prices: ").append(toIndentedString(prices)).append("\n");
-    sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
-    sb.append("    reservationEmail: ").append(toIndentedString(reservationEmail)).append("\n");
-    sb.append("    reservationName: ").append(toIndentedString(reservationName)).append("\n");
-    sb.append("    reservationTelephone: ").append(toIndentedString(reservationTelephone)).append("\n");
-    sb.append("    reservationYearMonthDay: ").append(toIndentedString(reservationYearMonthDay)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }
-
