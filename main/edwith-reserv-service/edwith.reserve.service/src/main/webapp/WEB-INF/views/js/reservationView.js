@@ -3,9 +3,17 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 function init() {
+	initAreaGnb();
 	initPrice();
 	initEssentials();
 	initBtnReseve();
+}
+
+function initAreaGnb() {
+	var btnToMain= document.getElementById('areaBtnToMain');
+	btnToMain.addEventListener('click', function() {
+		window.location.href= '/edwith.reserve.service';
+	});
 }
 
 function initBtnReseve() {
@@ -51,7 +59,7 @@ function initBtnReseve() {
 				
 				sendPostAjaxRequest('/edwith.reserve.service/api/reservations', parameters, function() {
 					if(this.status == 200) {
-						alert('예약을 완료 했습니다...')
+						window.location.href= '/edwith.reserve.service/reservationList';
 					} else {
 						alert('예약에 실패 했습니다...');
 					}

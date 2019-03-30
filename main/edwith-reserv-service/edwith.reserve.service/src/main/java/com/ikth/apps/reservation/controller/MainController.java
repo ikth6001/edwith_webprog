@@ -31,17 +31,17 @@ public class MainController
 	public String main(
 			HttpServletRequest req, HttpServletResponse res,
 			ModelMap model, Principal principal) {
-		if(principal == null) {
-			logger.debug("no login session is detected");
-			model.addAttribute("loginReqUrl", "loginView");
-			model.addAttribute("logInOut", "로그인");
-		} else {
-			final String name= principal.getName();
-			logger.debug("login user name is [{}]", name);
-			model.addAttribute("loginReqUrl", "userLogout");
-			model.addAttribute("logInOut", "로그아웃");
-			model.addAttribute("userName", name);
-		}
+//		if(principal == null) {
+//			logger.debug("no login session is detected");
+//			model.addAttribute("loginReqUrl", "loginView");
+//			model.addAttribute("logInOut", "로그인");
+//		} else {
+//			final String name= principal.getName();
+//			logger.debug("login user name is [{}]", name);
+//			model.addAttribute("loginReqUrl", "userLogout");
+//			model.addAttribute("logInOut", "로그아웃");
+//			model.addAttribute("userName", name);
+//		}
 		
 		return "main";
 	}

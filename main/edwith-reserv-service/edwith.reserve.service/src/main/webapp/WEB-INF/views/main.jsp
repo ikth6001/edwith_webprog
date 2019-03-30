@@ -67,12 +67,12 @@
 <body>
 	<div id="container" style="border: solid 1px gray;">
 		<div id="areaGnb">
-			<div id="areaBtnToMain" style="display: inline-block;">
+			<div id="areaBtnToMain" style="display: inline-block;  cursor: pointer;">
 				<img src="img/mainLog.png" align="middle" style="margin: 5px;"> 예약
 			</div>
 			<div id="areaBtnReservInfo" style="display: inline-block; float: right; margin: 5px;">
 				<div style="display: inline-block;">
-					<c:out value="${userName}"/>
+					<a href= "/edwith.reserve.service/reservationList"><c:out value="${userName}"/></a>
 					<a href= "<c:out value="${loginReqUrl}"/>"><c:out value="${logInOut}"/></a> 
 				</div>
 			</div>

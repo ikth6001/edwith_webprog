@@ -17,6 +17,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.ikth.apps.reservation.auth.MvcAuthInterceptor;
+
 @Configuration
 @EnableWebMvc
 @Import({ ServiceLayerConfiguration.class
@@ -51,6 +53,11 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	}
 	
 	@Bean
+	public MvcAuthInterceptor mvcAuthInterceptor() {
+		return new MvcAuthInterceptor();
+	}
+	
+	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor()
 	{
 		LocaleChangeInterceptor r= new LocaleChangeInterceptor();
@@ -62,6 +69,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
+		registry.addInterceptor(mvcAuthInterceptor());
 	};
 	
 	@Override

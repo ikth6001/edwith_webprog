@@ -1,4 +1,6 @@
 window.addEventListener('DOMContentLoaded', function() {
+	
+	initAreaGnb();
 	loadProductImages();
 	configureBtns();
 });
@@ -6,6 +8,13 @@ window.addEventListener('DOMContentLoaded', function() {
 var images;
 var imgIdx;
 var collapse= true;
+
+function initAreaGnb() {
+	var btnToMain= document.getElementById('areaBtnToMain');
+	btnToMain.addEventListener('click', function() {
+		window.location.href= '/edwith.reserve.service';
+	});
+}
 
 function configureBtns() {
 	var btnPrev= document.getElementById('btnPrev');

@@ -2,6 +2,8 @@ package com.ikth.apps.reservation.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,8 @@ import com.ikth.apps.reservation.dto.Product;
 import com.ikth.apps.reservation.dto.ProductImage;
 import com.ikth.apps.reservation.dto.ProductPrice;
 import com.ikth.apps.reservation.dto.ProductResponse;
+import com.ikth.apps.reservation.dto.ReservationInfo;
+import com.ikth.apps.reservation.dto.ReservationInfoResponse;
 import com.ikth.apps.reservation.dto.ReservationParam;
 import com.ikth.apps.reservation.dto.ReservationPrice;
 
@@ -125,5 +129,31 @@ public class ReservationSc implements IReservationSc
 		}
 
 		return true;
+	}
+
+	@Override
+	public ReservationInfoResponse getReservations(String reservationEmail) 
+	{
+		ReservationInfoResponse response= new ReservationInfoResponse();
+		List<ReservationInfo> reservationInfo= reservationDao.getReservations(reservationEmail);
+		
+		if(reservationInfo == null) {
+			return response;
+		}
+
+		SimpleDateFormat sdf= new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		for(ReservationInfo info : reservationInfo) {
+			int id= info.getDisplayInfoId();
+			DisplayInfo displayInfo= reservationDao.getDisplayInfo(id);
+			
+			/**
+			 * 마땅한 데이터가 없네
+			 */
+			displayInfo.setOpeningHours(sdf.format(new Date()));
+			info.setDisplayInfo(displayInfo);
+			response.addReservationsItem(info);
+		}
+		
+		return response;
 	}
 }

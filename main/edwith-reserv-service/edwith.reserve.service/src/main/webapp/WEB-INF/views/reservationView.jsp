@@ -29,6 +29,11 @@
 		padding-right: 0px;
 	}
 	
+	#areaGnb {
+		background-color: #F1F6F2;
+		font-weight: bold;
+	}
+	
 	div {
 	   margin-bottom: 10px;
 	}
@@ -116,6 +121,18 @@
 </head>
 <body>
 	<div id="container" style="border: solid 1px green;">
+		<div id="areaGnb">
+			<div id="areaBtnToMain" style="display: inline-block;  cursor: pointer;">
+				<img src="img/mainLog.png" align="middle" style="margin: 5px;"> 예약
+			</div>
+			<div id="areaBtnReservInfo" style="display: inline-block; float: right; margin: 5px;">
+				<div style="display: inline-block;">
+					<a href= "/edwith.reserve.service/reservationList"><c:out value="${userName}"/></a>
+					<a href= "<c:out value="${loginReqUrl}"/>"><c:out value="${logInOut}"/></a> 
+				</div>
+			</div>
+		</div>
+	
 		<div id="titleArea" class="needBottomPadding" style="text-align: center; font-weight: bold;"><c:out value="${mainTxt}"/></div>
 		<div id="mainArea" class="needBottomPadding" style="width:100%; text-align: center;">
 			<div id="imgArea"><img src="<c:out value="${mainImg}"/>" width="100%" height="400px"></div>

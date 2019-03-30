@@ -17,6 +17,11 @@
             border: solid 1px silver;
         }
         
+        #areaGnb {
+			background-color: #F1F6F2;
+			font-weight: bold;
+		}
+        
         #details {
             width: 100%;
         }
@@ -65,6 +70,17 @@
 </head>
 <body>
     <div id="container">
+    	<div id="areaGnb">
+			<div id="areaBtnToMain" style="display: inline-block; cursor: pointer;">
+				<img src="img/mainLog.png" align="middle" style="margin: 5px;"> 예약
+			</div>
+			<div id="areaBtnReservInfo" style="display: inline-block; float: right; margin: 5px;">
+				<div style="display: inline-block;">
+					<a href= "/edwith.reserve.service/reservationList"><c:out value="${userName}"/></a>
+					<a href= "<c:out value="${loginReqUrl}"/>"><c:out value="${logInOut}"/></a> 
+				</div>
+			</div>
+		</div>
         <div id="details">
             <div id="active">
                 <div id="activeLabel"><h3> 예약확정(N개) </h3></div>
@@ -81,6 +97,10 @@
             <div><font color="gray">내역</font> 내역이 없습니다.</div>
             <div><font color="gray">장소</font> {{place}}</div>
             <div>결제 예정 금액 <font color="red">{{price}}</font>원</div>
+	</script>
+	
+	<script type="text/hiddenData" id="loginUserEmail">
+		<c:out value="${userName}"/>
 	</script>
     
     <script type='text/javascript' src='js/handlebars-v4.1.0.js'></script>

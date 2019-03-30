@@ -5,8 +5,16 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 function initInternal() {
+	initAreaGnb();
 	configureCategory();
 	addPromotions();
+}
+
+function initAreaGnb() {
+	var btnToMain= document.getElementById('areaBtnToMain');
+	btnToMain.addEventListener('click', function() {
+		window.location.href= '/edwith.reserve.service';
+	});
 }
 
 function addPromotions() {

@@ -24,10 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ikth.apps.reservation.dto.Category;
 import com.ikth.apps.reservation.dto.CategoryResponse;
 import com.ikth.apps.reservation.dto.CommentResponse;
-import com.ikth.apps.reservation.dto.DisplayInfo;
 import com.ikth.apps.reservation.dto.DisplayInfoResponse;
 import com.ikth.apps.reservation.dto.ProductResponse;
-import com.ikth.apps.reservation.dto.ReservationInfo;
 import com.ikth.apps.reservation.dto.ReservationInfoResponse;
 import com.ikth.apps.reservation.dto.ReservationParam;
 import com.ikth.apps.reservation.dto.ReservationResponse;
@@ -216,52 +214,53 @@ public class ReservationRestController {
     	/**
     	 * TODO SC, DAO
     	 */
-    	ReservationInfoResponse response= new ReservationInfoResponse();
-    	
-    	{
-    		ReservationInfo info= new ReservationInfo();
-    		
-    		DisplayInfo display= new DisplayInfo();
-    		display.setProductContent("라이언킹");
-    		display.setOpeningHours("2019.03.01 ~ 2019.03.30");
-    		display.setPlaceName("서초구 예술의전당");
-    		info.setDisplayInfo(display);
-    		
-    		info.setTotalPrice(150000L);
-    		info.cancelYn(false);
-    		
-    		response.addReservationsItem(info);
-    	}
-    	
-    	{
-    		ReservationInfo info= new ReservationInfo();
-    		
-    		DisplayInfo display= new DisplayInfo();
-    		display.setProductContent("신데렐라");
-    		display.setOpeningHours("2019.02.01 ~ 2019.04.30");
-    		display.setPlaceName("송파구 샤로떼띠어떠");
-    		info.setDisplayInfo(display);
-    		
-    		info.setTotalPrice(350000L);
-    		info.cancelYn(false);
-    		
-    		response.addReservationsItem(info);
-    	}
-    	
-    	{
-    		ReservationInfo info= new ReservationInfo();
-    		
-    		DisplayInfo display= new DisplayInfo();
-    		display.setProductContent("신데렐라");
-    		display.setOpeningHours("2019.02.01 ~ 2019.02.25");
-    		display.setPlaceName("잠실 올림픽 공원");
-    		info.setDisplayInfo(display);
-    		
-    		info.setTotalPrice(50000L);
-    		info.cancelYn(true);
-    		
-    		response.addReservationsItem(info);
-    	}
+    	ReservationInfoResponse response= reservationSc.getReservations(reservationEmail);
+//    	ReservationInfoResponse response= new ReservationInfoResponse();
+//    	
+//    	{
+//    		ReservationInfo info= new ReservationInfo();
+//    		
+//    		DisplayInfo display= new DisplayInfo();
+//    		display.setProductContent("라이언킹");
+//    		display.setOpeningHours("2019.03.01 ~ 2019.03.30");
+//    		display.setPlaceName("서초구 예술의전당");
+//    		info.setDisplayInfo(display);
+//    		
+//    		info.setTotalPrice(150000L);
+//    		info.cancelYn(false);
+//    		
+//    		response.addReservationsItem(info);
+//    	}
+//    	
+//    	{
+//    		ReservationInfo info= new ReservationInfo();
+//    		
+//    		DisplayInfo display= new DisplayInfo();
+//    		display.setProductContent("신데렐라");
+//    		display.setOpeningHours("2019.02.01 ~ 2019.04.30");
+//    		display.setPlaceName("송파구 샤로떼띠어떠");
+//    		info.setDisplayInfo(display);
+//    		
+//    		info.setTotalPrice(350000L);
+//    		info.cancelYn(false);
+//    		
+//    		response.addReservationsItem(info);
+//    	}
+//    	
+//    	{
+//    		ReservationInfo info= new ReservationInfo();
+//    		
+//    		DisplayInfo display= new DisplayInfo();
+//    		display.setProductContent("신데렐라");
+//    		display.setOpeningHours("2019.02.01 ~ 2019.02.25");
+//    		display.setPlaceName("잠실 올림픽 공원");
+//    		info.setDisplayInfo(display);
+//    		
+//    		info.setTotalPrice(50000L);
+//    		info.cancelYn(true);
+//    		
+//    		response.addReservationsItem(info);
+//    	}
     	
     	return new ResponseEntity<ReservationInfoResponse>(response, HttpStatus.OK);
     }

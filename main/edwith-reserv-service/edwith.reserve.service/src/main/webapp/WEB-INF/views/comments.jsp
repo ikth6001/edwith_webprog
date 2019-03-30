@@ -19,6 +19,11 @@
 			border: solid 1px gray;
 		}
 		
+		#areaGnb {
+			background-color: #F1F6F2;
+			font-weight: bold;
+		}
+		
 		.textContentsArea {
 			padding: 10px;
 		}
@@ -27,6 +32,17 @@
 </head>
 <body>
 	<div id="container">
+		<div id="areaGnb">
+			<div id="areaBtnToMain" style="display: inline-block;  cursor: pointer;" onclick="onClickToMain()">
+				<img src="img/mainLog.png" align="middle" style="margin: 5px;"> 예약
+			</div>
+			<div id="areaBtnReservInfo" style="display: inline-block; float: right; margin: 5px;">
+				<div style="display: inline-block;">
+					<a href= "/edwith.reserve.service/reservationList"><c:out value="${userName}"/></a>
+					<a href= "<c:out value="${loginReqUrl}"/>"><c:out value="${logInOut}"/></a> 
+				</div>
+			</div>
+		</div>
 		<div id="commentArea">
 			<div>
 				<div class="textContentsArea"><b><spring:message code="label.comment"/></b></div>
@@ -49,5 +65,14 @@
 			</div>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+		function onClickToMain() {
+			var btnToMain= document.getElementById('areaBtnToMain');
+			btnToMain.addEventListener('click', function() {
+				window.location.href= '/edwith.reserve.service';
+			});
+		}
+	</script>
 </body>
 </html>
