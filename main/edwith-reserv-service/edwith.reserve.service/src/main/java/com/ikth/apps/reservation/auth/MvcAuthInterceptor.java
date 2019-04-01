@@ -1,7 +1,5 @@
 package com.ikth.apps.reservation.auth;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,7 +18,7 @@ public class MvcAuthInterceptor extends HandlerInterceptorAdapter
 				, Object handler
 				, ModelAndView modelAndView) throws Exception 
 	{
-		if(modelAndView == null) {
+		if(modelAndView == null) {	
 			return;
 		}
 		

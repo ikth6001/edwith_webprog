@@ -83,7 +83,7 @@
 		</div>
         <div id="details">
             <div id="active">
-                <div id="activeLabel"><h3> 예약확정(N개) </h3></div>
+                <div id="activeLabel"><h3>예약확정(N개)</h3></div>
             </div>
             <div id="canceled">
                 <div id="cancelLabel"><h3>예약취소(N개)</h3></div>

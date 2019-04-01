@@ -30,18 +30,7 @@ public class MainController
 	@GetMapping(path="/")
 	public String main(
 			HttpServletRequest req, HttpServletResponse res,
-			ModelMap model, Principal principal) {
-//		if(principal == null) {
-//			logger.debug("no login session is detected");
-//			model.addAttribute("loginReqUrl", "loginView");
-//			model.addAttribute("logInOut", "로그인");
-//		} else {
-//			final String name= principal.getName();
-//			logger.debug("login user name is [{}]", name);
-//			model.addAttribute("loginReqUrl", "userLogout");
-//			model.addAttribute("logInOut", "로그아웃");
-//			model.addAttribute("userName", name);
-//		}
+			ModelMap model) {
 		
 		return "main";
 	}
@@ -79,21 +68,19 @@ public class MainController
 	}
 	
 	@GetMapping(path="/reservationView")
-	public String doReservation(
+	public String reservationView(
 			ModelMap model
-			, @RequestParam("displayInfoId") int displayInfoId)
+			, @RequestParam("displayInfoId") int displayInfoId
+			, Principal principal)
 	{
 		DisplayInfoResponse displayInfo= reservationSc.getDisplayInfo(displayInfoId);
-//		String title= displayInfo.getDisplayInfo().getProductDescription();
-//		String img= displayInfo.getDisplayInfoImage().getFileName();
-//		String place= displayInfo.getDisplayInfo().getPlaceStreet();
-//		String openingHour= displayInfo.getDisplayInfo().getOpeningHours();
-//		List<ProductPrice> prices= displayInfo.getProductPrices();
+
 		model.addAttribute("mainImg", displayInfo.getProductImages().get(0).getFileName());
 		model.addAttribute("mainTxt", displayInfo.getDisplayInfo().getProductDescription());
 		model.addAttribute("place", displayInfo.getDisplayInfo().getPlaceLot());
 		model.addAttribute("openingHours", displayInfo.getDisplayInfo().getOpeningHours());
 		model.addAttribute("displayInfoId", displayInfoId);
+		model.addAttribute("userEmail", principal.getName());
 		return "reservationView";
 	}
 	
@@ -113,7 +100,7 @@ public class MainController
 	}
 	
 	@GetMapping(path="/reservationList")
-	public String getReservationList() {
+	public String reservationList() {
 		return "reservationList";
 	}
 	

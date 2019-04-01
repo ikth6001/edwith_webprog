@@ -214,6 +214,7 @@
     	SELECT
     		RI.DISPLAY_INFO_ID as displayInfoId
     		, SUM(PP.PRICE * RIP.COUNT) as totalPrice
+            , RI.ID as reservationInfoId
     		, CANCEL_FLAG as cancelYn
     	FROM RESERVATION_INFO AS RI
     	   , RESERVATION_INFO_PRICE AS RIP
@@ -222,6 +223,12 @@
     		RI.ID=RIP.RESERVATION_INFO_ID
     		AND RIP.PRODUCT_PRICE_ID=PP.ID 
     		AND RESERVATION_EMAIL=#{reservationEmail}
-    	GROUP BY DISPLAY_INFO_ID
+    	GROUP BY RI.ID
     </select>
+    
+    <update id="updateReservationStatus">
+        UPDATE RESERVATION_INFO
+        SET CANCEL_FLAG=#{status}
+        WHERE ID=#{id}
+    </update>
 </mapper>

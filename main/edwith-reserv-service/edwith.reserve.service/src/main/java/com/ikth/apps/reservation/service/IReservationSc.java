@@ -21,4 +21,6 @@ public interface IReservationSc {
 	boolean reservation(ReservationParam reservationParam);
 	
 	ReservationInfoResponse getReservations(String reservationEmail);
+	
+	void cancelReservation(int id);
 }

@@ -167,7 +167,7 @@
 			</div>
 			<div>
                 <div class="form formLabel textContainer" id="lblEmail">이메일</div>
-                <input class="form formInput" id="inputEmail" type="text" placeholder="  자동 입력 되야 함.">
+                <input class="form formInput" id="inputEmail" type="text" value="<c:out value="${userEmail}"/>" placeholder="  예매자 이메일을 입력하세요">
                 <div id="emailErrMsg" style="display: inline-block;"></div>
 			</div>
 			<div class="textContainer">

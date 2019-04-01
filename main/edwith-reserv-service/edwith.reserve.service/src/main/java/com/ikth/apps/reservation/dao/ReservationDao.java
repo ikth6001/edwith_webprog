@@ -43,4 +43,6 @@ public interface ReservationDao
 	int addPrice(ReservationPrice price);
 	
 	List<ReservationInfo> getReservations(String reservationEmail);
+	
+	int updateReservationStatus(@Param("id") int id, @Param("status") int status);
 }

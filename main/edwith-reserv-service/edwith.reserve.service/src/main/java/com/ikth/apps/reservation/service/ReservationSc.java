@@ -156,4 +156,12 @@ public class ReservationSc implements IReservationSc
 		
 		return response;
 	}
+	
+	private final int CANCEL= 1;
+
+	@Override
+	public void cancelReservation(int id) 
+	{
+		reservationDao.updateReservationStatus(id, CANCEL);
+	}
 }

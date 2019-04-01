@@ -78,10 +78,8 @@ public class ReservationRestController {
 //            }
 //        }
 
-    	/**
-    	 * TODO
-    	 */
-        return new ResponseEntity<ReservationResponse>(HttpStatus.NOT_IMPLEMENTED);
+    	reservationSc.cancelReservation(reservationId);
+        return new ResponseEntity<ReservationResponse>(HttpStatus.OK);
     }
 
     @ApiOperation(value = "한줄평 (Comment) 등록", nickname = "createReservationCommentUsingPOST", notes = "[PJT-6] 한중평 등록은 실제 DB 에 적용된 값이 아닌, Random 으로 생성된 Comment 객체를 반환한다.", response = CommentResponse.class, tags={ "예약 API", })
@@ -211,9 +209,6 @@ public class ReservationRestController {
 //            }
 //        }
 
-    	/**
-    	 * TODO SC, DAO
-    	 */
     	ReservationInfoResponse response= reservationSc.getReservations(reservationEmail);
 //    	ReservationInfoResponse response= new ReservationInfoResponse();
 //    	
