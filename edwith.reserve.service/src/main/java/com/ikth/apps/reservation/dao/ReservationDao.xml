@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ikth.apps.reservation.dao.ReservationDao">
+
+	<select id="getAllCategories"
+		resultType="com.ikth.apps.reservation.dto.Category">
+		SELECT 
+			ID as id
+			, NAME as name
+		FROM 
+			category
+	</select>
+	
+	<select id="getPromotionedProducts"
+		resultType="com.ikth.apps.reservation.dto.Product">
+		SELECT 
+			DI.id as displayInfoId
+			, DI.place_name as placeName
+			, PD.content as productContent
+			, PD.description as productDescription
+			, PD.id as productId
+			, concat('img/', FI.file_name) as productImageUrl
+		FROM
+			product as PD
+			, display_info as DI
+			, product_image as PI
+			, promotion as PM
+			, file_info as FI
+		WHERE
+			PD.id= DI.product_id
+			and PD.id= PI.product_id
+			and PD.id= PM.product_id
+			and PI.file_id= FI.id
+			and FI.file_name like '%_ma_%'
+	</select>
+	
+	<select id="getProducts"
+		resultType="com.ikth.apps.reservation.dto.Product">
+		select 
+			DI.id as displayInfoId
+		    , DI.place_name as placeName
+		    , PD.content as productContent
+		    , PD.description as productDescription
+		    , PD.id as productId
+		    , concat('img/', FI.file_name) as productImageUrl
+		from
+			product as PD
+			, display_info as DI
+			, product_image as PI
+			, file_info as FI
+		where
+			PD.id= DI.product_id
+			and PD.id= PI.product_id
+			and PI.file_id= FI.id
+			and FI.file_name like '%_ma_%'
+			<if test="categoryId > 0">
+			and PD.category_id= #{categoryId}
+			</if>
+		limit #{start}, 4;	
+	</select>
+	
+	<select id="getProductCount"
+		resultType="int">
+		select 
+			count(*)
+		from product
+		<if test="categoryId > 0">
+		where
+			category_id= #{categoryId}
+		</if>
+	</select>
+	
+	<select id="getDisplayInfo"
+		resultType="com.ikth.apps.reservation.dto.DisplayInfo">
+		SELECT
+			DI.ID as id
+			, DI.PRODUCT_ID as productId
+			, DI.OPENING_HOURS as openingHours
+			, DI.PLACE_NAME as placeName
+			, DI.PLACE_LOT as placeLot
+			, DI.PLACE_STREET as placeStreet
+			, DI.TEL as telephone
+			, DI.HOMEPAGE as homepage
+			, DI.EMAIL as email
+			, DI.CREATE_DATE as createDate
+			, DI.MODIFY_DATE as modifyDate
+			, PD.DESCRIPTION as productDescription
+			, PD.CONTENT as productContent
+			, PD.EVENT as productEvent
+		FROM
+			DISPLAY_INFO AS DI
+			, PRODUCT AS PD
+		WHERE 
+			DI.PRODUCT_ID = PD.ID 
+			AND DI.ID = #{id}
+	</select>
+	
+	<select id="getComments"
+		resultType="com.ikth.apps.reservation.dto.Comment">
+		SELECT
+			RUC.ID as Id
+			, RUC.PRODUCT_ID as productId
+			, RUC.RESERVATION_INFO_ID as reservationInfoId
+			, RUC.SCORE as score
+			, RUC.COMMENT as comment
+			, RUC.CREATE_DATE as createDate
+			, RUC.MODIFY_DATE as modifyDate
+			, RI.RESERVATION_EMAIL as reservationEmail
+		FROM
+			RESERVATION_USER_COMMENT as RUC
+			, RESERVATION_INFO as RI
+		WHERE 
+			RUC.PRODUCT_ID=#{productId}
+			AND RUC.RESERVATION_INFO_ID=RI.ID
+	</select>
+	
+	<select id="getDisplayInfoImage"
+		resultType="com.ikth.apps.reservation.dto.DisplayInfoImage">
+		SELECT
+			DI.ID as Id
+			, DI.DISPLAY_INFO_ID as displayInfoId
+			, DI.FILE_ID as fileId
+			, concat('img/', FI.FILE_NAME) AS fileName
+		FROM
+			DISPLAY_INFO_IMAGE DI, FILE_INFO FI
+		WHERE
+		    DI.FILE_ID=FI.ID
+			AND DISPLAY_INFO_ID=#{displayInfoId};
+	</select>
+	
+	<select id="getProductImages"
+		resultType="com.ikth.apps.reservation.dto.ProductImage">
+		SELECT
+			PI.ID as id
+			, PI.PRODUCT_ID as productId
+			, PI.TYPE as type
+			, PI.FILE_ID as fileInfoId
+			, concat('img/', FI.FILE_NAME) AS fileName
+		FROM
+			PRODUCT_IMAGE AS PI
+			, FILE_INFO AS FI
+		WHERE 
+			PI.FILE_ID=FI.ID
+			AND PI.PRODUCT_ID=#{productId}
+	</select>
+	
+	<select id="getProductPrices"
+		resultType="com.ikth.apps.reservation.dto.ProductPrice">
+		SELECT
+			ID as Id
+			, PRODUCT_ID as productId
+			, PRICE_TYPE_NAME as priceTypeName
+			, PRICE as price
+			, DISCOUNT_RATE as discountRate
+			, CREATE_DATE as createDate
+			, MODIFY_DATE as modifyDate
+			, ID as productPriceId
+		FROM
+			PRODUCT_PRICE
+		WHERE 
+			PRODUCT_ID=#{productId}
+	</select>
+	
+	<select id="getUserById"
+		resultType="com.ikth.apps.reservation.auth.User">
+		SELECT
+			USER_ID as userName
+			, USER_ENC_PW as password
+		FROM
+			RESERVATION_USER
+		WHERE 
+			USER_ID=#{userId}
+	</select>
+	
+	<insert id="addReservation"
+	   parameterType="com.ikth.apps.reservation.dto.ReservationParam"
+	   useGeneratedKeys="true"
+	   keyProperty="id">
+	   
+	   INSERT INTO RESERVATION_INFO
+	       (RESERVATION_NAME
+	       , RESERVATION_TEL
+	       , RESERVATION_EMAIL
+	       , RESERVATION_DATE
+	       , PRODUCT_ID
+	       , DISPLAY_INFO_ID)
+        VALUES
+            (#{reservationName}
+            , #{reservationTelephone}
+            , #{reservationEmail}
+            , PARSEDATETIME (#{reservationYearMonthDay}, 'yyyyMMdd')
+            , #{productId}
+            , #{displayInfoId})
+    </insert>
+    
+    <insert id="addPrice"
+        parameterType="com.ikth.apps.reservation.dto.ReservationPrice">
+        
+        INSERT INTO RESERVATION_INFO_PRICE
+            (RESERVATION_INFO_ID
+            , PRODUCT_PRICE_ID
+            , COUNT)
+        VALUES
+            (#{reservationInfoId}
+            , #{productPriceId}
+            , #{count})
+        
+    </insert>
+    
+    <select id="getReservations"
+    	resultType="com.ikth.apps.reservation.dto.ReservationInfo">
+    	SELECT
+    		RI.DISPLAY_INFO_ID as displayInfoId
+    		, SUM(PP.PRICE * RIP.COUNT) as totalPrice
+            , RI.ID as reservationInfoId
+    		, CANCEL_FLAG as cancelYn
+    	FROM RESERVATION_INFO AS RI
+    	   , RESERVATION_INFO_PRICE AS RIP
+    	   , PRODUCT_PRICE AS PP
+    	WHERE
+    		RI.ID=RIP.RESERVATION_INFO_ID
+    		AND RIP.PRODUCT_PRICE_ID=PP.ID 
+    		AND RESERVATION_EMAIL=#{reservationEmail}
+    	GROUP BY RI.ID
+    </select>
+    
+    <update id="updateReservationStatus">
+        UPDATE RESERVATION_INFO
+        SET CANCEL_FLAG=#{status}
+        WHERE ID=#{id}
+    </update>
+</mapper>
