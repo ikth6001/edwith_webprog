@@ -157,6 +157,12 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+
+		<!-- JPA 및 구현체 클래스패스 추가. default JPA 구현체는 hibernate -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.hsqldb</groupId>
