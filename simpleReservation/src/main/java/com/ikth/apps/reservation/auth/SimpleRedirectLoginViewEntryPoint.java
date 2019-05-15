@@ -21,10 +21,10 @@ public class SimpleRedirectLoginViewEntryPoint extends BasicAuthenticationEntryP
 		/**
 		 * REST API와 MVC 뷰 요청의 구분..
 		 */
-		if(request.getRequestURI().startsWith("/edwith.reserve.service/api")) {
+		if(request.getRequestURI().startsWith("/api")) {
 			response.sendError(HttpStatus.UNAUTHORIZED.value());
 		} else {
-			response.sendRedirect("/edwith.reserve.service/loginView");
+			response.sendRedirect("/loginView");
 		}
 	}
 }
