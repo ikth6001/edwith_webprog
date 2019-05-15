@@ -2,15 +2,18 @@ package com.ikth.apps.reservation.configuration;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -21,6 +24,7 @@ import com.ikth.apps.reservation.typehandle.CustomOffSetDateHandler;
 
 @Configuration
 @MapperScan("com.ikth.apps.reservation.dao")
+@PropertySource({"classpath:application.properties", "classpath:datasource.properties"})
 public class DataAccessObjectConfiguration 
 {
 	@Bean
@@ -47,9 +51,31 @@ public class DataAccessObjectConfiguration
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 	
+	@Value("${jndiName}")
+	private String jndiName;
+	
+	@Value("${jdbc.driver}")
+	private String driver;
+	
+	@Value("${jdbc.url}")
+	private String url;
+	
+	@Value("${jdbc.user}")
+	private String user;
+	
+	@Value("${jdbc.pass}")
+	private String password;
+	
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer getPropertyConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
+	}
+	
+	@Bean
+	@Profile("PRODUCT")
+	public DataSource getDataSource()
+	{
+		return loadJdbcDataSource();
 	}
 	
 	@Bean("h2DataSource")
@@ -57,8 +83,6 @@ public class DataAccessObjectConfiguration
 	public DataSource getEmbeddedDataSource()
 	{
 		EmbeddedDatabaseBuilder builder= new EmbeddedDatabaseBuilder();
-		
-		// jdbc:h2:mem:reservationDB
 		EmbeddedDatabase db= builder
 								.setType(EmbeddedDatabaseType.H2)
 								.setName("reservationDB;DATABASE_TO_UPPER=false;MODE=MYSQL")
@@ -83,4 +107,14 @@ public class DataAccessObjectConfiguration
 //		
 //		return manager;
 //	}
+
+	private DataSource loadJdbcDataSource() {
+		BasicDataSource dataSource= new BasicDataSource();
+		dataSource.setDriverClassName(driver);
+		dataSource.setUrl(url);
+		dataSource.setUsername(user);
+		dataSource.setPassword(password);
+		
+		return dataSource;
+	}
 }

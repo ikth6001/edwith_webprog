@@ -3,11 +3,8 @@ package com.ikth.apps.reservation.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +25,6 @@ import com.ikth.apps.reservation.dto.ReservationInfo;
 import com.ikth.apps.reservation.dto.ReservationInfoResponse;
 import com.ikth.apps.reservation.dto.ReservationParam;
 import com.ikth.apps.reservation.dto.ReservationPrice;
-import com.ikth.apps.reservation.jpa.entity.CategoryEntity;
-import com.ikth.apps.reservation.jpa.repository.CategoryRepository;
 
 @Service
 public class ReservationSc implements IReservationSc
@@ -38,27 +33,10 @@ public class ReservationSc implements IReservationSc
 	
 	@Autowired
 	private ReservationDao reservationDao;
-	
-	@Autowired
-	private CategoryRepository categoryRepository;
 
 	@Override
 	public List<Category> getAllCategories() {
-//		return reservationDao.getAllCategories();
-		Iterable<CategoryEntity> iter= categoryRepository.findAll();
-		
-		List<Category> categories= new ArrayList<>();
-		iter.forEach((entity) -> categories.add(adapt(entity)));
-		
-		return categories;
-	}
-	
-	private Category adapt(CategoryEntity entity) {
-		
-		Category category= new Category();
-		category.setId(entity.getId());
-		category.setName(entity.getName());
-		return category;
+		return reservationDao.getAllCategories();
 	}
 	
 	@Override
