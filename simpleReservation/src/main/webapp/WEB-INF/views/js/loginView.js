@@ -48,7 +48,7 @@ function init() {
 				printErrMsg('서버 에러 발생..');
 			}
 		});
-		req.open("GET", '/edwith.reserve.service/login?id=' + id + '&passwd=' + pw, true);
+		req.open("GET", '/login?id=' + id + '&passwd=' + pw, true);
 		req.send();
 	});
 }

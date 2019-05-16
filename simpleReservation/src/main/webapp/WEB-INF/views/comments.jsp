@@ -38,7 +38,7 @@
 			</div>
 			<div id="areaBtnReservInfo" style="display: inline-block; float: right; margin: 5px;">
 				<div style="display: inline-block;">
-					<a href= "/edwith.reserve.service/reservationList"><c:out value="${userName}"/></a>
+					<a href= "/reservationList"><c:out value="${userName}"/></a>
 					<a href= "<c:out value="${loginReqUrl}"/>"><c:out value="${logInOut}"/></a> 
 				</div>
 			</div>
@@ -70,7 +70,7 @@
 		function onClickToMain() {
 			var btnToMain= document.getElementById('areaBtnToMain');
 			btnToMain.addEventListener('click', function() {
-				window.location.href= '/edwith.reserve.service';
+				window.location.href= '/';
 			});
 		}
 	</script>

@@ -2,8 +2,6 @@ package com.ikth.apps.reservation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 import com.ikth.apps.reservation.configuration.ApplicationConfiguration;
@@ -18,9 +16,9 @@ public class ApplicationBoot
 		SpringApplication.run(ApplicationBoot.class, args);
 	}
 	
-	@Bean
-	public EmbeddedServletContainerCustomizer embeddedServletContainerCustomizer() {
-	    return container -> container.setContextPath("/edwith.reserve.service");
-	}
+//	@Bean
+//	public EmbeddedServletContainerCustomizer embeddedServletContainerCustomizer() {
+//	    return container -> container.setContextPath("/edwith.reserve.service");
+//	}
 
 }

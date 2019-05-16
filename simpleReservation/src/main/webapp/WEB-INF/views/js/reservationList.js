@@ -10,7 +10,7 @@ function init() {
 	var templateTxt= document.getElementById('reservationTempalte').innerText;
 	var template= Handlebars.compile(templateTxt);
 	
-	sendGetAjaxRequest('/edwith.reserve.service/api/reservations?' + qs, function() {
+	sendGetAjaxRequest('/api/reservations?' + qs, function() {
 		if(this.status == 200) {
 			var reservations= JSON.parse(this.responseText).reservations;
 			
@@ -68,14 +68,14 @@ function init() {
 					
 					if(isCancel) {
 						var id= element.id;
-						sendPutAjaxRequest('/edwith.reserve.service/api/reservations/' + id, function() {
+						sendPutAjaxRequest('/api/reservations/' + id, function() {
 							location.reload(true);
 						});
 					}
 				});
 			};
 		} else if(this.status == 401){
-			window.location.href='/edwith.reserve.service/loginView';
+			window.location.href='/loginView';
 		}
 	});
 }
@@ -83,7 +83,7 @@ function init() {
 function initAreaGnb() {
 	var btnToMain= document.getElementById('areaBtnToMain');
 	btnToMain.addEventListener('click', function() {
-		window.location.href= '/edwith.reserve.service';
+		window.location.href= '/';
 	});
 }
 
